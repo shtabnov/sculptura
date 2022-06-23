@@ -1,0 +1,27 @@
+//- include header
+
+header.header 
+    .header__container             
+        nav.header_nav.nav
+            div.nav__menu
+                input(id="menu__toggle" type="checkbox")
+                label.nav__btn(for="menu__toggle")
+                    span
+            
+            ul.nav__list
+                li.nav__item 
+                    a.nav__link(href='Услуги') Услуги
+                li.nav__item 
+                    a.nav__link(href='Прайс-лист') Прайс-лист
+                li.nav__item 
+                    a.nav__link(href='Акции') Акции
+                li.nav__item 
+                    a.nav__logo(href='/index.html')
+                        .header__img
+                            img(src="./images/logo.svg", alt="Sculptura")
+                li.nav__item 
+                    a.nav__link(href='О салоне') О салоне
+                li.nav__item 
+                    a.nav__link(href='Отзывы') Отзывы
+                li.nav__item 
+                    a.nav__link(href='Контакты') Контакты

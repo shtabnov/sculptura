@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Roboto;
+    margin: 0;
+    padding: 0px 0px;
+}
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+[class*="__container"] {
+    max-width: 1170px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1023.999px) {
+    * {
+        font-size: 14px;
+    }
+
+    [class*="__container"] {
+        padding: 0 20px;    
+    } 
+}
+
+
+@keyframes hero-btn {
+    0%    { transform: translate(0, 0px); }
+    50%   { transform: translate(0, -10px); }
+    100%  { transform: translate(0, 0px); }
+  }
