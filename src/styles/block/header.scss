@@ -1,6 +1,6 @@
 .header {
     position: absolute;
-    width: 100vw;
+    width: 100%;
     z-index: 50;
 }
 
@@ -139,7 +139,8 @@
             flex-direction: column;
             justify-content: start;
             background: linear-gradient(223deg, rgba(124,139,176, 0.8) 40%, rgba(195,162,207, 0.7) 100%),
-                        linear-gradient(150deg, rgba(219, 28, 196, 1) 40%, rgba(110, 251, 152, 1) 100%);
+                        linear-gradient(150deg, rgba(219, 28, 196, 0.9) 40%, rgba(110, 251, 152, 0.8) 100%),
+                        linear-gradient(45deg, #2a2595,#8b6f7a,#c9a81f);
             height: 100vh;
             transition: top 0.3s ease-in;
 

@@ -1,6 +1,7 @@
 .hero {
     height: 100vh;
     overflow: hidden;
+    margin-bottom: 90px;
 
     &__slider {
         position: relative;
@@ -85,8 +86,9 @@
         color: $black;
         padding: 1rem 2rem;
         border-radius: 2rem;
-        border: 1px solid $black;
+        border: 1px solid $gray;
         background-color: $light-pink;
+        background: linear-gradient(90deg, #ffd8da,#ddaecb);
     }
 
     &__btn-wrap {

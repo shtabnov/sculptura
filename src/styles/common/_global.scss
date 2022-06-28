@@ -12,6 +12,10 @@ h1, h2, h3, h4, h5, h6, p {
     padding: 0;
 }
 
+h1, h2 {
+    font-family: $heading;
+}
+
 ul, ol, li {
     list-style: none;
     padding: 0;
