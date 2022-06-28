@@ -16,6 +16,10 @@ h1, h2 {
     font-family: $heading;
 }
 
+h2 {
+    font-size: 3rem;
+}
+
 ul, ol, li {
     list-style: none;
     padding: 0;
@@ -30,6 +34,7 @@ a {
 [class*="__container"] {
     max-width: 1170px;
     margin: 0 auto;
+    text-align: center;
 }
 
 @media (max-width: 1023.999px) {

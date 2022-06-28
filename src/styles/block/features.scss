@@ -2,11 +2,7 @@
 
     &__container {
         color: $black;
-        text-align: center;
-
-        h2 {
-            font-size: 3rem;
-        }
+        margin-bottom: 90px;
     }
 
     &__wrapper {
@@ -25,12 +21,38 @@
 
         &-img {
             height: 100px;
+
+            & img {
+                height: 80%;
+            }
         }
 
         &-txt {
             width: 183px;
             margin: 0 auto;
             text-align: center;
+        }
+    }
+}
+
+@media (max-width: 767.99px) {
+    .features {
+
+        &__container {
+            margin-bottom: 60px;
+    
+            h2 {
+                font-size: 2.5rem;
+            }
+        }
+    
+        &__wrapper {
+            margin-top: 2rem;
+        }
+    
+        &__card {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
         }
     }
 }
