@@ -106,10 +106,46 @@
 @media (max-width: 1023.999px) {
 
     .hero {
+
+        &__title {
+    
+            & h1 {
+                font-size: 3rem;
+            }
+        }
         
         &__description {
             max-width: 70vw;
             margin: 4rem auto;
+        }
+
+    }
+}
+
+@media (max-width: 920px) {
+    
+    .hero {
+
+        &__title {
+    
+            & h1 {
+                padding: 0rem;
+                font-size: 2.5rem;
+            }
+        }
+        
+        &__description {
+            // max-width: 80vw;
+            margin: 2rem auto;
+
+            & p {
+                font-size: 0.8rem;
+            }
+        }
+        
+        &__link {
+            padding: 0.7rem 1rem;
+            font-size: 0.8rem;
         }
     }
 }

@@ -29,13 +29,14 @@ a {
 }
 
 @media (max-width: 1023.999px) {
-    * {
-        font-size: 14px;
-    }
 
     [class*="__container"] {
         padding: 0 20px;    
     } 
+}
+
+@media (max-width: 719.999px) {
+
 }
 
 

@@ -17,7 +17,7 @@
     &__link {
         position: relative;
         color: $white;
-
+        //hover under link
         &::after {
             content: '';
             position: absolute;
@@ -48,15 +48,35 @@
 
         & input {
             display: none;
+
+            &:checked ~ .nav__btn > span {
+                transform: rotate(45deg);
+                transition: 0.3s;
+            }
+            &:checked ~ .nav__btn > span::before {
+                top: 0;
+                transform: rotate(0);
+                transition: 0.3s;
+            }
+            &:checked ~ .nav__btn > span::after {
+                top: 0;
+                transform: rotate(90deg);
+                transition: 0.3s;
+            }
+
+            &:checked ~ .nav__list {
+                visibility: visible;
+                top: 0;
+            }
         }
     }
 
     &__btn {
-        display: flex; /* используем flex для центрирования содержимого */
-        align-items: center;  /* центрируем содержимое кнопки */
+        display: flex;
+        align-items: center;
         position: fixed;
         top: 20px;
-        right: 50%;
+        right: 20px;
         width: 26px;
         height: 26px;
         cursor: pointer;
@@ -94,31 +114,47 @@
 @media (max-width: 1023.999px) {
     
     .nav{
-        
+        font-size: 1rem;
+
         &__item {
 
             &:nth-child(4) {
                 order: -1;
             }
         }
-
-        &__link {
-            font-size: 1.3rem;
-        }
     }
 
 }
 
-@media (max-width: 719.999px) {
+@media (max-width: 767.99px) {
 
     .nav {
-        font-family: $nav;
-        font-size: 1.1rem;
+        font-size: 1.5rem;
     
         &__list {
-            visibility: hidden;
+            position: absolute;
+            top: -100vh;
+            left: 0;
+            right: 0;
             flex-direction: column;
-            width: 100%;
+            justify-content: start;
+            background: linear-gradient(223deg, rgba(124,139,176, 0.8) 40%, rgba(195,162,207, 0.7) 100%),
+                        linear-gradient(150deg, rgba(219, 28, 196, 1) 40%, rgba(110, 251, 152, 1) 100%);
+            height: 100vh;
+            transition: top 0.3s ease-in;
+
+            &_active {
+                top: 0;
+                transition: top 0.3s ease;
+            }
+        }
+
+        &__item {
+            padding: 1vh;
+        }
+
+        &__link {
+            font-size: 1.3rem;
         }
             
         &__menu {
