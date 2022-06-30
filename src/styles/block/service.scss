@@ -28,6 +28,10 @@
         background-position: center;
 
         &-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 1.5rem;
             z-index: 1;
 
@@ -36,10 +40,13 @@
                                 0 0 10px rgba(0, 0, 0, 0.25),
                                 0 0 15px rgba(0, 0, 0, 0.25);
             }
+            transition: all 0.3s ease;
         }
 
         &-btn {
-            z-index: 1;
+            position: absolute;
+            bottom: 2rem;
+            z-index: 0;
 
             & a {
                 color: $black;
@@ -65,13 +72,22 @@
             min-width: 100%;
             min-height: 100%;
             background: rgba(249, 249, 249, 0.4);
+            backdrop-filter: blur(5px);
             z-index: 0; 
             transition: min-height 0.3s ease;
         }
 
-        &:hover::after {
-            min-height: 0%;
-            transition: min-height 0.3s ease;
+        &:hover {
+
+            &::after {
+                min-height: 0%;
+                transition: min-height 0.3s ease;
+            }
+
+            & .service__card-title {
+                top: 3rem;
+                transition: all 0.3s ease;
+            }
         }
 
         &:nth-child(1) {
@@ -97,12 +113,16 @@
     }
 }
 
-@media (max-width: 767.99px) {
+@media (max-width: 768.99px) {
 
     .service {
 
         &__card {
             padding: 2rem;
+
+            &-title {
+                font-size: 1rem;
+            }
 
             &:nth-child(1) {
                 grid-column: 1/7;
@@ -127,3 +147,5 @@
         }
     }
 }
+
+// @media (max-width: 767.99px) {

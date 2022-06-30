@@ -48,7 +48,7 @@
         text-align: center;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        // align-items: center;
 
         top: 50%;
         right: 0;
@@ -88,7 +88,12 @@
         border-radius: 2rem;
         border: 1px solid $gray;
         background-color: $light-pink;
-        background: linear-gradient(90deg, #ffd8da,#ddaecb);
+        background: linear-gradient(90deg, #ffeced,#ddaecb);
+
+        &:hover {
+            transition: all 0.3s ease;
+            background: linear-gradient(90deg,#ddaecb, #ffeced);
+        }
     }
 
     &__btn-wrap {
@@ -131,7 +136,6 @@
         &__title {
     
             & h1 {
-                padding: 0rem;
                 font-size: 2.5rem;
             }
         }
@@ -148,6 +152,34 @@
         &__link {
             padding: 0.7rem 1rem;
             font-size: 0.8rem;
+        }
+    }
+}
+
+@media (max-width: 920px) and (orientation: portrait) {
+    
+    .hero {
+
+        &__title {
+    
+            & h1 {
+                padding: 1rem;
+                font-size: 2.5rem;
+            }
+        }
+        
+        &__description {
+            max-width: 80vw;
+            margin: 5rem auto;
+
+            & p {
+                font-size: 1rem;
+            }
+        }
+        
+        &__link {
+            padding: 0.7rem 1rem;
+            font-size: 1rem;
         }
     }
 }
