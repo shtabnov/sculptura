@@ -36,9 +36,9 @@
             z-index: 1;
 
             & h3 {
-                text-shadow:    0 0 5px rgba(0, 0, 0, 0.25),
-                                0 0 10px rgba(0, 0, 0, 0.25),
-                                0 0 15px rgba(0, 0, 0, 0.25);
+                color: darkslategray;
+                text-shadow:    0 0 10px rgba(0, 0, 0, 0.25),
+
             }
             transition: all 0.3s ease;
         }
@@ -46,6 +46,8 @@
         &-btn {
             position: absolute;
             bottom: 2rem;
+            left: 50%;
+            transform: translate(-50%, 0);
             z-index: 0;
 
             & a {
@@ -72,7 +74,7 @@
             min-width: 100%;
             min-height: 100%;
             background: rgba(249, 249, 249, 0.4);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(2px);
             z-index: 0; 
             transition: min-height 0.3s ease;
         }
@@ -116,12 +118,23 @@
 @media (max-width: 768.99px) {
 
     .service {
+        &__wrapper {
+            gap: 1rem;
+        }
 
         &__card {
             padding: 2rem;
 
             &-title {
                 font-size: 1rem;
+            }
+
+            &-btn {
+
+                & a {
+                    padding: 0.7rem 1rem;
+                    font-size: 0.7rem;
+                }   
             }
 
             &:nth-child(1) {
