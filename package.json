@@ -12,6 +12,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "@splidejs/splide": "^4.0.7",
     "ansi-colors": "^1.1.0",
     "ansi-gray": "^0.1.1",
     "ansi-regex": "^2.1.1",
