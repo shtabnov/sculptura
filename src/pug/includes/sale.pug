@@ -1,11 +1,21 @@
 // include sale.pug
-section.sale 
+section.sale(id='sale') 
     .sale__container 
         h2 Акции
         .sale__wrapper 
-            section.splide(aria-label="Splide Basic HTML Example")
+            .sale__slader.splide(id='sale_slider')
                 div.splide__track
                     ul.splide__list
-                        li.splide__slide Slide 01
-                        li.splide__slide Slide 01
-                        li.splide__slide Slide 01
+                        li.splide__slide
+                            .sale__item 
+                                img(src="images/sale_img.png", alt="sale")
+                        li.splide__slide
+                            .sale__item 
+                                img(src="images/sale_img.png", alt="sale")
+                        li.splide__slide
+                            .sale__item 
+                                img(src="images/sale_img.png", alt="sale")
+                .splide__arrows
+                    button.splide__arrow.splide__arrow--prev
+                    ul.splide__pagination.splide__pagination--ltr
+                    button.splide__arrow.splide__arrow--next

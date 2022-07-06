@@ -1,0 +1,59 @@
+.sale {
+    background-color: #f3f3f3;
+
+    &__container {
+        padding-top: 90px;
+        margin-bottom: 90px;
+    }
+
+}
+
+.splide {
+
+    &__arrows {
+        display: flex;
+        justify-content: center;
+        gap: 124px;
+    }
+
+    &__arrow {
+        border-radius: 50%;
+        background-color: white;
+        border: none;
+        width: 3rem;
+        height: 3rem;
+        padding: 0;
+
+        &--prev {
+            background-image: url('../images/icon/arrow_prev.svg');
+            background-position: 45% 50%;
+            background-repeat: no-repeat;
+        }
+
+        &--next {
+            background-image: url('../images/icon/arrow_next.svg');
+            background-position: 55% 50%;
+            background-repeat: no-repeat;
+        }
+
+        &:hover {
+            background-color: $green;
+        }
+    }
+
+    &__pagination {
+        gap: 24px;
+
+        &__page {
+            background-color: #AEACAA;
+            height: 16px;
+            width: 16px;
+            border: none;
+            border-radius: 50%;
+        }
+
+        & .is-active {
+            background-color: #363431;
+        }
+    }
+}
