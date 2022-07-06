@@ -124,6 +124,7 @@
 
     .service {
         &__wrapper {
+            grid-template-rows: repeat(6, 1fr);
             gap: 1rem;
         }
 
@@ -161,6 +162,11 @@
                 grid-column: 7/13;
                 grid-row: 3/5;
                 background-image: url('../images/card_3.png');
+            }
+            &:nth-child(5) {
+                grid-column: 1/7;
+                grid-row: 5/7;
+                background-image: url('../images/card_5.png');
             }
         }
     }
