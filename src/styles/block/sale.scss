@@ -7,6 +7,20 @@
         margin-bottom: 90px;
     }
 
+    &__wrapper {
+        margin-top: 4rem;
+    }
+
+    &__item {
+
+        & img {
+            // width: 100%;
+            height: 100%;
+            // object-fit: cover;
+            // object-position: left;
+        }
+    }
+
 }
 
 .splide {
@@ -58,5 +72,31 @@
         & .is-active {
             background-color: #363431;
         }
+    }
+}
+
+@media (max-width: 768.99px) {
+    .sale {
+    
+        &__container {
+            padding-top: 40px;
+            padding-bottom: 60px;
+            margin-bottom: 40px;
+        }
+    
+        &__wrapper {
+            margin-top: 2rem;
+        }
+    
+        &__item {
+    
+            & img {
+                // width: auto;
+                height: auto;
+                object-fit: fill;
+                object-position: left;
+            }
+        }
+    
     }
 }
