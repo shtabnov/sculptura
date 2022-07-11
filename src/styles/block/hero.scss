@@ -83,17 +83,26 @@
     }
 
     &__link {
-        color: $black;
         padding: 1rem 2rem;
+        border: 2px solid $light-pink;
         border-radius: 2rem;
-        border: 1px solid $gray;
-        background-color: $light-pink;
-        background: linear-gradient(90deg, #ffeced,#ddaecb);
+        color: #fff;
+        background-image: -webkit-linear-gradient(45deg, $light-pink 50%, transparent 50%);
+        background-image: linear-gradient(45deg, $light-pink 50%, transparent 50%);
+        background-position: 100%;
+        background-size: 400%;
+        -webkit-transition: all 400ms ease-in-out;
+        transition: all 400ms ease-in-out;
 
         &:hover {
-            transition: all 0.3s ease;
-            background: linear-gradient(90deg,#ddaecb, #ffeced);
+            border: 2px solid $green;
+            color: $black;
+            background-position: 0;
+            box-shadow: 0 0 10px 4px $green;
+            -webkit-transition: all 400ms ease-in-out;
+            transition: all 400ms ease-in-out;
         }
+
     }
 
     &__btn-wrap {
