@@ -1,5 +1,5 @@
 .reviews {
-    margin-top: 128px;
+    margin-top: 98px;
 
     &__card {
         position: relative;
@@ -16,9 +16,9 @@
     }
 
     &__img {
-        flex: 0 0 160px;
-        width: 160px;
-        height: 160px;
+        flex: 0 0 10vh;
+        width: 10vh;
+        height: 10vh;
         border-radius: 50%;
         overflow: hidden;
         margin-right: 20px;
@@ -41,11 +41,13 @@
         }
 
         & p {
-            text-overflow: clip;
+            overflow: hidden;
+            text-overflow: ellipsis;
             text-align: left;
             font-weight: 400;
             font-size: 1rem;
             line-height: 140%;
+            max-height: 70%;
         }
 
         & .date {
@@ -72,7 +74,7 @@
             top: 50%;
             border: none;
             border-radius: 50%;
-            background-color: $gray;
+            background-color: $white;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -81,6 +83,10 @@
             padding-top: 4px;
             filter: drop-shadow(0px 15px 20px rgba(0, 0, 0, 0.05));
             z-index: 5;
+
+            &:hover {
+                background-color: $green;
+            }
             
             &--next {
                 right: 0;
