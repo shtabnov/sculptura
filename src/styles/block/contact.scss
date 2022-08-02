@@ -1,0 +1,106 @@
+.contact {
+    margin-top: 90px;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+
+    &__map {
+        display: block;
+        margin-top: 60px;
+        width: 100%;
+        height: 70%;
+    }
+}
+
+
+//скрываем копирайт на яндекс картах
+[class*='copyrights-pane'] {
+    opacity: 0.5;
+}
+
+.card {
+    position: absolute;
+    right: 18%;
+    top: 30%;
+    z-index: 1;
+
+    padding: 2rem 3rem;
+    text-align: left;
+    max-width: 375px;
+    background-color: #4D730BAA;
+    border-radius: 20px;
+    color: $white;
+
+    h3 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+    }
+
+    &__address{
+        margin-bottom: 20px;
+        
+        & address {
+            font-size: 1.2em;
+            font-style: normal;
+        }
+
+        & em {
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 300;
+        }
+    }
+    
+    &__schedule {
+        margin-bottom: 20px;
+
+        & p {
+            font-size: 1.1rem;
+        }
+    }  
+
+    &__phone{
+        margin-bottom: 20px;
+
+        & a {
+            font-size: 1.8rem;
+            color: $white;
+        }
+    }
+
+    &__social {
+        display: flex;
+        align-items: center;
+
+        & a {
+            font-size: 1.1rem;
+            color: $white;
+        }
+
+        &::before {
+            content: url('../images/icon/vk-icon.svg');
+            margin-right: 10px;
+        }
+    }
+
+}
+
+@media (max-width: 768.99px) {
+
+    .contact {
+        height: auto;
+
+        &__map {
+            margin-top: 20px;
+            height: 80vh;
+        }
+    }
+
+    .card {
+        position: static;
+        margin: 3rem auto;
+        max-width: 90%;
+    }
+}

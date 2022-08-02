@@ -1,0 +1,48 @@
+.scroll-up {
+    position: fixed;
+    right: 3rem;
+    bottom: 3rem;
+    z-index: 100;
+    width: 3rem;
+    height: 3rem;
+    color: #DCDCDC;
+    cursor: pointer;
+    border-radius: 50%;
+    visibility: hidden;
+    box-shadow: inset 0 0 0 6px #DCDCDC;
+    opacity: 0;
+    transition: 0.3s;
+    transform: translateY(25px);
+
+    &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-size: 1.1rem;
+        content: '↑';
+    }
+
+    &:hover {
+        color: $green;
+    }
+
+    // .scroll-up_active
+    &_active {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    &__path {
+        box-sizing: border-box;
+        fill: none;
+        stroke: $green;
+        stroke-width: 6px;
+        transition: 0.3s;
+    }
+}
