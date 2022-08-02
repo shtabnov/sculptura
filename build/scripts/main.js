@@ -1,5 +1,86 @@
 "use strict";
 
+var offset = 100;
+var scrollUp = document.querySelector('.scroll-up');
+var scrollUpPath = document.querySelector('.scroll-up__path');
+var pathLength = scrollUpPath.getTotalLength();
+scrollUpPath.style.strokeDasharray = "".concat(pathLength, " ").concat(pathLength);
+scrollUpPath.style.transition = 'stroke-dashoffset 20ms';
+
+var getTop = function getTop() {
+  return window.pageYOffset || document.documentElement.scrollTop;
+}; // updateDashoffset
+
+
+var updateDashoffset = function updateDashoffset() {
+  var height = document.documentElement.scrollHeight - window.innerHeight;
+  var dashoffset = pathLength - getTop() * pathLength / height;
+  scrollUpPath.style.strokeDashoffset = dashoffset;
+}; //onScroll 
+
+
+window.addEventListener('scroll', function () {
+  updateDashoffset();
+
+  if (getTop() > offset) {
+    scrollUp.classList.add('scroll-up_active');
+  } else {
+    scrollUp.classList.remove('scroll-up_active');
+  }
+}); //click
+
+scrollUp.addEventListener('click', function () {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+"use strict";
+
+ymaps.ready(init);
+var center = [];
+var width = document.documentElement.clientWidth;
+
+if (width < 769) {
+  center = [57.97826988901288, 56.103487233862566];
+} else {
+  center = [57.97827456461129, 56.104658134476004];
+}
+
+function init() {
+  var map = new ymaps.Map("map", {
+    center: center,
+    zoom: 18
+  });
+  var placemark = new ymaps.Placemark([57.97826988901288, 56.103487233862566], {
+    balloonContentHeader: 'Sculptura',
+    balloonContentBody: 'д. Кондратово ул. Карла Маркса, 8А',
+    balloonContentFooter: '8 963-881-62-67',
+    hintContent: 'Забота о себе'
+  }, {
+    iconLayout: 'default#image',
+    iconImageHref: '../images/icon/location.svg',
+    iconImageSize: [100, 100],
+    iconImageOffset: [-40, -100]
+  });
+  map.geoObjects.add(placemark);
+  map.controls.remove('geolocationControl'); // удаляем геолокацию
+
+  map.controls.remove('searchControl'); // удаляем поиск
+
+  map.controls.remove('trafficControl'); // удаляем контроль трафика
+
+  map.controls.remove('typeSelector'); // удаляем тип
+
+  map.controls.remove('fullscreenControl'); // удаляем кнопку перехода в полноэкранный режим
+  // map.controls.remove('zoomControl'); // удаляем контрол зуммирования
+
+  map.controls.remove('rulerControl'); // удаляем контрол правил
+
+  map.behaviors.disable(['scrollZoom']); // отключаем скролл карты (опционально)
+}
+"use strict";
+
 var menuBtn = document.getElementById('menu__toggle');
 var navList = document.querySelector('.nav__list');
 menuBtn.addEventListener('click', function () {
@@ -31,6 +112,23 @@ function addActive(n) {
 }
 
 slide();
+"use strict";
+
+new Splide('#reviews_slider', {
+  perPage: 2,
+  perMove: 2,
+  type: 'loop',
+  breakpoints: {
+    1025: {
+      fixedHeight: '442px'
+    },
+    769: {
+      perPage: 1,
+      fixedWidth: 'calc(100% - 0px)',
+      fixedHeight: '340px'
+    }
+  }
+}).mount();
 "use strict";
 
 new Splide('#sale_slider', {

@@ -23,8 +23,8 @@
 						<li class="nav__item"> <a class="nav__logo" href="/index.html">
 								<div class="header__img"><img src="./images/logo.svg" alt="Sculptura"></div></a></li>
 						<li class="nav__item"> <a class="nav__link" href="О салоне">О салоне</a></li>
-						<li class="nav__item"> <a class="nav__link" href="Отзывы">Отзывы</a></li>
-						<li class="nav__item"> <a class="nav__link" href="Контакты">Контакты</a></li>
+						<li class="nav__item"> <a class="nav__link" href="#reviews">Отзывы</a></li>
+						<li class="nav__item"> <a class="nav__link" href="#contact">Контакты</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -46,7 +46,7 @@
 							ut iaculis metus nunc eget urna. Donec tincidunt libero non porttitor volutpat.
 						</p>
 					</div>
-					<div class="hero__lnk-wrap"><a class="hero__link" href="#">Записаться на прием</a></div>
+					<div class="hero__lnk-wrap"><a class="hero__link" href="#reception">Записаться на прием</a></div>
 				</div>
 			</div>
 			<div class="hero__btn-wrap">
@@ -138,13 +138,13 @@
 						<div class="splide__track">
 							<ul class="splide__list">
 								<li class="splide__slide">
-									<div class="sale__item"> <img src="images/sale_img.png" alt="sale"></div>
+									<div class="sale__item"><img src="images/sale_img.png" alt="sale"></div>
 								</li>
 								<li class="splide__slide">
-									<div class="sale__item"> <img src="images/sale_img.png" alt="sale"></div>
+									<div class="sale__item"><img src="images/sale_img.png" alt="sale"></div>
 								</li>
 								<li class="splide__slide">
-									<div class="sale__item"> <img src="images/sale_img.png" alt="sale"></div>
+									<div class="sale__item"><img src="images/sale_img.png" alt="sale"></div>
 								</li>
 							</ul>
 						</div>
@@ -157,7 +157,119 @@
 				</div>
 			</div>
 		</section>
+		<!-- include reception.pug-->
+		<section class="reception" id="reception">
+			<div class="reception__container"> 
+				<h2>Записаться на прием</h2>
+				<form class="reception__form form">
+					<input class="form__name" type="text" placeholder="Введите имя" name="name" required>
+					<input type="tel" id="phone" placeholder="Номер телефона" name="phone" pattern="+7-[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+					<input type="submit">
+				</form>
+			</div>
+		</section>
+		<!-- include reviews.pug-->
+		<section class="reviews" id="reviews"> 
+			<div class="reviews__container"> 
+				<h2>Отзывы</h2>
+				<div class="reviews__slider splide" id="reviews_slider">
+					<div class="splide__arrows">
+						<button class="splide__arrow splide__arrow--prev"></button>
+						<button class="splide__arrow splide__arrow--next"></button>
+					</div>
+					<div class="splide__track">
+						<ul class="splide__list">
+							<li class="splide__slide">
+								<div class="reviews__card">
+									<div class="reviews__img"> <img src="images/reviews_1.png" alt="Счастливый клиент клиники"></div>
+									<div class="reviews__txt"> 
+										<h3>Юрьева Оксана</h3>
+										<p>Клиника чистая, уютная. Персонал улыбчивый, вежливый, услужливый. Всегда объяснят если что не понятно несколько раз, с таким персоналом приятно общаться. Мне уделили довольно много времени, всё подробно рассказали и проконсультировали.</p>
+										<p class="date">12.02.2020</p>
+									</div>
+								</div>
+							</li>
+							<li class="splide__slide">
+								<div class="reviews__card">
+									<div class="reviews__img"> <img src="images/reviews_2.png" alt="Счастливый клиент клиники"></div>
+									<div class="reviews__txt"> 
+										<h3>Викина Вика</h3>
+										<p>Хочу сказать огромное СПАСИБО врачам и персоналу Стоматологии Семейный Доктор. Я ваш вечный клиент и главное эксклюзивный. Очень рада что мы познакомились. СПАСИБО!</p>
+										<p class="date">12.02.2020</p>
+									</div>
+								</div>
+							</li>
+							<li class="splide__slide">
+								<div class="reviews__card">
+									<div class="reviews__img"> <img src="images/reviews_1.png" alt="Счастливый клиент клиники"></div>
+									<div class="reviews__txt"> 
+										<h3>Юрьева Оксана</h3>
+										<p>Клиника чистая, уютная. Персонал улыбчивый, вежливый, услужливый. Всегда объяснят если что не понятно несколько раз, с таким персоналом приятно общаться. Мне уделили довольно много времени, всё подробно рассказали и проконсультировали.</p>
+										<p class="date">12.02.2020</p>
+									</div>
+								</div>
+							</li>
+							<li class="splide__slide">
+								<div class="reviews__card">
+									<div class="reviews__img"> <img src="images/reviews_2.png" alt="Счастливый клиент клиники"></div>
+									<div class="reviews__txt"> 
+										<h3>Викина Вика</h3>
+										<p>Хочу сказать огромное СПАСИБО врачам и персоналу Стоматологии Семейный Доктор. Я ваш вечный клиент и главное эксклюзивный. Очень рада что мы познакомились. СПАСИБО!</p>
+										<p class="date">12.02.2020</p>
+									</div>
+								</div>
+							</li>
+							<li class="splide__slide">
+								<div class="reviews__card">
+									<div class="reviews__img"> <img src="images/reviews_1.png" alt="Счастливый клиент клиники"></div>
+									<div class="reviews__txt"> 
+										<h3>Юрьева Оксана</h3>
+										<p>Клиника чистая, уютная. Персонал улыбчивый, вежливый, услужливый. Всегда объяснят если что не понятно несколько раз, с таким персоналом приятно общаться. Мне уделили довольно много времени, всё подробно рассказали и проконсультировали.</p>
+										<p class="date">12.02.2020</p>
+									</div>
+								</div>
+							</li>
+							<li class="splide__slide">
+								<div class="reviews__card">
+									<div class="reviews__img"> <img src="images/reviews_2.png" alt="Счастливый клиент клиники"></div>
+									<div class="reviews__txt"> 
+										<h3>Викина Вика</h3>
+										<p>Хочу сказать огромное СПАСИБО врачам и персоналу Стоматологии Семейный Доктор. Я ваш вечный клиент и главное эксклюзивный. Очень рада что мы познакомились. СПАСИБО!</p>
+										<p class="date">12.02.2020</p>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- include contact.pug-->
+		<section class="contact" id="contact"> 
+			<h2>Контакты </h2>
+			<div class="contact__map" id="map"></div>
+			<div class="contact__card card">
+				<h3>Контакты</h3>
+				<div class="card__address">
+					<address>д. Кондратво</address>
+					<address>ул. Карла Маркса д. 8А</address><em>вход в Зоомагазин</em>
+				</div>
+				<div class="card__schedule">
+					<p>с 9:00 до 21:00</p>
+					<p>последняя запись до 19:00</p>
+				</div>
+				<div class="card__phone"><a href="tel:+79638816267">+7(963)-881-62-67</a></div>
+				<div class="card__social"><a href="https://vk.com/buccal59" target="_blank">Наша группа в контакте</a></div>
+			</div>
+		</section>
+		<!-- include button-up.pug-->
+		<div class="scroll-up"> 
+			<svg class="scroll-up__svg" viewBox="-2 -2 52 52">
+				<path class="scroll-up__path" d="M24,0 a24,24 0 0,1 0,48 a24,24 0 0,1 0,-48"></path>
+			</svg>
+		</div>
 		<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.7/dist/js/splide.min.js"> </script>
+		<script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&amp;lang=ru_RU" type="text/javascript"> </script>
 		<script src="./scripts/main.min.js"> </script>
 	</body>
 </html>
