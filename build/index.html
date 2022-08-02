@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.7/dist/css/splide-core.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<title>Sulptura - студия Вашей красоты</title>
+	</head>
+	<body>
+		<header class="header"> 
+			<div class="header__container">            
+				<nav class="header_nav nav">
+					<div class="nav__menu">
+						<input id="menu__toggle" type="checkbox">
+						<label class="nav__btn" for="menu__toggle"><span></span></label>
+					</div>
+					<ul class="nav__list">
+						<li class="nav__item"> <a class="nav__link" href="#service">Услуги</a></li>
+						<li class="nav__item"> <a class="nav__link" href="Прайс-лист">Прайс-лист</a></li>
+						<li class="nav__item"> <a class="nav__link" href="#sale">Акции</a></li>
+						<li class="nav__item"> <a class="nav__logo" href="/index.html">
+								<div class="header__img"><img src="./images/logo.svg" alt="Sculptura"></div></a></li>
+						<li class="nav__item"> <a class="nav__link" href="О салоне">О салоне</a></li>
+						<li class="nav__item"> <a class="nav__link" href="Отзывы">Отзывы</a></li>
+						<li class="nav__item"> <a class="nav__link" href="Контакты">Контакты</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<!--include hero.pug-->
+		<section class="hero"> 
+			<div class="hero__slider">
+				<div class="hero__image hero__image_active"><img src="./images/hero_1.jpg" alt=""></div>
+				<div class="hero__image"><img src="./images/hero_2.jpg" alt=""></div>
+				<div class="hero__image"><img src="./images/hero_3.jpg" alt=""></div>
+				<div class="hero__container">
+					<div class="hero__title"> 
+						<h1>Узнай новые чувства</h1>
+					</div>
+					<div class="hero__description"> 
+						<p>
+							 In in augue placerat, viverra ligula quis, elementum augue. Donec molestie cursus tempus.
+							Suspendisse malesuada, non laoreet aliquet, est est vestibulum sapien,
+							ut iaculis metus nunc eget urna. Donec tincidunt libero non porttitor volutpat.
+						</p>
+					</div>
+					<div class="hero__lnk-wrap"><a class="hero__link" href="#">Записаться на прием</a></div>
+				</div>
+			</div>
+			<div class="hero__btn-wrap">
+				<div class="hero__btn"> <a href="#features"><svg class="t-cover__arrow-svg" style="fill:#ffffff;" x="0px" y="0px" width="40px" height="20px" viewBox="0 0 38.417 18.592"><g><path d="M19.208,18.592c-0.241,0-0.483-0.087-0.673-0.261L0.327,1.74c-0.408-0.372-0.438-1.004-0.066-1.413c0.372-0.409,1.004-0.439,1.413-0.066L19.208,16.24L36.743,0.261c0.411-0.372,1.042-0.342,1.413,0.066c0.372,0.408,0.343,1.041-0.065,1.413L19.881,18.332C19.691,18.505,19.449,18.592,19.208,18.592z"></path></g></svg></a></div>
+			</div>
+		</section>
+		<!--include features.pug-->
+		<section class="features" id="features">
+			<div class="features__container"> 
+				<h2>Наши приемущества</h2>
+				<div class="features__wrapper"> 
+					<div class="features__card"> 
+						<div class="features__card-img"> <img src="./images/icon/features_1.svg" alt="Персонал"></div>
+						<div class="features__card-txt"> 
+							<p>Квалифицированный перонал</p>
+						</div>
+					</div>
+					<div class="features__card"> 
+						<div class="features__card-img"> <img src="./images/icon/features_2.svg" alt="Подход"></div>
+						<div class="features__card-txt"> 
+							<p>Индивидуальный подход к каждому клиенту</p>
+						</div>
+					</div>
+					<div class="features__card"> 
+						<div class="features__card-img"> <img src="./images/icon/features_3.svg" alt="Гарантия"></div>
+						<div class="features__card-txt"> 
+							<p>100% гарантия результата</p>
+						</div>
+					</div>
+					<div class="features__card"> 
+						<div class="features__card-img"> <img src="./images/icon/features_4.svg" alt="Методики"></div>
+						<div class="features__card-txt"> 
+							<p>Новейшие методики</p>
+						</div>
+					</div>
+					<div class="features__card"> 
+						<div class="features__card-img"> <img src="./images/icon/features_5.svg" alt="Оборудование"></div>
+						<div class="features__card-txt"> 
+							<p>Современное оборудование</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--include service.pug-->
+		<section class="service" id="service">
+			<div class="service__container"> 
+				<h2>Наши услуги</h2>
+				<div class="service__wrapper"> 
+					<div class="service__card"> 
+						<div class="service__card-title"> 
+							<h3>Массаж лица</h3>
+						</div>
+						<div class="service__card-btn"> <a href="#">Подробнее </a></div>
+					</div>
+					<div class="service__card"> 
+						<div class="service__card-title"> 
+							<h3>Букальный массаж</h3>
+						</div>
+						<div class="service__card-btn"> <a href="#">Подробнее </a></div>
+					</div>
+					<div class="service__card"> 
+						<div class="service__card-title"> 
+							<h3>Косметология</h3>
+						</div>
+						<div class="service__card-btn"> <a href="#">Подробнее </a></div>
+					</div>
+					<div class="service__card"> 
+						<div class="service__card-title"> 
+							<h3>Косметические маски</h3>
+						</div>
+						<div class="service__card-btn"> <a href="#">Подробнее </a></div>
+					</div>
+					<div class="service__card"> 
+						<div class="service__card-title"> 
+							<h3>Эпиляция</h3>
+						</div>
+						<div class="service__card-btn"> <a href="#">Подробнее</a></div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- include sale.pug-->
+		<section class="sale" id="sale"> 
+			<div class="sale__container"> 
+				<h2>Акции</h2>
+				<div class="sale__wrapper"> 
+					<div class="sale__slader splide" id="sale_slider">
+						<div class="splide__track">
+							<ul class="splide__list">
+								<li class="splide__slide">
+									<div class="sale__item"> <img src="images/sale_img.png" alt="sale"></div>
+								</li>
+								<li class="splide__slide">
+									<div class="sale__item"> <img src="images/sale_img.png" alt="sale"></div>
+								</li>
+								<li class="splide__slide">
+									<div class="sale__item"> <img src="images/sale_img.png" alt="sale"></div>
+								</li>
+							</ul>
+						</div>
+						<div class="splide__arrows">
+							<button class="splide__arrow splide__arrow--prev"></button>
+							<ul class="splide__pagination splide__pagination--ltr"></ul>
+							<button class="splide__arrow splide__arrow--next"></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.7/dist/js/splide.min.js"> </script>
+		<script src="./scripts/main.min.js"> </script>
+	</body>
+</html>
