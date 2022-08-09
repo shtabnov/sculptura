@@ -116,7 +116,7 @@ slide();
 
 new Splide('#reviews_slider', {
   perPage: 2,
-  perMove: 2,
+  perMove: 1,
   type: 'loop',
   breakpoints: {
     1025: {
