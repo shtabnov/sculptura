@@ -22,7 +22,7 @@ function init(){
     },
     {
         iconLayout: 'default#image',
-        iconImageHref: '../images/icon/location.svg',
+        iconImageHref: 'images/icon/location.svg',
         iconImageSize: [100, 100],
         iconImageOffset: [-40, -100]
     });
