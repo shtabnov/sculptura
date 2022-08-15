@@ -674,7 +674,7 @@ a {
     background-size: 50%;
   }
   .splide__pagination__page {
-    height: 10px;
+    height: 12px;
     width: 10px;
   }
 }
@@ -1049,16 +1049,12 @@ a {
     display: none;
   }
   .reviews .splide__track {
-    transform: translate(-10px, 0px);
+    transform: translate(0px, 0px);
   }
   .reviews .splide__arrow--next {
     right: -5px;
   }
   .reviews .splide__arrow--prev {
     left: -5px;
-  }
-  .reviews .splide__pagination__page {
-    position: relative;
-    left: 20px;
   }
 }

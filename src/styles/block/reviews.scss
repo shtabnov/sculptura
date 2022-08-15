@@ -228,7 +228,7 @@
         & .splide {
 
             &__track {
-                transform: translate(-10px, 0px);
+                transform: translate(0px, 0px);
             }
 
             &__arrow {
@@ -242,10 +242,6 @@
                 }
             }
 
-            &__pagination__page {
-                position: relative;
-                left: 20px;
-            }
         }
     }
 }
