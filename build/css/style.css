@@ -345,6 +345,9 @@ a {
     padding: 0.7rem 1rem;
     font-size: 1rem;
   }
+  .hero__btn {
+    display: none;
+  }
 }
 .features__container {
   color: #131332;
