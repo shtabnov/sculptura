@@ -673,6 +673,9 @@ a {
     background-image: url("../images/icon/arrow_next.svg");
     background-size: 50%;
   }
+  .splide__pagination > li {
+    height: 12px;
+  }
   .splide__pagination__page {
     height: 12px;
     width: 10px;
