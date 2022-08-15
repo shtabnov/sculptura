@@ -677,7 +677,8 @@ a {
     height: 12px;
   }
   .splide__pagination__page {
-    height: 12px;
+    padding: 0;
+    height: 10px;
     width: 10px;
   }
 }
