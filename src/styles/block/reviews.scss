@@ -109,7 +109,7 @@
         }
 
         &__pagination__page {
-            margin-top: 20px;
+            margin-top: 0px;
             border: none;
             width: 18px;
             height: 18px;
@@ -117,8 +117,8 @@
             background-color: $gray;
     
             &.is-active {
-                width: 22px;
-                height: 22px;
+                width: 18px;
+                height: 18px;
                 background-color: $green;
             }
         }
