@@ -178,7 +178,7 @@ a {
     right: 0;
     flex-direction: column;
     justify-content: start;
-    background: linear-gradient(223deg, rgba(147, 161, 197, 0.2) 40%, rgba(56, 56, 56, 0.2) 100%), linear-gradient(150deg, rgba(255, 255, 255, 0.5) 40%, rgba(116, 170, 131, 0.5) 100%), linear-gradient(45deg, #000000, #8b6f7a, #4fc91f);
+    background: linear-gradient(223deg, rgba(147, 161, 197, 0.2) 40%, rgba(56, 56, 56, 0.2) 100%), linear-gradient(150deg, rgba(180, 136, 136, 0.3) 40%, rgba(116, 170, 131, 0.3) 100%), linear-gradient(45deg, #000000, #8b6f7a, #a0ed82);
     height: 100vh;
     transition: top 0.3s ease-in;
   }
@@ -980,7 +980,7 @@ a {
   content: url("../images/arrow_2.svg");
 }
 .reviews .splide__pagination__page {
-  margin-top: 0px;
+  margin-top: 20px;
   border: none;
   width: 18px;
   height: 18px;
