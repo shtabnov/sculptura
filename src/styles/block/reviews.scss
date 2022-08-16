@@ -232,6 +232,7 @@
             }
 
             &__arrow {
+                display: none;
                 
                 &--next {
                     right: -5px;
@@ -239,6 +240,27 @@
         
                 &--prev {
                     left: -5px;
+                }
+            }
+
+            &__pagination {
+            
+                & > li {
+                    padding: 0;
+                    height: 12px;
+                }
+        
+                &__page {
+                    margin: 0;
+                    padding: 0;
+                    height: 10px;
+                    width: 10px;
+
+                    &.is-active {
+                        height: 10px;
+                        width: 10px;
+                        background-color: $green;
+                    }
                 }
             }
 

@@ -1055,10 +1055,28 @@ a {
   .reviews .splide__track {
     transform: translate(0px, 0px);
   }
+  .reviews .splide__arrow {
+    display: none;
+  }
   .reviews .splide__arrow--next {
     right: -5px;
   }
   .reviews .splide__arrow--prev {
     left: -5px;
+  }
+  .reviews .splide__pagination > li {
+    padding: 0;
+    height: 12px;
+  }
+  .reviews .splide__pagination__page {
+    margin: 0;
+    padding: 0;
+    height: 10px;
+    width: 10px;
+  }
+  .reviews .splide__pagination__page.is-active {
+    height: 10px;
+    width: 10px;
+    background-color: #C7DF9E;
   }
 }
