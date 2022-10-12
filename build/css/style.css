@@ -230,7 +230,7 @@ a {
   left: 0;
   z-index: 1;
   opacity: 0.4;
-  background-image: linear-gradient(to right bottom, #000000, #bfbfbf);
+  background-image: radial-gradient(ellipse at top, #335476 0%, #31506e 11.1%, #304b67 22.2%, #2f4760 33.3%, #2d4359 44.4%, #2c3f51 55.6%, #2a3a4a 66.7%, #293643 77.8%, #28323d 88.9%, #262e36 100%);
 }
 .hero__image > img {
   position: absolute;
