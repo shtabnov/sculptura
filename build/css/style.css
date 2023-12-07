@@ -6,18 +6,29 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: Roboto;
   margin: 0;
   padding: 0px 0px;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   margin: 0;
   padding: 0;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: "El Messiri", sans-serif;
 }
 
@@ -25,7 +36,9 @@ h2 {
   font-size: 3rem;
 }
 
-ul, ol, li {
+ul,
+ol,
+li {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -128,7 +141,7 @@ a {
 .nav__btn {
   display: flex;
   align-items: center;
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
   width: 26px;

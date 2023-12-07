@@ -5,7 +5,7 @@ let width = document.documentElement.clientWidth;
 if (width < 769) {
     center = [57.97533526685659, 56.10150267024038];
 } else {
-    center = [57.975420768483986, 56.10147048373217];
+    center = [57.97533526685659, 56.10338558096882];
 }
 
 function init() {
