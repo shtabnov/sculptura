@@ -42,17 +42,17 @@ var center = [];
 var width = document.documentElement.clientWidth;
 
 if (width < 769) {
-  center = [57.97826988901288, 56.103487233862566];
+  center = [57.97533526685659, 56.10150267024038];
 } else {
-  center = [57.97827456461129, 56.104658134476004];
+  center = [57.975420768483986, 56.10147048373217];
 }
 
 function init() {
-  var map = new ymaps.Map("map", {
+  var map = new ymaps.Map('map', {
     center: center,
     zoom: 18
   });
-  var placemark = new ymaps.Placemark([57.97826988901288, 56.103487233862566], {
+  var placemark = new ymaps.Placemark([57.97533526685659, 56.10150267024038], {
     balloonContentHeader: 'Sculptura',
     balloonContentBody: 'д. Кондратово ул. Карла Маркса, 8А',
     balloonContentFooter: '8 963-881-62-67',
