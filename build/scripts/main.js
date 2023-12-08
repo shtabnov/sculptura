@@ -83,9 +83,16 @@ function init() {
 
 var menuBtn = document.getElementById('menu__toggle');
 var navList = document.querySelector('.nav__list');
+var navItems = document.querySelectorAll('.nav__item'); // Отображаем меню при нажитии на бургер
+
 menuBtn.addEventListener('click', function () {
   navList.classList.toggle('nav__list_active');
-  console.log(navList);
+}); // Скрываем меню при нажатии на ссылку
+
+navItems.forEach(function (navItem) {
+  return navItem.addEventListener('click', function () {
+    navList.classList.toggle('nav__list_active');
+  });
 });
 "use strict";
 

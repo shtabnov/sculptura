@@ -185,7 +185,7 @@ a {
     font-size: 1.5rem;
   }
   .nav__list {
-    position: absolute;
+    position: fixed;
     top: -100vh;
     left: 0;
     right: 0;

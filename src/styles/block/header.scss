@@ -66,6 +66,7 @@
             &:checked ~ .nav__list {
                 visibility: visible;
                 top: 0;
+                // bottom: 0;
             }
         }
     }
@@ -127,7 +128,7 @@
         font-size: 1.5rem;
 
         &__list {
-            position: absolute;
+            position: fixed;
             top: -100vh;
             left: 0;
             right: 0;
