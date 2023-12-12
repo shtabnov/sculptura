@@ -99,7 +99,7 @@ navItems.forEach(function (navItem) {
 window.addEventListener('scroll', function () {
   console.log(window.scrollY);
 
-  if (window.scrollY > 200) {
+  if (window.scrollY > 1) {
     header.classList.add('header_fixed');
   } else {
     header.classList.remove('header_fixed');
