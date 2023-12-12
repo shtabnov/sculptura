@@ -81,6 +81,14 @@ a {
   width: 100%;
   z-index: 50;
 }
+.header_fixed {
+  position: fixed;
+  background: rgba(57, 93, 18, 0.3);
+  box-shadow: 0px 0px 15px #dfffc4;
+  backdrop-filter: blur(10px);
+  -webkit-transition: width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+  transition: width 2s, height 2s, background-color 2s, transform 2s;
+}
 
 .nav {
   font-family: "Ruda", sans-serif;
@@ -1092,4 +1100,9 @@ a {
     width: 10px;
     background-color: #C7DF9E;
   }
+}
+.bucal {
+  padding-top: 200px;
+  background-color: antiquewhite;
+  height: 100vh;
 }

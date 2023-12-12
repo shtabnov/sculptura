@@ -83,7 +83,8 @@ function init() {
 
 var menuBtn = document.getElementById('menu__toggle');
 var navList = document.querySelector('.nav__list');
-var navItems = document.querySelectorAll('.nav__item'); // Отображаем меню при нажитии на бургер
+var navItems = document.querySelectorAll('.nav__item');
+var header = document.querySelector('.header'); // Отображаем меню при нажитии на бургер
 
 menuBtn.addEventListener('click', function () {
   navList.classList.toggle('nav__list_active');
@@ -93,6 +94,16 @@ navItems.forEach(function (navItem) {
   return navItem.addEventListener('click', function () {
     navList.classList.toggle('nav__list_active');
   });
+}); // фиксируем хедер при прокрутке
+
+window.addEventListener('scroll', function () {
+  console.log(window.scrollY);
+
+  if (window.scrollY > 200) {
+    header.classList.add('header_fixed');
+  } else {
+    header.classList.remove('header_fixed');
+  }
 });
 "use strict";
 

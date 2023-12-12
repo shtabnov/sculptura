@@ -2,6 +2,16 @@
     position: absolute;
     width: 100%;
     z-index: 50;
+
+    &_fixed {
+        position: fixed;
+        background: rgba(57, 93, 18, 0.3);
+        box-shadow: 0px 0px 15px rgb(223, 255, 196);
+        backdrop-filter: blur(10px);
+        -webkit-transition: width 2s, height 2s, background-color 2s,
+            -webkit-transform 2s;
+        transition: width 2s, height 2s, background-color 2s, transform 2s;
+    }
 }
 
 .nav {
@@ -17,6 +27,7 @@
     &__link {
         position: relative;
         color: $white;
+
         //hover under link
         &::after {
             content: '';
