@@ -8,9 +8,18 @@
         background: rgba(57, 93, 18, 0.3);
         box-shadow: 0px 0px 15px rgb(223, 255, 196);
         backdrop-filter: blur(10px);
-        -webkit-transition: width 2s, height 2s, background-color 2s,
-            -webkit-transform 2s;
-        transition: width 2s, height 2s, background-color 2s, transform 2s;
+        -webkit-transition: width 1s, height 1s, background-color 1s,
+            -webkit-transform 1s;
+        transition: width 1s, height 1s, background-color 1s, transform 1s;
+    }
+
+    &__img {
+        &_small {
+            width: 78%;
+            -webkit-transition: width 1s, height 1s, background-color 1s,
+                -webkit-transform 1s;
+            transition: width 1s, height 1s, background-color 1s, transform 1s;
+        }
     }
 }
 
