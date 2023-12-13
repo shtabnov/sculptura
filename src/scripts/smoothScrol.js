@@ -8,7 +8,7 @@ for (let anchor of anchors) {
 
         document.getElementById(blockID).scrollIntoView({
             behavior: 'smooth',
-            block: 'nearest',
+            block: 'start',
         });
     });
 }
