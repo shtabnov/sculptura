@@ -990,15 +990,9 @@ a {
   right: 0;
   transform: translate(0, -100%);
 }
-.reviews .splide__arrow--next::before {
-  content: url("../images/arrow_1.svg");
-}
 .reviews .splide__arrow--prev {
   left: 0;
   transform: translate(0, -100%);
-}
-.reviews .splide__arrow--prev::before {
-  content: url("../images/arrow_2.svg");
 }
 .reviews .splide__pagination__page {
   margin-top: 20px;
@@ -1103,6 +1097,6 @@ a {
 }
 .bucal {
   padding-top: 200px;
-  background-color: antiquewhite;
-  height: 100vh;
+  background-color: #acc986;
+  height: 200vh;
 }

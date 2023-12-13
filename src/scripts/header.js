@@ -17,7 +17,6 @@ navItems.forEach((navItem) =>
 
 // фиксируем хедер при прокрутке
 window.addEventListener('scroll', () => {
-    console.log(window.scrollY);
     if (window.scrollY > 1) {
         header.classList.add('header_fixed');
     } else {

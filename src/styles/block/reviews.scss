@@ -32,7 +32,6 @@
     }
 
     &__txt {
-
         overflow: hidden;
 
         & h3 {
@@ -63,7 +62,6 @@
     }
 
     & .splide {
-
         &__track {
             overflow-x: hidden;
         }
@@ -88,23 +86,15 @@
             &:hover {
                 background-color: $green;
             }
-            
+
             &--next {
                 right: 0;
                 transform: translate(0, -100%);
-    
-                &::before {
-                    content: url('../images/arrow_1.svg');
-                }
             }
-    
+
             &--prev {
                 left: 0;
                 transform: translate(0, -100%);
-    
-                &::before {
-                    content: url('../images/arrow_2.svg');
-                }
             }
         }
 
@@ -115,7 +105,7 @@
             height: 18px;
             border-radius: 50%;
             background-color: $gray;
-    
+
             &.is-active {
                 width: 18px;
                 height: 18px;
@@ -127,21 +117,19 @@
 
 @media (max-width: 1025px) {
     .reviews {
-
         &__card {
             height: 400px;
         }
 
         &__txt {
-    
             & h3 {
                 font-size: 22px;
             }
-    
+
             & p {
                 font-size: 16px;
             }
-    
+
             & .date {
                 bottom: 20px;
                 left: 30px;
@@ -150,32 +138,28 @@
     }
 }
 
-
 @media (max-width: 769px) {
     .reviews {
-
         &__card {
             height: 300px;
         }
 
         &__txt {
-    
             & h3 {
                 font-size: 22px;
             }
-    
+
             & p {
                 font-size: 16px;
             }
-    
+
             & .date {
                 bottom: 20px;
-                left: calc(100% - 100px)
+                left: calc(100% - 100px);
             }
         }
 
         & .splide {
-
             &__track {
                 width: calc(100% + 40px);
                 position: relative;
@@ -183,12 +167,11 @@
             }
 
             &__arrow {
-                
                 &--next {
                     right: -5px;
                     transform: translate(0, -100%);
                 }
-        
+
                 &--prev {
                     left: -5px;
                     transform: translate(0, -100%);
@@ -200,24 +183,21 @@
 
 @media (max-width: 630px) {
     .reviews {
-
         &__card {
             height: 300px;
         }
 
         &__txt {
-    
             & h3 {
                 font-size: 22px;
             }
-    
+
             & p {
                 font-size: 16px;
             }
-    
+
             & .date {
                 bottom: 20px;
-
             }
         }
 
@@ -226,30 +206,28 @@
         }
 
         & .splide {
-
             &__track {
                 transform: translate(0px, 0px);
             }
 
             &__arrow {
                 display: none;
-                
+
                 &--next {
                     right: -5px;
                 }
-        
+
                 &--prev {
                     left: -5px;
                 }
             }
 
             &__pagination {
-            
                 & > li {
                     padding: 0;
                     height: 12px;
                 }
-        
+
                 &__page {
                     margin: 0;
                     padding: 0;
@@ -263,7 +241,6 @@
                     }
                 }
             }
-
         }
     }
 }
