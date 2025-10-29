@@ -2,12 +2,17 @@
     position: absolute;
     width: 100%;
     z-index: 50;
+    background: rgba(57, 93, 18, 0.3);
+    box-shadow: 0px 0px 15px rgb(223, 255, 196);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
     &_fixed {
         position: fixed;
         background: rgba(57, 93, 18, 0.3);
         box-shadow: 0px 0px 15px rgb(223, 255, 196);
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         -webkit-transition: width 1s, height 1s, background-color 1s,
             -webkit-transform 1s;
         transition: width 1s, height 1s, background-color 1s, transform 1s;

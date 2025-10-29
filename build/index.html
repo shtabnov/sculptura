@@ -93,37 +93,42 @@
 		<!--include service.pug-->
 		<section class="service" id="service">
 			<div class="service__container"> 
-				<h2>Наши услуги</h2>
+				<h2 class="service__title">Наши услуги</h2>
 				<div class="service__wrapper"> 
 					<div class="service__card"> 
-						<div class="service__card-title"> 
-							<h3>Массаж лица</h3>
+						<div class="service__card-image"><img src="images/card_1.png" alt="Массаж лица"></div>
+						<div class="service__card-content">
+							<h3 class="service__card-title">Массаж лица</h3>
+							<p class="service__card-description">Профессиональный массаж для расслабления и улучшения состояния кожи лица</p><a class="service__card-btn" href="/face-massage.html">Подробнее</a>
 						</div>
-						<div class="service__card-btn"> <a href="#">Подробнее </a></div>
 					</div>
 					<div class="service__card"> 
-						<div class="service__card-title"> 
-							<h3>Букальный массаж</h3>
+						<div class="service__card-image"><img src="images/card_2.png" alt="Букальный массаж"></div>
+						<div class="service__card-content">
+							<h3 class="service__card-title">Букальный массаж</h3>
+							<p class="service__card-description">Эффективная техника массажа для улучшения контуров лица и тонуса мышц</p><a class="service__card-btn" href="/bucal.html">Подробнее</a>
 						</div>
-						<div class="service__card-btn"> <a href="/bucal.html">Подробнее </a></div>
 					</div>
 					<div class="service__card"> 
-						<div class="service__card-title"> 
-							<h3>Косметология</h3>
+						<div class="service__card-image"><img src="images/card_4.png" alt="Косметология"></div>
+						<div class="service__card-content">
+							<h3 class="service__card-title">Косметология</h3>
+							<p class="service__card-description">Комплексный уход за кожей с использованием современных методик</p><a class="service__card-btn" href="/cosmetology.html">Подробнее</a>
 						</div>
-						<div class="service__card-btn"> <a href="#">Подробнее </a></div>
 					</div>
 					<div class="service__card"> 
-						<div class="service__card-title"> 
-							<h3>Косметические маски</h3>
+						<div class="service__card-image"><img src="images/card_3.png" alt="Косметические маски"></div>
+						<div class="service__card-content">
+							<h3 class="service__card-title">Косметические маски</h3>
+							<p class="service__card-description">Индивидуальный подбор масок для решения различных проблем кожи</p><a class="service__card-btn" href="/masks.html">Подробнее</a>
 						</div>
-						<div class="service__card-btn"> <a href="#">Подробнее </a></div>
 					</div>
 					<div class="service__card"> 
-						<div class="service__card-title"> 
-							<h3>Эпиляция</h3>
+						<div class="service__card-image"><img src="images/card_5.png" alt="Эпиляция"></div>
+						<div class="service__card-content">
+							<h3 class="service__card-title">Эпиляция</h3>
+							<p class="service__card-description">Безболезненное удаление нежелательных волос современными методами</p><a class="service__card-btn" href="/epilation.html">Подробнее</a>
 						</div>
-						<div class="service__card-btn"> <a href="#">Подробнее</a></div>
 					</div>
 				</div>
 			</div>
@@ -159,14 +164,52 @@
 		<!-- include reception.pug-->
 		<section class="reception" id="reception">
 			<div class="reception__container"> 
-				<h2>Записаться на прием</h2>
-				<form class="reception__form form">
-					<input class="form__name" type="text" placeholder="Введите имя" name="name" required>
-					<input type="tel" id="phone" placeholder="Номер телефона" name="phone" pattern="+7-[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-					<input type="submit">
+				<h2 class="reception__title">Записаться на прием</h2>
+				<p class="reception__description">Оставьте свои контактные данные, и мы свяжемся с вами для уточнения деталей записи</p>
+				<form class="reception__form form" action="#" method="POST">
+					<div class="form__group">
+						<label class="form__label" for="name">Ваше имя *</label>
+						<input class="form__input" type="text" id="name" name="name" placeholder="Введите ваше имя" required>
+					</div>
+					<div class="form__group">
+						<label class="form__label" for="phone">Номер телефона *</label>
+						<input class="form__input" type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+					</div>
+					<div class="form__group">
+						<label class="form__label" for="service">Выберите услугу</label>
+						<select class="form__select" id="service" name="service">
+							<option value="">Выберите услугу</option>
+							<option value="face-massage">Массаж лица</option>
+							<option value="bucal">Букальный массаж</option>
+							<option value="cosmetology">Косметология</option>
+							<option value="masks">Косметические маски</option>
+							<option value="epilation">Эпиляция</option>
+						</select>
+					</div>
+					<div class="form__group">
+						<label class="form__label" for="date">Предпочтительная дата</label>
+						<input class="form__input" type="date" id="date" name="date">
+					</div>
+					<div class="form__group">
+						<label class="form__label" for="time">Предпочтительное время</label>
+						<input class="form__input" type="time" id="time" name="time">
+					</div>
+					<div class="form__group">
+						<label class="form__label" for="comment">Комментарий (необязательно)</label>
+						<textarea class="form__textarea" id="comment" name="comment" placeholder="Укажите дополнительную информацию" rows="4"></textarea>
+					</div>
+					<div class="form__group">
+						<button class="form__submit" type="submit">Отправить заявку</button>
+					</div>
 				</form>
 			</div>
 		</section>
+		<!-- include button-up.pug-->
+		<div class="scroll-up"> 
+			<svg class="scroll-up__svg" viewBox="-2 -2 52 52">
+				<path class="scroll-up__path" d="M24,0 a24,24 0 0,1 0,48 a24,24 0 0,1 0,-48"></path>
+			</svg>
+		</div>
 		<!-- include reviews.pug-->
 		<section class="reviews" id="reviews"> 
 			<div class="reviews__container"> 
@@ -267,6 +310,34 @@
 				<path class="scroll-up__path" d="M24,0 a24,24 0 0,1 0,48 a24,24 0 0,1 0,-48"></path>
 			</svg>
 		</div>
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__content">
+					<div class="footer__brand"><a class="footer__logo" href="./"><img src="images/logo.svg" alt="Sculptura"></a>
+						<p class="footer__tagline">Студия Вашей красоты</p>
+					</div>
+					<div class="footer__info">
+						<h3 class="footer__title">Контакты</h3>
+						<div class="footer__address">
+							<address>д. Кондратово</address>
+							<address>ул. Садовое кольцо 14</address><em>вход с торца здания</em>
+						</div>
+					</div>
+					<div class="footer__schedule">
+						<h3 class="footer__title">Режим работы</h3>
+						<p>с 9:00 до 21:00</p>
+						<p>последняя запись до 19:00</p>
+					</div>
+					<div class="footer__contact">
+						<h3 class="footer__title">Связаться с нами</h3><a class="footer__phone" href="tel:+79638816267">+7 (963) 881-62-67</a>
+						<div class="footer__social"><a class="footer__social-link" href="https://vk.com/buccal59" target="_blank" rel="noopener noreferrer"><img src="images/icon/vk-icon.svg" alt="VK"><span>Наша группа в контакте</span></a></div>
+					</div>
+				</div>
+				<div class="footer__bottom">
+					<p class="footer__copyright">© 2024 Sculptura. Все права защищены.</p>
+				</div>
+			</div>
+		</footer>
 		<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.7/dist/js/splide.min.js"> </script>
 		<script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&amp;lang=ru_RU" type="text/javascript"> </script>
 		<script src="./scripts/main.min.js"> </script>

@@ -1,10 +1,40 @@
 // include reception.pug
 section.reception(id='reception')
     .reception__container 
-        h2 Записаться на прием
-        form.reception__form.form
-            //- label(for="name") Ваше имя
-            input.form__name(type="text" placeholder="Введите имя" name="name" required)
-            //- label(for="phone") Телефон для свзяи
-            input(type="tel" id="phone" placeholder="Номер телефона" name="phone" pattern="+7-[0-9]{3}-[0-9]{3}-[0-9]{4}" required)
-            input(type="submit") 
+        h2.reception__title Записаться на прием
+        p.reception__description Оставьте свои контактные данные, и мы свяжемся с вами для уточнения деталей записи
+        form.reception__form.form(action="#" method="POST")
+            .form__group
+                label.form__label(for="name") Ваше имя *
+                input.form__input(type="text" id="name" name="name" placeholder="Введите ваше имя" required)
+            
+            .form__group
+                label.form__label(for="phone") Номер телефона *
+                input.form__input(type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required)
+            
+            .form__group
+                label.form__label(for="service") Выберите услугу
+                select.form__select(id="service" name="service")
+                    option(value="") Выберите услугу
+                    option(value="face-massage") Массаж лица
+                    option(value="bucal") Букальный массаж
+                    option(value="cosmetology") Косметология
+                    option(value="masks") Косметические маски
+                    option(value="epilation") Эпиляция
+            
+            .form__group
+                label.form__label(for="date") Предпочтительная дата
+                input.form__input(type="date" id="date" name="date")
+            
+            .form__group
+                label.form__label(for="time") Предпочтительное время
+                input.form__input(type="time" id="time" name="time")
+            
+            .form__group
+                label.form__label(for="comment") Комментарий (необязательно)
+                textarea.form__textarea(id="comment" name="comment" placeholder="Укажите дополнительную информацию" rows="4")
+            
+            .form__group
+                button.form__submit(type="submit") Отправить заявку
+
+include button-up.pug

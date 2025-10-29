@@ -84,26 +84,15 @@
     }
 
     &__link {
-        padding: 1rem 2rem;
-        border: 2px solid $light-pink;
-        border-radius: 2rem;
-        color: #fff;
-        background-image: -webkit-linear-gradient(45deg, $light-pink 50%, transparent 50%);
-        background-image: linear-gradient(45deg, $light-pink 50%, transparent 50%);
-        background-position: 100%;
-        background-size: 400%;
-        -webkit-transition: all 400ms ease-in-out;
-        transition: all 400ms ease-in-out;
+        @include button-ghost;
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
 
         &:hover {
-            border: 2px solid $green;
+            background: rgba(255, 219, 219, 0.85);
             color: $black;
-            background-position: 0;
-            box-shadow: 0 0 10px 4px $green;
-            -webkit-transition: all 400ms ease-in-out;
-            transition: all 400ms ease-in-out;
+            backdrop-filter: blur(15px);
         }
-
     }
 
     &__btn-wrap {

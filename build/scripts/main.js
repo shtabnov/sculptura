@@ -135,27 +135,35 @@ if (count > 0) {
 }
 "use strict";
 
-new Splide('#reviews_slider', {
-  perPage: 2,
-  perMove: 1,
-  type: 'loop',
-  breakpoints: {
-    1025: {
-      fixedHeight: '442px'
-    },
-    769: {
-      perPage: 1,
-      fixedWidth: 'calc(100% - 0px)',
-      fixedHeight: '340px'
+var reviewsSlider = document.querySelector('#reviews_slider');
+
+if (reviewsSlider) {
+  new Splide('#reviews_slider', {
+    perPage: 2,
+    perMove: 1,
+    type: 'loop',
+    breakpoints: {
+      1025: {
+        fixedHeight: '442px'
+      },
+      769: {
+        perPage: 1,
+        fixedWidth: 'calc(100% - 0px)',
+        fixedHeight: '340px'
+      }
     }
-  }
-}).mount();
+  }).mount();
+}
 "use strict";
 
-new Splide('#sale_slider', {
-  type: 'loop',
-  perPage: 1
-}).mount();
+var saleSlider = document.querySelector('#sale_slider');
+
+if (saleSlider) {
+  new Splide('#sale_slider', {
+    type: 'loop',
+    perPage: 1
+  }).mount();
+}
 "use strict";
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -174,13 +182,25 @@ if (anchors) {
     var _loop = function _loop() {
       var anchor = _step.value;
       anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        var blockID = anchor.getAttribute('href').substring(2);
-        console.log(blockID);
-        document.getElementById(blockID).scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+        var href = anchor.getAttribute('href'); // Проверяем, что это якорная ссылка (начинается с #)
+
+        if (!href || !href.startsWith('#')) {
+          return;
+        } // Извлекаем ID элемента (убираем #)
+
+
+        var blockID = href.substring(1); // Проверяем, что элемент существует на странице
+
+        var targetElement = document.getElementById(blockID);
+
+        if (targetElement) {
+          e.preventDefault();
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        } // Если элемента нет, позволяем браузеру обработать ссылку (переход на другую страницу)
+
       });
     };
 
