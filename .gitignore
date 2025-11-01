@@ -14,7 +14,7 @@ node_modules/
 
 
 # Папка с собранными файлами проекта
-# build/
+build/
 
 # WordPress тема
-wp-theme/
+# wp-theme/
