@@ -481,8 +481,6 @@ a {
 }
 .service {
   margin-top: 100px;
-}
-.service__container {
   background-color: #f3f3f3;
 }
 .service__title {
@@ -636,6 +634,217 @@ a {
   .service__card-btn {
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
+  }
+}
+.service-detail {
+  padding-top: 200px;
+  padding-bottom: 100px;
+  min-height: 80vh;
+  background-color: #F9F9F9;
+}
+.service-detail__container {
+  margin-bottom: 60px;
+}
+.service-detail__title {
+  margin-bottom: 3rem;
+  color: #131332;
+  font-family: "El Messiri", sans-serif;
+}
+.service-detail__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  text-align: left;
+}
+.service-detail__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.service-detail__description {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #131332;
+  margin-bottom: 1rem;
+}
+.service-detail__info {
+  background-color: #FFEEE3;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+.service-detail__info h2,
+.service-detail__info h3,
+.service-detail__info h4,
+.service-detail__info h5,
+.service-detail__info h6 {
+  font-family: "El Messiri", sans-serif;
+  color: #131332;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+.service-detail__info h3 {
+  font-size: 1.5rem;
+}
+.service-detail__info p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #131332;
+  margin-bottom: 1rem;
+}
+.service-detail__info ul,
+.service-detail__info ol {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+.service-detail__info li {
+  font-size: 1rem;
+  line-height: 2;
+  color: #131332;
+  padding-left: 1.5rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+.service-detail__info li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #C7DF9E;
+  font-size: 1.5rem;
+}
+.service-detail__info .wp-block-heading {
+  font-family: "El Messiri", sans-serif;
+  color: #131332;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+.service-detail__info .wp-block-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+.service-detail__info .wp-block-list li {
+  font-size: 1rem;
+  line-height: 2;
+  color: #131332;
+  padding-left: 1.5rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+.service-detail__info .wp-block-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #C7DF9E;
+  font-size: 1.5rem;
+}
+.service-detail__subtitle {
+  font-family: "El Messiri", sans-serif;
+  font-size: 1.5rem;
+  color: #131332;
+  margin-bottom: 1.5rem;
+}
+.service-detail__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.service-detail__item {
+  font-size: 1rem;
+  line-height: 2;
+  color: #131332;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.service-detail__item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #C7DF9E;
+  font-size: 1.5rem;
+}
+.service-detail__action {
+  margin-top: 1rem;
+}
+.service-detail__btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-family: "Ruda", sans-serif;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  color: #131332;
+  border-radius: 0.75rem;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
+}
+.service-detail__btn::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(90deg, #FFDBDB 0%, #EA99FF 25%, rgba(255, 219, 219, 0.8) 50%, #EA99FF 75%, #FFDBDB 100%);
+  background-size: 200% 100%;
+  animation: border-shimmer 3s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  z-index: -1;
+  pointer-events: none;
+}
+.service-detail__btn:hover {
+  background: rgba(255, 219, 219, 0.85);
+  color: #131332;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 219, 219, 0.4);
+}
+.service-detail__btn:hover::before {
+  animation-duration: 1.5s;
+}
+.service-detail__btn:active {
+  transform: translateY(-1px);
+}
+.service-detail__image img {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768.99px) {
+  .service-detail {
+    padding-top: 150px;
+    padding-bottom: 60px;
+  }
+  .service-detail__title {
+    margin-bottom: 2rem;
+  }
+  .service-detail__content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .service-detail__text {
+    gap: 1.5rem;
+  }
+  .service-detail__info {
+    padding: 1.5rem;
+  }
+  .service-detail__subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
   }
 }
 .sale {
@@ -1381,720 +1590,5 @@ a {
   }
   .footer__logo {
     margin: 0 auto;
-  }
-}
-.bucal {
-  padding-top: 200px;
-  padding-bottom: 100px;
-  min-height: 80vh;
-  background-color: #F9F9F9;
-}
-.bucal__container {
-  margin-bottom: 60px;
-}
-.bucal__title {
-  margin-bottom: 3rem;
-  color: #131332;
-  font-family: "El Messiri", sans-serif;
-}
-.bucal__content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-  text-align: left;
-}
-.bucal__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-.bucal__description {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: #131332;
-  margin-bottom: 1rem;
-}
-.bucal__info {
-  background-color: #FFEEE3;
-  padding: 2rem;
-  border-radius: 1rem;
-}
-.bucal__subtitle {
-  font-family: "El Messiri", sans-serif;
-  font-size: 1.5rem;
-  color: #131332;
-  margin-bottom: 1.5rem;
-}
-.bucal__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.bucal__item {
-  font-size: 1rem;
-  line-height: 2;
-  color: #131332;
-  padding-left: 1.5rem;
-  position: relative;
-}
-.bucal__item::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #C7DF9E;
-  font-size: 1.5rem;
-}
-.bucal__action {
-  margin-top: 1rem;
-}
-.bucal__btn {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  border-radius: 0.75rem;
-  font-family: "Ruda", sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  background: #FFDBDB;
-  color: #131332;
-  box-shadow: 0 2px 10px rgba(255, 219, 219, 0.3);
-  border: 1px solid rgba(124, 139, 176, 0.2);
-}
-.bucal__btn > * {
-  position: relative;
-  z-index: 1;
-}
-.bucal__btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.bucal__btn:hover {
-  background: #C7DF9E;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(199, 223, 158, 0.35);
-  border-color: rgba(124, 139, 176, 0.3);
-}
-.bucal__btn:hover::before {
-  opacity: 1;
-}
-.bucal__btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(199, 223, 158, 0.3);
-}
-.bucal__image img {
-  width: 100%;
-  height: auto;
-  border-radius: 1rem;
-  object-fit: cover;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 768.99px) {
-  .bucal {
-    padding-top: 150px;
-    padding-bottom: 60px;
-  }
-  .bucal__title {
-    margin-bottom: 2rem;
-  }
-  .bucal__content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .bucal__text {
-    gap: 1.5rem;
-  }
-  .bucal__info {
-    padding: 1.5rem;
-  }
-  .bucal__subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-  }
-}
-.face-massage {
-  padding-top: 200px;
-  padding-bottom: 100px;
-  min-height: 80vh;
-  background-color: #F9F9F9;
-}
-.face-massage__container {
-  margin-bottom: 60px;
-}
-.face-massage__title {
-  margin-bottom: 3rem;
-  color: #131332;
-  font-family: "El Messiri", sans-serif;
-}
-.face-massage__content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-  text-align: left;
-}
-.face-massage__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-.face-massage__description {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: #131332;
-  margin-bottom: 1rem;
-}
-.face-massage__info {
-  background-color: #FFEEE3;
-  padding: 2rem;
-  border-radius: 1rem;
-}
-.face-massage__subtitle {
-  font-family: "El Messiri", sans-serif;
-  font-size: 1.5rem;
-  color: #131332;
-  margin-bottom: 1.5rem;
-}
-.face-massage__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.face-massage__item {
-  font-size: 1rem;
-  line-height: 2;
-  color: #131332;
-  padding-left: 1.5rem;
-  position: relative;
-}
-.face-massage__item::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #C7DF9E;
-  font-size: 1.5rem;
-}
-.face-massage__action {
-  margin-top: 1rem;
-}
-.face-massage__btn {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  border-radius: 0.75rem;
-  font-family: "Ruda", sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  background: #FFDBDB;
-  color: #131332;
-  box-shadow: 0 2px 10px rgba(255, 219, 219, 0.3);
-  border: 1px solid rgba(124, 139, 176, 0.2);
-}
-.face-massage__btn > * {
-  position: relative;
-  z-index: 1;
-}
-.face-massage__btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.face-massage__btn:hover {
-  background: #C7DF9E;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(199, 223, 158, 0.35);
-  border-color: rgba(124, 139, 176, 0.3);
-}
-.face-massage__btn:hover::before {
-  opacity: 1;
-}
-.face-massage__btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(199, 223, 158, 0.3);
-}
-.face-massage__image img {
-  width: 100%;
-  height: auto;
-  border-radius: 1rem;
-  object-fit: cover;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 768.99px) {
-  .face-massage {
-    padding-top: 150px;
-    padding-bottom: 60px;
-  }
-  .face-massage__title {
-    margin-bottom: 2rem;
-  }
-  .face-massage__content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .face-massage__text {
-    gap: 1.5rem;
-  }
-  .face-massage__info {
-    padding: 1.5rem;
-  }
-  .face-massage__subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-  }
-}
-.cosmetology {
-  padding-top: 200px;
-  padding-bottom: 100px;
-  min-height: 80vh;
-  background-color: #F9F9F9;
-}
-.cosmetology__container {
-  margin-bottom: 60px;
-}
-.cosmetology__title {
-  margin-bottom: 3rem;
-  color: #131332;
-  font-family: "El Messiri", sans-serif;
-}
-.cosmetology__content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-  text-align: left;
-}
-.cosmetology__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-.cosmetology__description {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: #131332;
-  margin-bottom: 1rem;
-}
-.cosmetology__info {
-  background-color: #FFEEE3;
-  padding: 2rem;
-  border-radius: 1rem;
-}
-.cosmetology__subtitle {
-  font-family: "El Messiri", sans-serif;
-  font-size: 1.5rem;
-  color: #131332;
-  margin-bottom: 1.5rem;
-}
-.cosmetology__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.cosmetology__item {
-  font-size: 1rem;
-  line-height: 2;
-  color: #131332;
-  padding-left: 1.5rem;
-  position: relative;
-}
-.cosmetology__item::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #C7DF9E;
-  font-size: 1.5rem;
-}
-.cosmetology__action {
-  margin-top: 1rem;
-}
-.cosmetology__btn {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  border-radius: 0.75rem;
-  font-family: "Ruda", sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  background: #FFDBDB;
-  color: #131332;
-  box-shadow: 0 2px 10px rgba(255, 219, 219, 0.3);
-  border: 1px solid rgba(124, 139, 176, 0.2);
-}
-.cosmetology__btn > * {
-  position: relative;
-  z-index: 1;
-}
-.cosmetology__btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.cosmetology__btn:hover {
-  background: #C7DF9E;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(199, 223, 158, 0.35);
-  border-color: rgba(124, 139, 176, 0.3);
-}
-.cosmetology__btn:hover::before {
-  opacity: 1;
-}
-.cosmetology__btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(199, 223, 158, 0.3);
-}
-.cosmetology__image img {
-  width: 100%;
-  height: auto;
-  border-radius: 1rem;
-  object-fit: cover;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 768.99px) {
-  .cosmetology {
-    padding-top: 150px;
-    padding-bottom: 60px;
-  }
-  .cosmetology__title {
-    margin-bottom: 2rem;
-  }
-  .cosmetology__content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .cosmetology__text {
-    gap: 1.5rem;
-  }
-  .cosmetology__info {
-    padding: 1.5rem;
-  }
-  .cosmetology__subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-  }
-}
-.masks {
-  padding-top: 200px;
-  padding-bottom: 100px;
-  min-height: 80vh;
-  background-color: #F9F9F9;
-}
-.masks__container {
-  margin-bottom: 60px;
-}
-.masks__title {
-  margin-bottom: 3rem;
-  color: #131332;
-  font-family: "El Messiri", sans-serif;
-}
-.masks__content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-  text-align: left;
-}
-.masks__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-.masks__description {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: #131332;
-  margin-bottom: 1rem;
-}
-.masks__info {
-  background-color: #FFEEE3;
-  padding: 2rem;
-  border-radius: 1rem;
-}
-.masks__subtitle {
-  font-family: "El Messiri", sans-serif;
-  font-size: 1.5rem;
-  color: #131332;
-  margin-bottom: 1.5rem;
-}
-.masks__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.masks__item {
-  font-size: 1rem;
-  line-height: 2;
-  color: #131332;
-  padding-left: 1.5rem;
-  position: relative;
-}
-.masks__item::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #C7DF9E;
-  font-size: 1.5rem;
-}
-.masks__action {
-  margin-top: 1rem;
-}
-.masks__btn {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  border-radius: 0.75rem;
-  font-family: "Ruda", sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  background: #FFDBDB;
-  color: #131332;
-  box-shadow: 0 2px 10px rgba(255, 219, 219, 0.3);
-  border: 1px solid rgba(124, 139, 176, 0.2);
-}
-.masks__btn > * {
-  position: relative;
-  z-index: 1;
-}
-.masks__btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.masks__btn:hover {
-  background: #C7DF9E;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(199, 223, 158, 0.35);
-  border-color: rgba(124, 139, 176, 0.3);
-}
-.masks__btn:hover::before {
-  opacity: 1;
-}
-.masks__btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(199, 223, 158, 0.3);
-}
-.masks__image img {
-  width: 100%;
-  height: auto;
-  border-radius: 1rem;
-  object-fit: cover;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 768.99px) {
-  .masks {
-    padding-top: 150px;
-    padding-bottom: 60px;
-  }
-  .masks__title {
-    margin-bottom: 2rem;
-  }
-  .masks__content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .masks__text {
-    gap: 1.5rem;
-  }
-  .masks__info {
-    padding: 1.5rem;
-  }
-  .masks__subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-  }
-}
-.epilation {
-  padding-top: 200px;
-  padding-bottom: 100px;
-  min-height: 80vh;
-  background-color: #F9F9F9;
-}
-.epilation__container {
-  margin-bottom: 60px;
-}
-.epilation__title {
-  margin-bottom: 3rem;
-  color: #131332;
-  font-family: "El Messiri", sans-serif;
-}
-.epilation__content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-  text-align: left;
-}
-.epilation__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-.epilation__description {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  color: #131332;
-  margin-bottom: 1rem;
-}
-.epilation__info {
-  background-color: #FFEEE3;
-  padding: 2rem;
-  border-radius: 1rem;
-}
-.epilation__subtitle {
-  font-family: "El Messiri", sans-serif;
-  font-size: 1.5rem;
-  color: #131332;
-  margin-bottom: 1.5rem;
-}
-.epilation__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.epilation__item {
-  font-size: 1rem;
-  line-height: 2;
-  color: #131332;
-  padding-left: 1.5rem;
-  position: relative;
-}
-.epilation__item::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #C7DF9E;
-  font-size: 1.5rem;
-}
-.epilation__action {
-  margin-top: 1rem;
-}
-.epilation__btn {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  border-radius: 0.75rem;
-  font-family: "Ruda", sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: none;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  background: #FFDBDB;
-  color: #131332;
-  box-shadow: 0 2px 10px rgba(255, 219, 219, 0.3);
-  border: 1px solid rgba(124, 139, 176, 0.2);
-}
-.epilation__btn > * {
-  position: relative;
-  z-index: 1;
-}
-.epilation__btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.epilation__btn:hover {
-  background: #C7DF9E;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(199, 223, 158, 0.35);
-  border-color: rgba(124, 139, 176, 0.3);
-}
-.epilation__btn:hover::before {
-  opacity: 1;
-}
-.epilation__btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(199, 223, 158, 0.3);
-}
-.epilation__image img {
-  width: 100%;
-  height: auto;
-  border-radius: 1rem;
-  object-fit: cover;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 768.99px) {
-  .epilation {
-    padding-top: 150px;
-    padding-bottom: 60px;
-  }
-  .epilation__title {
-    margin-bottom: 2rem;
-  }
-  .epilation__content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .epilation__text {
-    gap: 1.5rem;
-  }
-  .epilation__info {
-    padding: 1.5rem;
-  }
-  .epilation__subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
   }
 }

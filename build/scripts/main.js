@@ -123,7 +123,18 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   var menuBtn = document.getElementById("menu__toggle");
   var navList = document.querySelector(".nav__list");
-  var navLinks = document.querySelectorAll(".nav__item a.nav__link, .nav__item a.nav__logo"); // Закрываем меню при клике на ссылку
+  var navLinks = document.querySelectorAll(".nav__item a.nav__link, .nav__item a.nav__logo"); // Синхронизируем состояние чекбокса с классом меню
+
+  if (menuBtn && navList) {
+    menuBtn.addEventListener("change", function () {
+      if (menuBtn.checked) {
+        navList.classList.add("nav__list_active");
+      } else {
+        navList.classList.remove("nav__list_active");
+      }
+    });
+  } // Закрываем меню при клике на ссылку
+
 
   if (navLinks && navLinks.length > 0) {
     navLinks.forEach(function (navLink) {
