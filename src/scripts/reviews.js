@@ -1,20 +1,22 @@
-const reviewsSlider = document.querySelector('#reviews_slider');
-if (reviewsSlider) {
-    new Splide( '#reviews_slider', {
-        perPage: 2,
-        perMove: 1,
-        type: 'loop',
+document.addEventListener('DOMContentLoaded', () => {
+    const reviewsSlider = document.querySelector('#reviews_slider');
+    if (reviewsSlider && typeof Splide !== 'undefined') {
+        new Splide('#reviews_slider', {
+            perPage: 2,
+            perMove: 1,
+            type: 'loop',
 
-        breakpoints: {
-          1025: {
-                  fixedHeight: '442px',
-          },
+            breakpoints: {
+                1025: {
+                    fixedHeight: '442px',
+                },
 
-          769: {
-              perPage: 1,
-              fixedWidth: 'calc(100% - 0px)',
-              fixedHeight: '340px',
-          },
-        }
-    } ).mount();
-}
+                769: {
+                    perPage: 1,
+                    fixedWidth: 'calc(100% - 0px)',
+                    fixedHeight: '340px',
+                },
+            }
+        }).mount();
+    }
+});

@@ -1,8 +1,13 @@
 .features {
+    margin-top: 100px;
 
     &__container {
+        background-color: $white;
+    }
+
+    &__title {
+        text-align: center;
         color: $black;
-        margin-bottom: 90px;
     }
 
     &__wrapper {
@@ -37,19 +42,17 @@
 
 @media (max-width: 767.99px) {
     .features {
-
         &__container {
             margin-bottom: 60px;
-    
-            h2 {
-                font-size: 2.5rem;
-            }
         }
-    
+        &__title {
+            font-size: 2.5rem;
+        }
+
         &__wrapper {
             margin-top: 2rem;
         }
-    
+
         &__card {
             margin-top: 2rem;
             margin-bottom: 2rem;

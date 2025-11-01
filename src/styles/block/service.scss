@@ -1,9 +1,8 @@
 .service {
-    padding: 100px 0;
-    background-color: $white;
+    margin-top: 100px;
 
     &__container {
-        margin-bottom: 0;
+        background-color: #f3f3f3;
     }
 
     &__title {
@@ -110,7 +109,7 @@
 
         &__title {
             margin-bottom: 2rem;
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
 
         &__wrapper {

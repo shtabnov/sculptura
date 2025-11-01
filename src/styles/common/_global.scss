@@ -44,14 +44,14 @@ a {
     cursor: pointer;
 }
 
-[class*='__container'] {
+[class*="__container"] {
     max-width: 1170px;
     margin: 0 auto;
     text-align: center;
 }
 
 @media (max-width: 1023.999px) {
-    [class*='__container'] {
+    [class*="__container"] {
         padding: 0 20px;
     }
 }
@@ -71,5 +71,14 @@ a {
     }
     100% {
         transform: translate(0, 0px);
+    }
+}
+
+@keyframes border-shimmer {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 200% 0%;
     }
 }

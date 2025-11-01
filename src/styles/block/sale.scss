@@ -1,10 +1,13 @@
 .sale {
-    background-color: #f3f3f3;
+    margin-top: 100px;
 
     &__container {
-        padding-top: 90px;
-        padding-bottom: 90px;
-        margin-bottom: 90px;
+        background-color: $white;
+    }
+
+    &__title {
+        text-align: center;
+        color: $black;
     }
 
     &__wrapper {
@@ -13,7 +16,6 @@
 }
 
 .splide {
-
     &__arrows {
         display: flex;
         justify-content: center;
@@ -31,13 +33,13 @@
         padding: 0;
 
         &--prev {
-            background-image: url('../images/icon/arrow_prev.svg');
+            background-image: url("../images/icon/arrow_prev.svg");
             background-position: 45% 50%;
             background-repeat: no-repeat;
         }
 
         &--next {
-            background-image: url('../images/icon/arrow_next.svg');
+            background-image: url("../images/icon/arrow_next.svg");
             background-position: 55% 50%;
             background-repeat: no-repeat;
         }
@@ -51,7 +53,7 @@
         gap: 24px;
 
         &__page {
-            background-color: #AEACAA;
+            background-color: #aeacaa;
             height: 16px;
             width: 16px;
             border: none;
@@ -66,13 +68,15 @@
 
 @media (max-width: 768.99px) {
     .sale {
-    
         &__container {
             padding-top: 40px;
             padding-bottom: 60px;
             margin-bottom: 40px;
         }
-    
+        &__title {
+            font-size: 2.5rem;
+        }
+
         &__wrapper {
             margin-top: 2rem;
         }
@@ -91,10 +95,10 @@
     }
 
     .splide {
-        &__arrows { 
+        &__arrows {
             margin-top: 20px;
         }
-        
+
         &__arrow {
             position: absolute;
             width: 3rem;
@@ -104,24 +108,23 @@
             &--prev {
                 top: 60%;
                 left: 0;
-                background-image: url('../images/icon/arrow_prev.svg');
+                background-image: url("../images/icon/arrow_prev.svg");
                 background-size: 50%;
             }
-    
+
             &--next {
                 top: 60%;
                 right: 0;
-                background-image: url('../images/icon/arrow_next.svg');
+                background-image: url("../images/icon/arrow_next.svg");
                 background-size: 50%;
             }
         }
 
         &__pagination {
-            
             & > li {
                 height: 12px;
             }
-    
+
             &__page {
                 padding: 0;
                 height: 10px;
