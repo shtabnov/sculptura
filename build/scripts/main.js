@@ -123,23 +123,20 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   var menuBtn = document.getElementById("menu__toggle");
   var navList = document.querySelector(".nav__list");
-  var navItems = document.querySelectorAll(".nav__item"); // Отображаем меню при нажитии на бургер
+  var navLinks = document.querySelectorAll(".nav__item a.nav__link, .nav__item a.nav__logo"); // Закрываем меню при клике на ссылку
 
-  if (menuBtn && navList && navList.classList) {
-    menuBtn.addEventListener("click", function () {
-      if (navList && navList.classList) {
-        navList.classList.toggle("nav__list_active");
-      }
-    });
-  } // Скрываем меню при нажатии на ссылку
-
-
-  if (navItems && navItems.length > 0) {
-    navItems.forEach(function (navItem) {
-      if (navItem && navItem.addEventListener) {
-        navItem.addEventListener("click", function () {
+  if (navLinks && navLinks.length > 0) {
+    navLinks.forEach(function (navLink) {
+      if (navLink && navLink.addEventListener) {
+        navLink.addEventListener("click", function () {
+          // Закрываем меню
           if (navList && navList.classList) {
-            navList.classList.toggle("nav__list_active");
+            navList.classList.remove("nav__list_active");
+          } // Сбрасываем чекбокс (чтобы бургер вернулся в исходное состояние)
+
+
+          if (menuBtn) {
+            menuBtn.checked = false;
           }
         });
       }

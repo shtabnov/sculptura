@@ -1,24 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
     const menuBtn = document.getElementById("menu__toggle");
     const navList = document.querySelector(".nav__list");
-    const navItems = document.querySelectorAll(".nav__item");
+    const navLinks = document.querySelectorAll(
+        ".nav__item a.nav__link, .nav__item a.nav__logo"
+    );
 
-    // Отображаем меню при нажитии на бургер
-    if (menuBtn && navList && navList.classList) {
-        menuBtn.addEventListener("click", () => {
-            if (navList && navList.classList) {
-                navList.classList.toggle("nav__list_active");
+    // Синхронизируем состояние чекбокса с классом меню
+    if (menuBtn && navList) {
+        menuBtn.addEventListener("change", () => {
+            if (menuBtn.checked) {
+                navList.classList.add("nav__list_active");
+            } else {
+                navList.classList.remove("nav__list_active");
             }
         });
     }
 
-    // Скрываем меню при нажатии на ссылку
-    if (navItems && navItems.length > 0) {
-        navItems.forEach((navItem) => {
-            if (navItem && navItem.addEventListener) {
-                navItem.addEventListener("click", () => {
+    // Закрываем меню при клике на ссылку
+    if (navLinks && navLinks.length > 0) {
+        navLinks.forEach((navLink) => {
+            if (navLink && navLink.addEventListener) {
+                navLink.addEventListener("click", () => {
+                    // Закрываем меню
                     if (navList && navList.classList) {
-                        navList.classList.toggle("nav__list_active");
+                        navList.classList.remove("nav__list_active");
+                    }
+                    // Сбрасываем чекбокс (чтобы бургер вернулся в исходное состояние)
+                    if (menuBtn) {
+                        menuBtn.checked = false;
                     }
                 });
             }
