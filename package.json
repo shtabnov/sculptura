@@ -300,6 +300,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:ssh": "node scripts/test-ssh-connection.js",
+    "find:wp": "node scripts/find-wp-path.js",
+    "check:wp": "node scripts/check-wp-structure.js",
+    "activate:theme": "node scripts/activate-theme.js",
     "deploy": "node scripts/deploy.js",
     "deploy:theme": "node scripts/deploy.js theme",
     "deploy:assets": "node scripts/deploy.js assets",

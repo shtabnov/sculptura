@@ -72,24 +72,44 @@ a {
     text-align: center;
 }
 
-@media (max-width: 1023.999px) {
+// Унифицированные медиа-запросы для всего проекта
+// Точка 1: Планшеты (до 1024px)
+@media (max-width: 1023.99px) {
     [class*="__container"] {
         padding: 0 20px;
     }
 
+    h2 {
+        font-size: 2.5rem; // 40px
+    }
+
     [class*="__title"] {
         margin-bottom: 2.5rem;
+        font-size: 2.5rem; // 40px
     }
 }
 
-@media (max-width: 719.999px) {
+// Точка 2: Мобильные (до 768px)
+@media (max-width: 767.99px) {
     h2 {
-        font-size: 2rem;
+        font-size: 2rem; // 32px
     }
 
     [class*="__title"] {
         margin-bottom: 2rem;
-        font-size: 2.5rem;
+        font-size: 2rem; // 32px
+    }
+}
+
+// Точка 3: Маленькие мобильные (до 480px) - опционально
+@media (max-width: 479.99px) {
+    h2 {
+        font-size: 1.75rem; // 28px
+    }
+
+    [class*="__title"] {
+        margin-bottom: 1.5rem;
+        font-size: 1.75rem; // 28px
     }
 }
 

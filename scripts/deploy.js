@@ -1,4 +1,5 @@
 const ssh2 = require('ssh2-sftp-client');
+const { Client } = require('ssh2');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
@@ -15,6 +16,8 @@ try {
 }
 
 const sftp = new ssh2();
+let sshClient = null;
+let homeDir = null;
 
 // Получаем режим деплоя из аргументов командной строки
 const deployMode = process.argv[2] || deployConfig.deploy.mode || 'all';
@@ -64,6 +67,90 @@ function getPrivateKey() {
   return undefined;
 }
 
+// Функция для расширения пути с тильдой (~) через существующее SFTP соединение
+async function expandTildePath(remotePath) {
+  // Если путь не начинается с тильды, возвращаем как есть
+  if (!remotePath.startsWith('~')) {
+    return remotePath;
+  }
+  
+  // Если домашняя директория уже получена, используем её
+  if (homeDir) {
+    return remotePath.replace('~', homeDir);
+  }
+  
+  // Получаем домашнюю директорию через realPath() или команду echo
+  try {
+    // Пробуем использовать realPath для получения абсолютного пути
+    try {
+      const homePath = await sftp.realPath('~');
+      homeDir = homePath;
+      return remotePath.replace('~', homeDir);
+    } catch (realPathError) {
+      // Если realPath не работает, используем SSH команду через отдельное соединение
+      const connectOptions = {
+        host: deployConfig.ssh.host,
+        port: deployConfig.ssh.port || 22,
+        username: deployConfig.ssh.username,
+        readyTimeout: 20000
+      };
+      
+      if (deployConfig.ssh.password) {
+        connectOptions.password = deployConfig.ssh.password;
+      } else {
+        const privateKey = getPrivateKey();
+        if (privateKey) {
+          connectOptions.privateKey = privateKey;
+          if (deployConfig.ssh.passphrase) {
+            connectOptions.passphrase = deployConfig.ssh.passphrase;
+          }
+        } else {
+          throw new Error('Не указан метод аутентификации');
+        }
+      }
+      
+      return new Promise((resolve, reject) => {
+        sshClient = new Client();
+        
+        sshClient.on('ready', () => {
+          sshClient.exec('echo $HOME', (err, stream) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            
+            let output = '';
+            stream.on('data', (chunk) => {
+              output += chunk.toString();
+            });
+            
+            stream.on('close', (code) => {
+              if (code === 0) {
+                homeDir = output.trim();
+                sshClient.end();
+                resolve(remotePath.replace('~', homeDir));
+              } else {
+                sshClient.end();
+                reject(new Error(`Команда завершилась с кодом ${code}`));
+              }
+            });
+          });
+        });
+        
+        sshClient.on('error', (err) => {
+          reject(err);
+        });
+        
+        sshClient.connect(connectOptions);
+      });
+    }
+  } catch (error) {
+    console.warn(`⚠️ Не удалось расширить путь с тильдой: ${error.message}`);
+    console.warn('   Используйте абсолютный путь в deploy.config.js');
+    return remotePath;
+  }
+}
+
 // Функция для синхронизации файлов темы
 async function deployTheme() {
   try {
@@ -101,19 +188,24 @@ async function deployTheme() {
     
     const results = [];
     
+    // Расширяем пути с тильдой
+    const themeRemotePath = await expandTildePath(deployConfig.remote.themePath);
+    
     // Деплоим тему WordPress
     if (deployMode === 'theme' || deployMode === 'all') {
       const themeLocal = path.resolve(deployConfig.local.themeSource);
-      const themeRemote = deployConfig.remote.themePath;
       
-      const themeResult = await uploadFiles(themeLocal, themeRemote);
+      const themeResult = await uploadFiles(themeLocal, themeRemotePath);
       results.push({ type: 'theme', success: themeResult });
     }
     
     // Деплоим ассеты (CSS, JS, изображения)
     if (deployMode === 'assets' || deployMode === 'all') {
       const assetsLocal = path.resolve(deployConfig.local.assetsPath);
-      const assetsRemote = path.join(deployConfig.remote.themePath, 'assets/');
+      // Используем правильное объединение путей для удалённого сервера
+      const assetsRemote = themeRemotePath.endsWith('/') 
+        ? `${themeRemotePath}assets/` 
+        : `${themeRemotePath}/assets/`;
       
       // Проверяем существование локальной директории ассетов
       if (fs.existsSync(assetsLocal)) {
@@ -127,8 +219,11 @@ async function deployTheme() {
       }
     }
     
-    // Закрываем соединение
+    // Закрываем соединения
     await sftp.end();
+    if (sshClient) {
+      sshClient.end();
+    }
     
     console.log('\n📊 Результаты деплоя:');
     results.forEach(result => {
@@ -149,6 +244,9 @@ async function deployTheme() {
     
     if (sftp) {
       await sftp.end();
+    }
+    if (sshClient) {
+      sshClient.end();
     }
     
     process.exit(1);
