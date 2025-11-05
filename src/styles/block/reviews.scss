@@ -5,11 +5,6 @@
         background-color: #f3f3f3;
     }
 
-    &__title {
-        text-align: center;
-        color: $black;
-    }
-
     &__card {
         position: relative;
         display: flex;
@@ -149,9 +144,6 @@
 
 @media (max-width: 769px) {
     .reviews {
-        &__title {
-            font-size: 2.5rem;
-        }
         &__card {
             height: 300px;
         }

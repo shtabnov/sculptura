@@ -6,7 +6,8 @@
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
-    "gulp-pug": "^5.0.0"
+    "gulp-pug": "^5.0.0",
+    "ssh2-sftp-client": "^10.0.3"
   },
   "name": "gulp_tamplate",
   "version": "1.0.0",
@@ -298,7 +299,18 @@
     "yargs-parser": "^5.0.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "node scripts/deploy.js",
+    "deploy:theme": "node scripts/deploy.js theme",
+    "deploy:assets": "node scripts/deploy.js assets",
+    "ssh:copy-key": "node scripts/copy-ssh-key.js",
+    "ssh:copy-key-sftp": "node scripts/copy-ssh-key-sftp.js",
+    "wp:read": "node scripts/wp-edit.js read",
+    "wp:write": "node scripts/wp-edit.js write",
+    "wp:list": "node scripts/wp-edit.js list",
+    "wp:exec": "node scripts/wp-edit.js exec",
+    "wp:pull": "node scripts/wp-edit.js pull",
+    "wp:push": "node scripts/wp-edit.js push"
   },
   "author": "",
   "license": "ISC",

@@ -110,11 +110,15 @@ $homepage_id = get_option('page_on_front');
                 <div class="service__wrapper">
                     <?php while ($services->have_posts()) : $services->the_post(); ?>
                         <div class="service__card">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <div class="service__card-image">
+                            <div class="service__card-image">
+                                <?php if (has_post_thumbnail()) : ?>
                                     <?php the_post_thumbnail('medium', ['alt' => get_the_title()]); ?>
-                                </div>
-                            <?php endif; ?>
+                                <?php else : ?>
+                                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #FFDBDB 0%, #EA99FF 100%); display: flex; align-items: center; justify-content: center; color: #131332; font-family: 'El Messiri', sans-serif; font-size: 1.2rem;">
+                                        <?php echo esc_html(get_the_title()); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                             <div class="service__card-content">
                                 <h3 class="service__card-title"><?php the_title(); ?></h3>
                                 <?php if (has_excerpt()) : ?>

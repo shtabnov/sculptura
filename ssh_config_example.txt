@@ -1,0 +1,10 @@
+# SSH конфигурация для проекта Sculptura
+# Использование: ssh sculptura
+
+Host sculptura
+    HostName 141.8.192.138
+    Port 22
+    User a1140618
+    IdentityFile G:\github\sculptura\.ssh\id_rsa
+    IdentitiesOnly yes
+

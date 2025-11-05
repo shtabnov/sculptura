@@ -36,6 +36,25 @@ h2 {
   font-size: 3rem;
 }
 
+[class*=__title] {
+  font-family: "El Messiri", sans-serif;
+  text-align: center;
+  color: #131332;
+  margin-bottom: 3rem;
+  font-size: 3rem;
+}
+[class*=__title] h1,
+[class*=__title] h2,
+[class*=__title] h3,
+[class*=__title] h4,
+[class*=__title] h5,
+[class*=__title] h6 {
+  font-family: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
 ul,
 ol,
 li {
@@ -59,10 +78,19 @@ a {
   [class*=__container] {
     padding: 0 20px;
   }
+
+  [class*=__title] {
+    margin-bottom: 2.5rem;
+  }
 }
 @media (max-width: 719.999px) {
   h2 {
     font-size: 2rem;
+  }
+
+  [class*=__title] {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
   }
 }
 @keyframes hero-btn {
@@ -435,10 +463,6 @@ a {
 .features__container {
   background-color: #F9F9F9;
 }
-.features__title {
-  text-align: center;
-  color: #131332;
-}
 .features__wrapper {
   margin-top: 2.5rem;
   display: flex;
@@ -468,9 +492,6 @@ a {
   .features__container {
     margin-bottom: 60px;
   }
-  .features__title {
-    font-size: 2.5rem;
-  }
   .features__wrapper {
     margin-top: 2rem;
   }
@@ -482,11 +503,6 @@ a {
 .service {
   margin-top: 100px;
   background-color: #f3f3f3;
-}
-.service__title {
-  margin-bottom: 3rem;
-  text-align: center;
-  color: #131332;
 }
 .service__wrapper {
   display: grid;
@@ -614,10 +630,6 @@ a {
   .service {
     padding: 60px 0;
   }
-  .service__title {
-    margin-bottom: 2rem;
-    font-size: 2.5rem;
-  }
   .service__wrapper {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -644,11 +656,6 @@ a {
 }
 .service-detail__container {
   margin-bottom: 60px;
-}
-.service-detail__title {
-  margin-bottom: 3rem;
-  color: #131332;
-  font-family: "El Messiri", sans-serif;
 }
 .service-detail__content {
   display: grid;
@@ -829,15 +836,19 @@ a {
     padding-top: 150px;
     padding-bottom: 60px;
   }
-  .service-detail__title {
-    margin-bottom: 2rem;
-  }
   .service-detail__content {
     grid-template-columns: 1fr;
     gap: 2rem;
+    display: flex;
+    flex-direction: column;
   }
   .service-detail__text {
     gap: 1.5rem;
+    order: 2;
+  }
+  .service-detail__image {
+    order: 1;
+    margin-bottom: 1rem;
   }
   .service-detail__info {
     padding: 1.5rem;
@@ -852,10 +863,6 @@ a {
 }
 .sale__container {
   background-color: #F9F9F9;
-}
-.sale__title {
-  text-align: center;
-  color: #131332;
 }
 .sale__wrapper {
   margin-top: 4rem;
@@ -907,9 +914,6 @@ a {
     padding-top: 40px;
     padding-bottom: 60px;
     margin-bottom: 40px;
-  }
-  .sale__title {
-    font-size: 2.5rem;
   }
   .sale__wrapper {
     margin-top: 2rem;
@@ -964,8 +968,6 @@ a {
 }
 .reception__title {
   margin-bottom: 1rem;
-  text-align: center;
-  color: #131332;
 }
 .reception__description {
   text-align: center;
@@ -1253,10 +1255,6 @@ a {
 .reviews__container {
   background-color: #f3f3f3;
 }
-.reviews__title {
-  text-align: center;
-  color: #131332;
-}
 .reviews__card {
   position: relative;
   display: flex;
@@ -1369,9 +1367,6 @@ a {
   }
 }
 @media (max-width: 769px) {
-  .reviews__title {
-    font-size: 2.5rem;
-  }
   .reviews__card {
     height: 300px;
   }
