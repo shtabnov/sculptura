@@ -26,10 +26,22 @@ function getPrivateKey() {
     return deployConfig.ssh.privateKey;
   }
   
+  // Пробуем использовать ключ из проекта .ssh/id_rsa
+  const projectKeyPath = path.join(__dirname, '..', '.ssh', 'id_rsa');
+  if (fs.existsSync(projectKeyPath)) {
+    try {
+      console.log('🔑 Найден SSH ключ в проекте: .ssh/id_rsa');
+      return fs.readFileSync(projectKeyPath);
+    } catch (e) {
+      console.warn('⚠️ Не удалось прочитать SSH ключ из проекта');
+    }
+  }
+  
   // Пробуем использовать стандартный ключ из ~/.ssh/id_rsa
   const defaultKeyPath = path.join(os.homedir(), '.ssh', 'id_rsa');
   if (fs.existsSync(defaultKeyPath)) {
     try {
+      console.log('🔑 Найден стандартный SSH ключ: ~/.ssh/id_rsa');
       return fs.readFileSync(defaultKeyPath);
     } catch (e) {
       console.warn('⚠️ Не удалось прочитать стандартный SSH ключ');

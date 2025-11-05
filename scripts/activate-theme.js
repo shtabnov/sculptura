@@ -11,13 +11,26 @@ async function activateTheme() {
     conn.on('ready', () => {
       console.log('✅ Подключено к серверу\n');
       
-      // Путь к WordPress
-      const wpPath = '/home/a1140618/domains/sculptura-perm.ru/public_html';
+      // Получаем путь к WordPress из конфигурации или используем стандартный путь
+      // Путь должен быть указан в deploy.config.js или вычисляется автоматически
+      const themePath = deployConfig.remote.themePath || '';
+      // Извлекаем базовый путь WordPress (убираем wp-content/themes/sculptura/)
+      const wpPath = themePath 
+        ? themePath.replace(/\/wp-content\/themes\/sculptura\/?$/, '')
+        : null;
+      
+      if (!wpPath) {
+        console.error('❌ Не удалось определить путь к WordPress');
+        console.log('💡 Укажите правильный themePath в deploy.config.js');
+        reject(new Error('Не указан путь к WordPress'));
+        return;
+      }
       
       // Команда для активации темы через WP-CLI
       const command = `cd ${wpPath} && wp theme activate sculptura --allow-root`;
       
       console.log(`🔄 Активация темы "sculptura"...`);
+      console.log(`   WordPress путь: ${wpPath}`);
       console.log(`   Команда: ${command}\n`);
       
       conn.exec(command, (err, stream) => {

@@ -1,10 +1,15 @@
 # SSH конфигурация для проекта Sculptura
 # Использование: ssh sculptura
+# 
+# ВАЖНО: Замените примеры на реальные значения:
+# - HostName: IP адрес или домен вашего сервера
+# - User: имя пользователя для SSH подключения
+# - IdentityFile: путь к вашему приватному SSH ключу
 
 Host sculptura
-    HostName 141.8.192.138
+    HostName your-server.com
     Port 22
-    User a1140618
-    IdentityFile G:\github\sculptura\.ssh\id_rsa
+    User your-username
+    IdentityFile ~/.ssh/id_rsa
     IdentitiesOnly yes
 

@@ -72,6 +72,23 @@ a {
     text-align: center;
 }
 
+// Унифицированные стили для всех секций
+section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+
+    // Исключения для специфичных секций
+    &.hero,
+    &.contact {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    &.contact {
+        margin-top: 90px;
+    }
+}
+
 // Унифицированные медиа-запросы для всего проекта
 // Точка 1: Планшеты (до 1024px)
 @media (max-width: 1023.99px) {
@@ -87,6 +104,17 @@ a {
         margin-bottom: 2.5rem;
         font-size: 2.5rem; // 40px
     }
+
+    section {
+        padding-top: 80px;
+        padding-bottom: 80px;
+
+        &.hero,
+        &.contact {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
 }
 
 // Точка 2: Мобильные (до 768px)
@@ -98,6 +126,17 @@ a {
     [class*="__title"] {
         margin-bottom: 2rem;
         font-size: 2rem; // 32px
+    }
+
+    section {
+        padding-top: 60px;
+        padding-bottom: 60px;
+
+        &.hero,
+        &.contact {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
     }
 }
 

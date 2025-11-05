@@ -19,6 +19,7 @@ const watch = () => {
 const { series, parallel } = gulp;
 
 // Отдельные задачи для scripts, css и images
+exports.pug = pug;
 exports.scripts = scripts;
 exports.css = scss;
 exports.images = img;

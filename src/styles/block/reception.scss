@@ -1,5 +1,4 @@
 .reception {
-    padding: 100px 0;
     background-color: $white;
 
     &__container {
@@ -115,8 +114,6 @@
 
 @media (max-width: 768.99px) {
     .reception {
-        padding: 60px 0;
-
         &__description {
             font-size: 1rem;
             margin-bottom: 2rem;
