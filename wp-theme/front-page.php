@@ -60,41 +60,6 @@ $homepage_id = get_option('page_on_front');
     </section>
 
     <?php
-    // Features секция
-    $features_query = new WP_Query([
-        'post_type' => 'feature',
-        'posts_per_page' => -1,
-        'orderby' => 'menu_order',
-        'order' => 'ASC',
-    ]);
-    ?>
-    <section class="features" id="features">
-        <div class="features__container">
-            <h2>Наши преимущества</h2>
-            <?php if ($features_query->have_posts()) : ?>
-                <div class="features__wrapper">
-                    <?php while ($features_query->have_posts()) : $features_query->the_post(); ?>
-                        <div class="features__card">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <div class="features__card-img">
-                                    <?php the_post_thumbnail('medium', ['alt' => get_the_title()]); ?>
-                                </div>
-                            <?php endif; ?>
-                            <div class="features__card-txt">
-                                <p><?php the_title(); ?></p>
-                                <?php if (has_excerpt()) : ?>
-                                    <p><?php echo esc_html(get_the_excerpt()); ?></p>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    <?php endwhile; ?>
-                </div>
-                <?php wp_reset_postdata(); ?>
-            <?php endif; ?>
-        </div>
-    </section>
-
-    <?php
     // Services секция
     $services = new WP_Query([
         'post_type' => 'service',
@@ -145,7 +110,7 @@ $homepage_id = get_option('page_on_front');
     ?>
     <section class="sale" id="sale">
         <div class="sale__container">
-            <h2>Акции</h2>
+            <h2 class="sale__title">Акции</h2>
             <?php if ($sales->have_posts()) : ?>
                 <div class="sale__wrapper">
                     <div class="sale__slader splide" id="sale_slider">
@@ -175,6 +140,41 @@ $homepage_id = get_option('page_on_front');
     </section>
 
     <?php
+    // Features секция
+    $features_query = new WP_Query([
+        'post_type' => 'feature',
+        'posts_per_page' => -1,
+        'orderby' => 'menu_order',
+        'order' => 'ASC',
+    ]);
+    ?>
+    <section class="features" id="features">
+        <div class="features__container">
+            <h2 class="features__title">Наши преимущества</h2>
+            <?php if ($features_query->have_posts()) : ?>
+                <div class="features__wrapper">
+                    <?php while ($features_query->have_posts()) : $features_query->the_post(); ?>
+                        <div class="features__card">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <div class="features__card-img">
+                                    <?php the_post_thumbnail('medium', ['alt' => get_the_title()]); ?>
+                                </div>
+                            <?php endif; ?>
+                            <div class="features__card-txt">
+                                <p><?php the_title(); ?></p>
+                                <?php if (has_excerpt()) : ?>
+                                    <p><?php echo esc_html(get_the_excerpt()); ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+                <?php wp_reset_postdata(); ?>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <?php
     // Reviews секция
     $reviews_query = new WP_Query([
         'post_type' => 'review',
@@ -185,7 +185,7 @@ $homepage_id = get_option('page_on_front');
     ?>
     <section class="reviews" id="reviews">
         <div class="reviews__container">
-            <h2>Отзывы</h2>
+            <h2 class="reviews__title">Отзывы</h2>
             <?php if ($reviews_query->have_posts()) : ?>
                 <div class="reviews__slider splide" id="reviews_slider">
                     <div class="splide__arrows">
@@ -225,7 +225,7 @@ $homepage_id = get_option('page_on_front');
 
     <section class="contact" id="contact">
         <div class="contact__container">
-            <h2>Контакты</h2>
+            <h2 class="contact__title">Контакты</h2>
             <div class="contact__wrap">
                 <div class="contact__map" id="map"></div>
                 <div class="contact__card card">

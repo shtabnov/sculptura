@@ -147,22 +147,7 @@
             right: 0;
             flex-direction: column;
             justify-content: start;
-            background: linear-gradient(
-                    223deg,
-                    rgba(40, 70, 15, 0.35) 40%,
-                    rgba(70, 110, 30, 0.48) 100%
-                ),
-                linear-gradient(
-                    150deg,
-                    rgba(57, 93, 18, 0.42) 40%,
-                    rgba(82, 160, 13, 0.527) 100%
-                ),
-                linear-gradient(
-                    45deg,
-                    rgba(38, 73, 2, 0.45),
-                    rgba(57, 93, 18, 0.33),
-                    rgba(100, 150, 60, 0.5)
-                );
+            background: rgba($deep-oliva, 0.88);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0px 0px 15px rgb(223, 255, 196);
@@ -197,6 +182,7 @@
             font-size: 1.2rem;
             font-weight: 600;
             margin: 0;
+            text-transform: uppercase;
         }
 
         &__link {

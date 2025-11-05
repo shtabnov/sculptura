@@ -1,7 +1,7 @@
 .hero {
     height: 100vh;
     overflow: hidden;
-    margin-bottom: 90px;
+    // margin-bottom: 90px; // Временно убрано
 
     &__slider {
         position: relative;
@@ -93,6 +93,8 @@
         & p {
             font-family: $nav;
             color: $white;
+            font-size: 1.2rem;
+            line-height: 1.3;
         }
     }
 
