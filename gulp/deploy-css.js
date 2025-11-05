@@ -1,14 +1,20 @@
 // Gulp задача для деплоя CSS
 const ssh2 = require('ssh2-sftp-client');
-const deployConfig = require('../deploy.config.js');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
 
+// Опциональная загрузка конфига деплоя
+let deployConfig = null;
+const configPath = path.join(__dirname, '..', 'deploy.config.js');
+if (fs.existsSync(configPath)) {
+  deployConfig = require(configPath);
+}
+
 const sftp = new ssh2();
 
 function getPrivateKey() {
-  if (deployConfig.ssh.privateKey) {
+  if (deployConfig && deployConfig.ssh && deployConfig.ssh.privateKey) {
     return deployConfig.ssh.privateKey;
   }
   
@@ -81,6 +87,13 @@ async function deployAssets(localPath, remotePath) {
 
 module.exports = function deployCSS() {
   return new Promise(async (resolve, reject) => {
+    // Если конфиг не найден, пропускаем деплой
+    if (!deployConfig) {
+      console.log('⚠️  deploy.config.js не найден, пропускаем деплой CSS');
+      resolve();
+      return;
+    }
+
     try {
       const themePath = deployConfig.remote.themePath;
       const remoteCSSPath = path.join(themePath, 'assets/css').replace(/\\/g, '/');
