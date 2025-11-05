@@ -3,14 +3,35 @@
     width: 100%;
     z-index: 50;
     background: rgba(57, 93, 18, 0.3);
-    box-shadow: 0px 0px 15px rgb(223, 255, 196);
+    box-shadow: 0px 4px 15px rgb(223, 255, 196);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    transition: background 0.3s ease;
+}
+
+.header_scrolled {
+    background: rgba(57, 93, 18, 0.6) !important;
 }
 
 .nav {
     font-family: $nav;
     font-size: 1.1rem;
+    width: 100%;
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        
+        &_mobile {
+            display: none !important;
+            z-index: 51;
+        }
+    }
+
+    &__logo_text {
+        display: none !important;
+    }
+
 
     &__list {
         display: flex;
@@ -18,8 +39,14 @@
         justify-content: space-between;
     }
 
-    &__item_title {
-        display: none;
+    &__item {
+        &_title {
+            display: none;
+        }
+
+        &_logo_desktop {
+            display: block;
+        }
     }
 
     &__title {
@@ -61,25 +88,19 @@
         & input {
             display: none;
 
-            &:checked ~ .nav__btn > span {
+            &:checked + .nav__btn > span {
                 transform: rotate(45deg);
                 transition: 0.3s;
             }
-            &:checked ~ .nav__btn > span::before {
+            &:checked + .nav__btn > span::before {
                 top: 0;
                 transform: rotate(0);
                 transition: 0.3s;
             }
-            &:checked ~ .nav__btn > span::after {
+            &:checked + .nav__btn > span::after {
                 top: 0;
                 transform: rotate(90deg);
                 transition: 0.3s;
-            }
-
-            &:checked ~ .nav__list {
-                visibility: visible;
-                top: 0;
-                // bottom: 0;
             }
         }
     }
@@ -138,26 +159,61 @@
 
 @media (max-width: 767.99px) {
     .header {
-        position: absolute;
+        position: fixed;
+        background: rgba($deep-oliva, 0.8);
+    }
+
+    .header_scrolled {
+        background: rgba($deep-oliva, 0.8) !important;
+    }
+
+    .header__container {
+        padding: 1.5rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 70px;
     }
 
     .nav {
         font-size: 1.5rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        &__logo_mobile {
+            display: flex !important;
+            align-items: center;
+            text-decoration: none;
+            color: $white;
+            z-index: 51;
+        }
+
+        &__logo_text {
+            display: block !important;
+            font-family: $heading;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: $white;
+        }
 
         &__list {
             position: fixed;
-            top: -92vh;
+            top: -100vh;
             left: 0;
             right: 0;
             flex-direction: column;
             justify-content: start;
-            background: rgba($deep-oliva, 0.88);
+            background: rgba($deep-oliva, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0px 0px 15px rgb(223, 255, 196);
             height: 100vh;
             transition: top 0.3s ease-in;
-            padding-top: 7vh;
+            padding-top: 10vh;
+            z-index: 50;
 
             &_active {
                 top: 0;
@@ -166,7 +222,13 @@
         }
 
         &__item {
-            padding: 1vh;
+            padding: 1.5vh 0;
+            width: 100%;
+            text-align: center;
+
+            &_logo_desktop {
+                display: none;
+            }
 
             &_title {
                 position: absolute;
@@ -195,9 +257,44 @@
 
         &__menu {
             display: block;
+            position: relative;
+            z-index: 51;
 
             & input {
                 display: none;
+            }
+        }
+
+        &__btn {
+            position: relative;
+            top: auto;
+            right: auto;
+            width: 40px;
+            height: 40px;
+            z-index: 52;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            & > span {
+                width: 24px;
+                height: 3px;
+                background-color: $white;
+
+                &::after,
+                &::before {
+                    width: 24px;
+                    height: 3px;
+                    background-color: $white;
+                }
+
+                &::before {
+                    top: -9px;
+                }
+
+                &::after {
+                    top: 9px;
+                }
             }
         }
     }
