@@ -8,6 +8,7 @@ const fonts = require("./gulp/font");
 const server = require("./gulp/server");
 const deployCSS = require("./gulp/deploy-css");
 const deployJS = require("./gulp/deploy-js");
+const deployImages = require("./gulp/deploy-images");
 
 // const dev = gulp.parallel(pug, style, move, babel);
 // const img = gulp.parallel(image);
@@ -19,7 +20,7 @@ const { series, parallel } = gulp;
 exports.pug = pug;
 exports.scripts = series(scripts, deployJS); // Автоматический деплой после сборки
 exports.css = series(scss, deployCSS); // Автоматический деплой после сборки
-exports.images = img;
+exports.images = series(img, deployImages);
 exports.fonts = fonts;
 
 // Задачи только сборки (без деплоя) - если нужны
