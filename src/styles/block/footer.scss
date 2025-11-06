@@ -46,7 +46,7 @@
         font-family: $heading;
         font-size: 1.25rem;
         margin-bottom: 1rem;
-        color: $light-pink;
+        color: $accent-sage;
     }
 
     &__info,
@@ -98,7 +98,7 @@
         transition: color 0.3s ease;
 
         &:hover {
-            color: $light-pink;
+            color: $accent-sage;
         }
     }
 
@@ -124,7 +124,7 @@
         }
 
         &:hover {
-            color: $light-pink;
+            color: $accent-sage;
         }
     }
 

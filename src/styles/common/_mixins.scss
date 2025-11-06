@@ -24,10 +24,10 @@
 
 @mixin button-primary {
     @include button-base;
-    background: $light-pink;
-    color: $black;
-    box-shadow: 0 2px 10px rgba(255, 219, 219, 0.3);
-    border: 1px solid rgba($gray, 0.2);
+    background: $accent-sage;
+    color: $white;
+    box-shadow: 0 2px 10px rgba(139, 154, 122, 0.3);
+    border: 1px solid rgba($accent-sage, 0.2);
     
     &::before {
         content: '';
@@ -42,10 +42,10 @@
     }
 
     &:hover {
-        background: $green;
+        background: $accent-terracotta;
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(199, 223, 158, 0.35);
-        border-color: rgba($gray, 0.3);
+        box-shadow: 0 4px 15px rgba(201, 125, 95, 0.35);
+        border-color: rgba($accent-terracotta, 0.3);
         
         &::before {
             opacity: 1;
@@ -54,21 +54,21 @@
 
     &:active {
         transform: translateY(-1px);
-        box-shadow: 0 2px 8px rgba(199, 223, 158, 0.3);
+        box-shadow: 0 2px 8px rgba(201, 125, 95, 0.3);
     }
 }
 
 @mixin button-outline {
     @include button-base;
     background: transparent;
-    color: $light-pink;
-    border: 2px solid $light-pink;
+    color: $accent-sage;
+    border: 2px solid $accent-sage;
     
     &:hover {
-        background: $light-pink;
-        color: $black;
+        background: $accent-sage;
+        color: $white;
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 219, 219, 0.4);
+        box-shadow: 0 6px 20px rgba(139, 154, 122, 0.4);
     }
 
     &:active {
@@ -86,9 +86,9 @@
 
     &:hover {
         background: rgba(255, 255, 255, 0.25);
-        border-color: $light-pink;
+        border-color: $accent-sage;
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(255, 219, 219, 0.4);
+        box-shadow: 0 8px 25px rgba(139, 154, 122, 0.4);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
     }

@@ -28,7 +28,7 @@
     }
 
     &:hover {
-        color: $green;
+        color: $accent-sage;
     }
 
     // .scroll-up_active
@@ -41,7 +41,7 @@
     &__path {
         box-sizing: border-box;
         fill: none;
-        stroke: $green;
+        stroke: $accent-sage;
         stroke-width: 6px;
         transition: 0.3s;
     }

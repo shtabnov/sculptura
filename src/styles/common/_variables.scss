@@ -1,12 +1,21 @@
 // colors
+// Основные цвета (новый дизайн)
+$primary-beige: #f5f1eb;        // Основной фон (бежевый/кремовый)
+$primary-cream: #faf8f4;       // Светлый фон секций
+$accent-sage: #8b9a7a;         // Акцентный цвет (приглушенный зеленый)
+$accent-terracotta: #c97d5f;   // Вторичный акцент (терракота)
+$text-dark: #2c2c2c;           // Основной текст
+$text-light: #6b6b6b;          // Второстепенный текст
+$white: #ffffff;
+$black: #1a1a1a;
+
+// Старые цвета (для совместимости, постепенно заменяем)
 $light-pink: #ffdbdb;
 $hot-pink: #ea99ff;
 $cyan: #c2fcff;
 $green: #c7df9e;
 $peach: #ffeee3;
 $gray: #7c8bb0;
-$white: #f9f9f9;
-$black: #131332;
 $deep-oliva: #3d4a1f;
 
 // fonts

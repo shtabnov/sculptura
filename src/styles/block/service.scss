@@ -1,5 +1,5 @@
 .service {
-    background-color: #f3f3f3;
+    background-color: $primary-beige;
 
     // &__container {
     // }
@@ -56,7 +56,7 @@
     &__card-title {
         font-family: $heading;
         font-size: 1.5rem;
-        color: $black;
+        color: $text-dark;
         margin: 0;
         font-weight: 600;
     }
@@ -64,7 +64,7 @@
     &__card-description {
         font-size: 1rem;
         line-height: 1.6;
-        color: rgba($black, 0.7);
+        color: $text-light;
         margin: 0;
         flex-grow: 1;
     }

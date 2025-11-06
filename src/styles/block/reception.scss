@@ -12,7 +12,7 @@
     &__description {
         text-align: center;
         font-size: 1.125rem;
-        color: rgba($black, 0.7);
+        color: $text-light;
         margin-bottom: 3rem;
         max-width: 600px;
         margin-left: auto;
@@ -27,7 +27,7 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 2.5rem;
-    background: $peach;
+    background: $primary-beige;
     border-radius: 1.5rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 
@@ -41,7 +41,7 @@
         font-family: $nav;
         font-size: 0.95rem;
         font-weight: 500;
-        color: $black;
+        color: $text-dark;
         padding-left: 0.5rem;
     }
 
@@ -50,26 +50,26 @@
     &__textarea {
         width: 100%;
         padding: 1rem 1.5rem;
-        border: 2px solid rgba($gray, 0.3);
+        border: 2px solid rgba($accent-sage, 0.3);
         border-radius: 0.75rem;
         font-family: $nav;
         font-size: 1rem;
-        color: $black;
+        color: $text-dark;
         background-color: $white;
         transition: all 0.3s ease;
 
         &::placeholder {
-            color: rgba($black, 0.4);
+            color: $text-light;
         }
 
         &:focus {
             outline: none;
-            border-color: $green;
-            box-shadow: 0 0 0 3px rgba($green, 0.1);
+            border-color: $accent-sage;
+            box-shadow: 0 0 0 3px rgba($accent-sage, 0.1);
         }
 
         &:hover:not(:focus) {
-            border-color: rgba($gray, 0.5);
+            border-color: rgba($accent-sage, 0.5);
         }
     }
 
@@ -148,10 +148,10 @@
         padding: 1rem 2rem;
         margin-top: 0.5rem;
         font-size: 1.1rem;
-        background: $green;
+        background: $accent-sage;
 
         &:hover {
-            background: darken($green, 5%);
+            background: $accent-terracotta;
         }
     }
 }

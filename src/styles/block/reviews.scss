@@ -1,5 +1,5 @@
 .reviews {
-    background-color: #f3f3f3;
+    background-color: $primary-beige;
 
     &__card {
         position: relative;
@@ -15,14 +15,14 @@
         margin-right: 15px;
     }
 
-    &__img {
+        &__img {
         flex: 0 0 10vh;
         width: 10vh;
         height: 10vh;
         border-radius: 50%;
         overflow: hidden;
         margin-right: 20px;
-        background-color: $gray;
+        background-color: rgba($accent-sage, 0.2);
 
         & img {
             width: 100%;
@@ -84,7 +84,7 @@
             z-index: 5;
 
             &:hover {
-                background-color: $green;
+                background-color: $accent-sage;
             }
 
             &--next {
@@ -104,12 +104,12 @@
             width: 18px;
             height: 18px;
             border-radius: 50%;
-            background-color: $gray;
+            background-color: rgba($accent-sage, 0.3);
 
             &.is-active {
                 width: 18px;
                 height: 18px;
-                background-color: $green;
+                background-color: $accent-sage;
             }
         }
     }
@@ -237,7 +237,7 @@
                     &.is-active {
                         height: 10px;
                         width: 10px;
-                        background-color: $green;
+                        background-color: $accent-sage;
                     }
                 }
             }

@@ -74,8 +74,8 @@
     }
 
     &__title {
-        border-top: 2px solid $light-pink;
-        border-bottom: 2px solid $light-pink;
+        border-top: 2px solid $accent-sage;
+        border-bottom: 2px solid $accent-sage;
 
         & h1 {
             font-family: $heading;
@@ -125,11 +125,11 @@
             padding: 2px;
             background: linear-gradient(
                 90deg,
-                $light-pink 0%,
-                $hot-pink 25%,
-                rgba(255, 219, 219, 0.8) 50%,
-                $hot-pink 75%,
-                $light-pink 100%
+                $accent-sage 0%,
+                $accent-terracotta 25%,
+                rgba(139, 154, 122, 0.8) 50%,
+                $accent-terracotta 75%,
+                $accent-sage 100%
             );
             background-size: 200% 100%;
             animation: border-shimmer 3s linear infinite;
@@ -144,12 +144,12 @@
         }
 
         &:hover {
-            background: rgba(255, 219, 219, 0.85);
-            color: $black;
+            background: rgba(139, 154, 122, 0.85);
+            color: $white;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 219, 219, 0.4);
+            box-shadow: 0 8px 25px rgba(139, 154, 122, 0.4);
 
             &::before {
                 animation-duration: 1.5s;

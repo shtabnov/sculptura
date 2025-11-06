@@ -1,5 +1,5 @@
 .sale {
-    background-color: #F9F9F9;
+    background-color: $primary-cream;
 
     &__wrapper {
         margin-top: 4rem;
@@ -36,7 +36,7 @@
         }
 
         &:hover {
-            background-color: $green;
+            background-color: $accent-sage;
         }
     }
 
@@ -44,7 +44,7 @@
         gap: 24px;
 
         &__page {
-            background-color: #aeacaa;
+            background-color: rgba($accent-sage, 0.3);
             height: 16px;
             width: 16px;
             border: none;
@@ -52,7 +52,7 @@
         }
 
         & .is-active {
-            background-color: #363431;
+            background-color: $accent-sage;
         }
     }
 }

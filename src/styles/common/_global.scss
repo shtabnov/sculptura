@@ -10,6 +10,8 @@ body {
     font-family: Roboto;
     margin: 0;
     padding: 0px 0px;
+    background-color: $primary-cream;
+    color: $text-dark;
 }
 h1,
 h2,
@@ -35,7 +37,7 @@ h2 {
 [class*="__title"] {
     font-family: $heading;
     text-align: center;
-    color: $black;
+    color: $text-dark;
     margin-bottom: 3rem;
     font-size: 3rem; // Наследуется от h2, но явно указываем для ясности
 

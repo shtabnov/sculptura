@@ -25,12 +25,12 @@
     &__description {
         font-size: 1.125rem;
         line-height: 1.8;
-        color: $black;
+        color: $text-dark;
         margin-bottom: 1rem;
     }
 
     &__info {
-        background-color: $peach;
+        background-color: $primary-beige;
         padding: 2rem;
         border-radius: 1rem;
 
@@ -41,7 +41,7 @@
         h5,
         h6 {
             font-family: $heading;
-            color: $black;
+            color: $text-dark;
             margin-bottom: 1.5rem;
             margin-top: 0;
         }
@@ -53,7 +53,7 @@
         p {
             font-size: 1rem;
             line-height: 1.8;
-            color: $black;
+            color: $text-dark;
             margin-bottom: 1rem;
         }
 
@@ -67,7 +67,7 @@
         li {
             font-size: 1rem;
             line-height: 2;
-            color: $black;
+            color: $text-dark;
             padding-left: 1.5rem;
             position: relative;
             margin-bottom: 0.5rem;
@@ -76,7 +76,7 @@
                 content: "•";
                 position: absolute;
                 left: 0;
-                color: $green;
+                color: $accent-sage;
                 font-size: 1.5rem;
             }
         }
@@ -84,7 +84,7 @@
         // WordPress блок-редактор классы
         .wp-block-heading {
             font-family: $heading;
-            color: $black;
+            color: $text-dark;
             margin-bottom: 1.5rem;
             margin-top: 0;
         }
@@ -97,7 +97,7 @@
             li {
                 font-size: 1rem;
                 line-height: 2;
-                color: $black;
+                color: $text-dark;
                 padding-left: 1.5rem;
                 position: relative;
                 margin-bottom: 0.5rem;
@@ -106,7 +106,7 @@
                     content: "•";
                     position: absolute;
                     left: 0;
-                    color: $green;
+                    color: $accent-sage;
                     font-size: 1.5rem;
                 }
             }
@@ -116,7 +116,7 @@
     &__subtitle {
         font-family: $heading;
         font-size: 1.5rem;
-        color: $black;
+        color: $text-dark;
         margin-bottom: 1.5rem;
     }
 
@@ -129,7 +129,7 @@
     &__item {
         font-size: 1rem;
         line-height: 2;
-        color: $black;
+        color: $text-dark;
         padding-left: 1.5rem;
         position: relative;
 
@@ -137,7 +137,7 @@
             content: "•";
             position: absolute;
             left: 0;
-            color: $green;
+            color: $accent-sage;
             font-size: 1.5rem;
         }
     }
@@ -156,7 +156,7 @@
         cursor: pointer;
         text-decoration: none;
         position: relative;
-        color: $black;
+        color: $text-dark;
         border-radius: 0.75rem;
         border: 2px solid transparent;
         background: rgba(255, 255, 255, 0.1);
@@ -174,11 +174,11 @@
             padding: 2px;
             background: linear-gradient(
                 90deg,
-                $light-pink 0%,
-                $hot-pink 25%,
-                rgba(255, 219, 219, 0.8) 50%,
-                $hot-pink 75%,
-                $light-pink 100%
+                $accent-sage 0%,
+                $accent-terracotta 25%,
+                rgba(139, 154, 122, 0.8) 50%,
+                $accent-terracotta 75%,
+                $accent-sage 100%
             );
             background-size: 200% 100%;
             animation: border-shimmer 3s linear infinite;
@@ -193,12 +193,12 @@
         }
 
         &:hover {
-            background: rgba(255, 219, 219, 0.85);
-            color: $black;
+            background: rgba(139, 154, 122, 0.85);
+            color: $white;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 219, 219, 0.4);
+            box-shadow: 0 8px 25px rgba(139, 154, 122, 0.4);
 
             &::before {
                 animation-duration: 1.5s;
