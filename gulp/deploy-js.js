@@ -55,18 +55,23 @@ async function deployAssets(localPath, remotePath) {
       readyTimeout: 20000
     };
 
+    // Сначала пробуем использовать ключ (для рабочего места)
+    const privateKey = getPrivateKey();
+    if (privateKey) {
+      connectOptions.privateKey = privateKey;
+      if (deployConfig.ssh.passphrase) {
+        connectOptions.passphrase = deployConfig.ssh.passphrase;
+      }
+    }
+    
+    // Добавляем пароль как fallback (для работы из дома)
     if (deployConfig.ssh.password) {
       connectOptions.password = deployConfig.ssh.password;
-    } else {
-      const privateKey = getPrivateKey();
-      if (privateKey) {
-        connectOptions.privateKey = privateKey;
-        if (deployConfig.ssh.passphrase) {
-          connectOptions.passphrase = deployConfig.ssh.passphrase;
-        }
-      } else {
-        throw new Error('Не указан метод аутентификации');
-      }
+    }
+    
+    // Проверяем, что хотя бы один метод указан
+    if (!privateKey && !deployConfig.ssh.password) {
+      throw new Error('Не указан метод аутентификации. Укажите password или добавьте SSH ключ');
     }
 
     await sftp.connect(connectOptions);

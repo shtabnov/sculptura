@@ -68,21 +68,30 @@ async function testConnection() {
       readyTimeout: 20000
     };
     
-    // Добавляем метод аутентификации
+    // Добавляем методы аутентификации
+    // Сначала пробуем использовать ключ (для рабочего места)
+    const privateKey = getPrivateKey();
+    if (privateKey) {
+      connectOptions.privateKey = privateKey;
+      if (deployConfig.ssh.passphrase) {
+        connectOptions.passphrase = deployConfig.ssh.passphrase;
+      }
+      console.log('🔑 Используется SSH ключ (приоритет)\n');
+    }
+    
+    // Добавляем пароль как fallback (для работы из дома)
     if (deployConfig.ssh.password) {
       connectOptions.password = deployConfig.ssh.password;
-      console.log('🔑 Используется аутентификация по паролю\n');
-    } else {
-      const privateKey = getPrivateKey();
       if (privateKey) {
-        connectOptions.privateKey = privateKey;
-        if (deployConfig.ssh.passphrase) {
-          connectOptions.passphrase = deployConfig.ssh.passphrase;
-        }
-        console.log('🔑 Используется аутентификация по SSH ключу\n');
+        console.log('🔑 Пароль также доступен как fallback\n');
       } else {
-        throw new Error('Не указан метод аутентификации. Укажите password или privateKey в deploy.config.js');
+        console.log('🔑 Используется аутентификация по паролю\n');
       }
+    }
+    
+    // Проверяем, что хотя бы один метод указан
+    if (!privateKey && !deployConfig.ssh.password) {
+      throw new Error('Не указан метод аутентификации. Укажите password или добавьте SSH ключ');
     }
     
     // Подключаемся к серверу
