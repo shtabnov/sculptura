@@ -27,3 +27,5 @@ deploy.config.js
 
 # Конфигурация Telegram (содержит чувствительные данные)
 .telegram-config.js
+
+v2design
