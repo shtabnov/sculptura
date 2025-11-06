@@ -175,6 +175,72 @@ $homepage_id = get_option('page_on_front');
     </section>
 
     <?php
+    // Reception секция (форма записи)
+    ?>
+    <section class="reception" id="reception">
+        <div class="reception__container">
+            <h2 class="reception__title">Записаться на прием</h2>
+            <p class="reception__description">Оставьте свои контактные данные, и мы свяжемся с вами для уточнения деталей записи</p>
+            <form class="reception__form form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST">
+                <?php wp_nonce_field('reception_form', 'reception_nonce'); ?>
+                <input type="hidden" name="action" value="reception_form_submit">
+                
+                <div class="form__group">
+                    <label class="form__label" for="name">Ваше имя *</label>
+                    <input class="form__input" type="text" id="name" name="name" placeholder="Введите ваше имя" required>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label" for="phone">Номер телефона *</label>
+                    <input class="form__input" type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label" for="service">Выберите услугу</label>
+                    <select class="form__select" id="service" name="service">
+                        <option value="">Выберите услугу</option>
+                        <?php
+                        $services_dropdown = new WP_Query([
+                            'post_type' => 'service',
+                            'posts_per_page' => -1,
+                            'orderby' => 'menu_order',
+                            'order' => 'ASC',
+                        ]);
+                        if ($services_dropdown->have_posts()) :
+                            while ($services_dropdown->have_posts()) : $services_dropdown->the_post();
+                                ?>
+                                <option value="<?php echo esc_attr(get_post_field('post_name')); ?>"><?php the_title(); ?></option>
+                                <?php
+                            endwhile;
+                            wp_reset_postdata();
+                        endif;
+                        ?>
+                    </select>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label" for="date">Предпочтительная дата</label>
+                    <input class="form__input" type="date" id="date" name="date">
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label" for="time">Предпочтительное время</label>
+                    <input class="form__input" type="time" id="time" name="time">
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label" for="comment">Комментарий (необязательно)</label>
+                    <textarea class="form__textarea" id="comment" name="comment" placeholder="Укажите дополнительную информацию" rows="4"></textarea>
+                </div>
+                
+                <div class="form__group">
+                    <button class="form__submit" type="submit">Отправить заявку</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <?php
     // Reviews секция
     $reviews_query = new WP_Query([
         'post_type' => 'review',

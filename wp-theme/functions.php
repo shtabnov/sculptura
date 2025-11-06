@@ -524,3 +524,134 @@ function sculptura_get_meta($key, $post_id = null, $default = '') {
     return $value ? $value : $default;
 }
 
+/**
+ * Обработка формы записи на прием
+ */
+function sculptura_handle_reception_form() {
+    // Проверка nonce
+    if (!isset($_POST['reception_nonce']) || !wp_verify_nonce($_POST['reception_nonce'], 'reception_form')) {
+        wp_die('Ошибка безопасности. Пожалуйста, попробуйте еще раз.');
+    }
+    
+    // Получение данных формы
+    $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+    $phone = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
+    $service = isset($_POST['service']) ? sanitize_text_field($_POST['service']) : '';
+    $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
+    $time = isset($_POST['time']) ? sanitize_text_field($_POST['time']) : '';
+    $comment = isset($_POST['comment']) ? sanitize_textarea_field($_POST['comment']) : '';
+    
+    // Валидация обязательных полей
+    if (empty($name) || empty($phone)) {
+        wp_redirect(add_query_arg('reception', 'error', wp_get_referer()));
+        exit;
+    }
+    
+    // Отправка в Telegram
+    $telegram_sent = sculptura_send_to_telegram($name, $phone, $service, $date, $time, $comment);
+    
+    if ($telegram_sent) {
+        // Редирект обратно с сообщением об успехе
+        wp_redirect(add_query_arg('reception', 'success', wp_get_referer()));
+    } else {
+        // Редирект с ошибкой отправки
+        wp_redirect(add_query_arg('reception', 'error', wp_get_referer()));
+    }
+    exit;
+}
+add_action('admin_post_reception_form_submit', 'sculptura_handle_reception_form');
+add_action('admin_post_nopriv_reception_form_submit', 'sculptura_handle_reception_form');
+
+/**
+ * Отправка сообщения в Telegram
+ * 
+ * @param string $name Имя клиента
+ * @param string $phone Телефон клиента
+ * @param string $service Выбранная услуга
+ * @param string $date Предпочтительная дата
+ * @param string $time Предпочтительное время
+ * @param string $comment Комментарий
+ * @return bool Успешность отправки
+ */
+function sculptura_send_to_telegram($name, $phone, $service = '', $date = '', $time = '', $comment = '') {
+    // Получаем настройки Telegram из опций WordPress
+    // Для настройки добавить в wp-config.php или использовать опции:
+    // define('TELEGRAM_BOT_TOKEN', 'ваш_токен_бота');
+    // define('TELEGRAM_CHAT_ID', 'ваш_chat_id');
+    
+    $bot_token = defined('TELEGRAM_BOT_TOKEN') ? TELEGRAM_BOT_TOKEN : get_option('sculptura_telegram_bot_token', '');
+    $chat_id = defined('TELEGRAM_CHAT_ID') ? TELEGRAM_CHAT_ID : get_option('sculptura_telegram_chat_id', '');
+    
+    // Проверка наличия настроек
+    if (empty($bot_token) || empty($chat_id)) {
+        error_log('Sculptura: Telegram не настроен. Укажите TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID');
+        return false;
+    }
+    
+    // Экранирование специальных символов для Markdown
+    $escape_markdown = function($text) {
+        return str_replace(
+            ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'],
+            ['\_', '\*', '\[', '\]', '\(', '\)', '\~', '\`', '\>', '\#', '\+', '\-', '\=', '\|', '\{', '\}', '\.', '\!'],
+            $text
+        );
+    };
+    
+    // Формируем сообщение
+    $message = "📝 *Новая заявка на запись*\n\n";
+    $message .= "👤 *Имя:* " . $escape_markdown($name) . "\n";
+    $message .= "📞 *Телефон:* " . $escape_markdown($phone) . "\n";
+    
+    if ($service) {
+        $message .= "💼 *Услуга:* " . $escape_markdown($service) . "\n";
+    }
+    if ($date) {
+        $message .= "📅 *Дата:* " . $escape_markdown($date) . "\n";
+    }
+    if ($time) {
+        $message .= "⏰ *Время:* " . $escape_markdown($time) . "\n";
+    }
+    if ($comment) {
+        $message .= "💬 *Комментарий:*\n" . $escape_markdown($comment) . "\n";
+    }
+    
+    // URL для отправки сообщения через Bot API
+    $url = "https://api.telegram.org/bot{$bot_token}/sendMessage";
+    
+    // Параметры запроса
+    $data = [
+        'chat_id' => $chat_id,
+        'text' => $message,
+        'parse_mode' => 'Markdown'
+    ];
+    
+    // Отправка запроса через wp_remote_post
+    $response = wp_remote_post($url, [
+        'body' => $data,
+        'timeout' => 10,
+    ]);
+    
+    // Проверка результата
+    if (is_wp_error($response)) {
+        error_log('Sculptura: Ошибка отправки в Telegram: ' . $response->get_error_message());
+        return false;
+    }
+    
+    $response_code = wp_remote_retrieve_response_code($response);
+    $response_body = wp_remote_retrieve_body($response);
+    
+    if ($response_code === 200) {
+        $result = json_decode($response_body, true);
+        if (isset($result['ok']) && $result['ok']) {
+            return true;
+        } else {
+            error_log('Sculptura: Telegram API вернул ошибку: ' . $response_body);
+            return false;
+        }
+    } else {
+        error_log("Sculptura: HTTP ошибка при отправке в Telegram: {$response_code} - {$response_body}");
+        return false;
+    }
+}
+
+

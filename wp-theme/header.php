@@ -11,6 +11,10 @@
 <header class="header">
     <div class="header__container">
         <nav class="header_nav nav">
+            <a class="nav__logo_mobile" href="<?php echo esc_url(home_url('/')); ?>">
+                <span class="nav__logo_text"><?php echo esc_html(get_bloginfo('name')); ?></span>
+            </a>
+            
             <div class="nav__menu">
                 <input id="menu__toggle" type="checkbox">
                 <label class="nav__btn" for="menu__toggle">
@@ -42,7 +46,7 @@
                     }
                     
                     // Логотип в центре
-                    echo '<li class="nav__item">';
+                    echo '<li class="nav__item nav__item_logo_desktop">';
                     echo '<a class="nav__logo" href="' . esc_url(home_url('/')) . '">';
                     if (has_custom_logo()) {
                         echo get_custom_logo();
