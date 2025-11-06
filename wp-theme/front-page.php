@@ -154,26 +154,71 @@ $homepage_id = get_option('page_on_front');
     ?>
     <section class="features" id="features">
         <div class="features__container">
-            <h2 class="features__title">Наши преимущества</h2>
+            <div class="features__header">
+                <h2 class="features__title">Почему выбирают нас</h2>
+                <p class="features__subtitle">Мы создаём пространство гармонии и естественной красоты</p>
+            </div>
             <?php if ($features_query->have_posts()) : ?>
                 <div class="features__wrapper">
                     <?php while ($features_query->have_posts()) : $features_query->the_post(); ?>
+                        <?php
+                        // Получаем иконку из мета-поля или используем миниатюру
+                        $icon_url = get_post_meta(get_the_ID(), '_feature_icon', true);
+                        if (!$icon_url && has_post_thumbnail()) {
+                            $icon_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                        }
+                        ?>
                         <div class="features__card">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <div class="features__card-img">
-                                    <?php the_post_thumbnail('medium', ['alt' => get_the_title()]); ?>
-                                </div>
-                            <?php endif; ?>
-                            <div class="features__card-txt">
-                                <p><?php the_title(); ?></p>
-                                <?php if (has_excerpt()) : ?>
-                                    <p><?php echo esc_html(get_the_excerpt()); ?></p>
+                            <div class="features__card-icon">
+                                <?php if ($icon_url) : ?>
+                                    <img src="<?php echo esc_url($icon_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
                                 <?php endif; ?>
                             </div>
+                            <h3 class="features__card-title"><?php the_title(); ?></h3>
+                            <?php if (has_excerpt()) : ?>
+                                <p class="features__card-description"><?php echo esc_html(get_the_excerpt()); ?></p>
+                            <?php endif; ?>
                         </div>
                     <?php endwhile; ?>
                 </div>
                 <?php wp_reset_postdata(); ?>
+            <?php else : ?>
+                <?php
+                // Fallback: статический контент, если нет постов
+                $static_features = [
+                    [
+                        'icon' => get_template_directory_uri() . '/assets/images/icon/leaf.svg',
+                        'title' => 'Натуральные продукты',
+                        'description' => 'Используем только органическую косметику и масла премиум-класса'
+                    ],
+                    [
+                        'icon' => get_template_directory_uri() . '/assets/images/icon/sparkles.svg',
+                        'title' => 'Профессионализм',
+                        'description' => 'Сертифицированные мастера с многолетним опытом работы'
+                    ],
+                    [
+                        'icon' => get_template_directory_uri() . '/assets/images/icon/heart.svg',
+                        'title' => 'Индивидуальный подход',
+                        'description' => 'Персональные программы ухода для каждого клиента'
+                    ],
+                    [
+                        'icon' => get_template_directory_uri() . '/assets/images/icon/clock.svg',
+                        'title' => 'Удобное время',
+                        'description' => 'Работаем ежедневно с 9:00 до 21:00 без выходных'
+                    ]
+                ];
+                ?>
+                <div class="features__wrapper">
+                    <?php foreach ($static_features as $feature) : ?>
+                        <div class="features__card">
+                            <div class="features__card-icon">
+                                <img src="<?php echo esc_url($feature['icon']); ?>" alt="<?php echo esc_attr($feature['title']); ?>">
+                            </div>
+                            <h3 class="features__card-title"><?php echo esc_html($feature['title']); ?></h3>
+                            <p class="features__card-description"><?php echo esc_html($feature['description']); ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             <?php endif; ?>
         </div>
     </section>
