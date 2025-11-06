@@ -5,7 +5,7 @@ const WordPressSSH = require('./wp-ssh.js');
 const deployConfig = require('../deploy.config.js');
 
 const TELEGRAM_BOT_TOKEN = '1850261952:AAHSxGUD20ZJ34d9woe49ZJvpSIp-9QQyKA';
-const TELEGRAM_CHAT_ID = '242846482';
+const TELEGRAM_CHAT_IDS = ['242846482', '973736141'];
 
 const wp = new WordPressSSH();
 
@@ -39,9 +39,9 @@ async function setupTelegram() {
       console.log('⚠️  Настройки Telegram уже присутствуют в wp-config.php');
       console.log('   Обновляю существующие настройки...\n');
       
-      // Удаляем старые настройки Telegram
+      // Удаляем старые настройки Telegram (поддержка старого формата с одним чатом и нового с массивом)
       configContent = configContent.replace(
-        /\/\/ Настройки Telegram для формы записи Sculptura[\s\S]*?define\('TELEGRAM_CHAT_ID', '[^']+'\);\s*\n/g,
+        /\/\/ Настройки Telegram для формы записи Sculptura[\s\S]*?(?:define\('TELEGRAM_CHAT_ID', '[^']+'\);\s*\n|define\('TELEGRAM_CHAT_IDS', \[[^\]]+\]\);\s*\n)/g,
         ''
       );
     }
@@ -53,16 +53,18 @@ async function setupTelegram() {
     if (stopEditingIndex === -1) {
       // Если маркер не найден, добавляем в конец файла перед закрывающим тегом PHP (если есть)
       const phpCloseTag = configContent.indexOf('?>');
+      const chatIdsString = TELEGRAM_CHAT_IDS.map(id => `'${id}'`).join(', ');
       if (phpCloseTag !== -1) {
-        const telegramConfig = `\n// Настройки Telegram для формы записи Sculptura\ndefine('TELEGRAM_BOT_TOKEN', '${TELEGRAM_BOT_TOKEN}');\ndefine('TELEGRAM_CHAT_ID', '${TELEGRAM_CHAT_ID}');\n\n`;
+        const telegramConfig = `\n// Настройки Telegram для формы записи Sculptura\ndefine('TELEGRAM_BOT_TOKEN', '${TELEGRAM_BOT_TOKEN}');\ndefine('TELEGRAM_CHAT_IDS', [${chatIdsString}]);\n\n`;
         configContent = configContent.slice(0, phpCloseTag) + telegramConfig + configContent.slice(phpCloseTag);
       } else {
         // Добавляем в конец файла
-        configContent += `\n// Настройки Telegram для формы записи Sculptura\ndefine('TELEGRAM_BOT_TOKEN', '${TELEGRAM_BOT_TOKEN}');\ndefine('TELEGRAM_CHAT_ID', '${TELEGRAM_CHAT_ID}');\n`;
+        configContent += `\n// Настройки Telegram для формы записи Sculptura\ndefine('TELEGRAM_BOT_TOKEN', '${TELEGRAM_BOT_TOKEN}');\ndefine('TELEGRAM_CHAT_IDS', [${chatIdsString}]);\n`;
       }
     } else {
       // Добавляем перед маркером
-      const telegramConfig = `// Настройки Telegram для формы записи Sculptura\ndefine('TELEGRAM_BOT_TOKEN', '${TELEGRAM_BOT_TOKEN}');\ndefine('TELEGRAM_CHAT_ID', '${TELEGRAM_CHAT_ID}');\n\n`;
+      const chatIdsString = TELEGRAM_CHAT_IDS.map(id => `'${id}'`).join(', ');
+      const telegramConfig = `// Настройки Telegram для формы записи Sculptura\ndefine('TELEGRAM_BOT_TOKEN', '${TELEGRAM_BOT_TOKEN}');\ndefine('TELEGRAM_CHAT_IDS', [${chatIdsString}]);\n\n`;
       configContent = configContent.slice(0, stopEditingIndex) + telegramConfig + configContent.slice(stopEditingIndex);
     }
     
@@ -72,8 +74,9 @@ async function setupTelegram() {
     
     console.log('\n✅ Настройки Telegram успешно добавлены в wp-config.php!');
     console.log(`   Bot Token: ${TELEGRAM_BOT_TOKEN.substring(0, 20)}...`);
-    console.log(`   Chat ID: ${TELEGRAM_CHAT_ID}`);
-    console.log('\n📝 Теперь форма записи будет отправлять уведомления в Telegram.');
+    console.log(`   Chat IDs: ${TELEGRAM_CHAT_IDS.join(', ')}`);
+    console.log(`   Количество чатов: ${TELEGRAM_CHAT_IDS.length}`);
+    console.log('\n📝 Теперь форма записи будет отправлять уведомления во все указанные Telegram чаты.');
     
   } catch (error) {
     console.error('\n❌ Ошибка:', error.message);

@@ -19,6 +19,10 @@ $homepage_id = get_option('page_on_front');
     for ($i = 1; $i <= 3; $i++) {
         $img = sculptura_get_meta('_hero_image_' . $i, $homepage_id);
         if ($img) {
+            // Принудительно используем HTTPS для изображений
+            if (is_ssl() || (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')) {
+                $img = str_replace('http://', 'https://', $img);
+            }
             $hero_images[] = $img;
         }
     }

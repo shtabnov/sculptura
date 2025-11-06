@@ -12,7 +12,12 @@ if (!defined('ABSPATH')) {
 // Константы
 define('SCULPTURA_VERSION', '1.0.0');
 define('SCULPTURA_THEME_PATH', get_template_directory());
-define('SCULPTURA_THEME_URI', get_template_directory_uri());
+// Принудительно используем HTTPS для URI темы
+$theme_uri = get_template_directory_uri();
+if (is_ssl() || (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')) {
+    $theme_uri = str_replace('http://', 'https://', $theme_uri);
+}
+define('SCULPTURA_THEME_URI', $theme_uri);
 
 /**
  * Подключение класса Walker
@@ -71,6 +76,50 @@ function sculptura_enqueue_assets() {
     );
 }
 add_action('wp_enqueue_scripts', 'sculptura_enqueue_assets');
+
+/**
+ * Принудительное использование HTTPS для всех URL
+ * Исправляет проблему Mixed Content
+ */
+function sculptura_force_https($url) {
+    if (is_ssl()) {
+        $url = str_replace('http://', 'https://', $url);
+    }
+    return $url;
+}
+
+// Применяем HTTPS ко всем URL
+add_filter('wp_get_attachment_url', 'sculptura_force_https');
+add_filter('wp_get_attachment_image_src', function($image) {
+    if ($image && isset($image[0])) {
+        $image[0] = sculptura_force_https($image[0]);
+    }
+    return $image;
+}, 10, 1);
+add_filter('wp_get_attachment_image_attributes', function($attr) {
+    if (isset($attr['src'])) {
+        $attr['src'] = sculptura_force_https($attr['src']);
+    }
+    if (isset($attr['srcset'])) {
+        $attr['srcset'] = sculptura_force_https($attr['srcset']);
+    }
+    return $attr;
+}, 10, 1);
+add_filter('the_post_thumbnail_url', 'sculptura_force_https');
+add_filter('wp_calculate_image_srcset', function($sources) {
+    if (is_array($sources)) {
+        foreach ($sources as &$source) {
+            if (isset($source['url'])) {
+                $source['url'] = sculptura_force_https($source['url']);
+            }
+        }
+    }
+    return $sources;
+}, 10, 1);
+add_filter('home_url', 'sculptura_force_https');
+add_filter('site_url', 'sculptura_force_https');
+add_filter('content_url', 'sculptura_force_https');
+add_filter('plugins_url', 'sculptura_force_https');
 
 /**
  * Добавление Favicon
@@ -575,16 +624,30 @@ add_action('admin_post_nopriv_reception_form_submit', 'sculptura_handle_receptio
  */
 function sculptura_send_to_telegram($name, $phone, $service = '', $date = '', $time = '', $comment = '') {
     // Получаем настройки Telegram из опций WordPress
-    // Для настройки добавить в wp-config.php или использовать опции:
+    // Для настройки добавить в wp-config.php:
     // define('TELEGRAM_BOT_TOKEN', 'ваш_токен_бота');
-    // define('TELEGRAM_CHAT_ID', 'ваш_chat_id');
+    // define('TELEGRAM_CHAT_ID', 'ваш_chat_id'); // Один чат
+    // или
+    // define('TELEGRAM_CHAT_IDS', ['chat_id1', 'chat_id2']); // Несколько чатов
     
     $bot_token = defined('TELEGRAM_BOT_TOKEN') ? TELEGRAM_BOT_TOKEN : get_option('sculptura_telegram_bot_token', '');
-    $chat_id = defined('TELEGRAM_CHAT_ID') ? TELEGRAM_CHAT_ID : get_option('sculptura_telegram_chat_id', '');
+    
+    // Поддержка нескольких чатов
+    $chat_ids = [];
+    if (defined('TELEGRAM_CHAT_IDS') && is_array(TELEGRAM_CHAT_IDS)) {
+        $chat_ids = TELEGRAM_CHAT_IDS;
+    } elseif (defined('TELEGRAM_CHAT_ID')) {
+        $chat_ids = [TELEGRAM_CHAT_ID];
+    } else {
+        $single_chat_id = get_option('sculptura_telegram_chat_id', '');
+        if ($single_chat_id) {
+            $chat_ids = [$single_chat_id];
+        }
+    }
     
     // Проверка наличия настроек
-    if (empty($bot_token) || empty($chat_id)) {
-        error_log('Sculptura: Telegram не настроен. Укажите TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID');
+    if (empty($bot_token) || empty($chat_ids)) {
+        error_log('Sculptura: Telegram не настроен. Укажите TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID или TELEGRAM_CHAT_IDS');
         return false;
     }
     
@@ -618,40 +681,45 @@ function sculptura_send_to_telegram($name, $phone, $service = '', $date = '', $t
     // URL для отправки сообщения через Bot API
     $url = "https://api.telegram.org/bot{$bot_token}/sendMessage";
     
-    // Параметры запроса
-    $data = [
-        'chat_id' => $chat_id,
-        'text' => $message,
-        'parse_mode' => 'Markdown'
-    ];
-    
-    // Отправка запроса через wp_remote_post
-    $response = wp_remote_post($url, [
-        'body' => $data,
-        'timeout' => 10,
-    ]);
-    
-    // Проверка результата
-    if (is_wp_error($response)) {
-        error_log('Sculptura: Ошибка отправки в Telegram: ' . $response->get_error_message());
-        return false;
-    }
-    
-    $response_code = wp_remote_retrieve_response_code($response);
-    $response_body = wp_remote_retrieve_body($response);
-    
-    if ($response_code === 200) {
-        $result = json_decode($response_body, true);
-        if (isset($result['ok']) && $result['ok']) {
-            return true;
-        } else {
-            error_log('Sculptura: Telegram API вернул ошибку: ' . $response_body);
-            return false;
+    // Отправляем сообщение во все указанные чаты
+    $all_success = true;
+    foreach ($chat_ids as $chat_id) {
+        // Параметры запроса
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => $message,
+            'parse_mode' => 'Markdown'
+        ];
+        
+        // Отправка запроса через wp_remote_post
+        $response = wp_remote_post($url, [
+            'body' => $data,
+            'timeout' => 10,
+        ]);
+        
+        // Проверка результата
+        if (is_wp_error($response)) {
+            error_log("Sculptura: Ошибка отправки в Telegram (chat_id: {$chat_id}): " . $response->get_error_message());
+            $all_success = false;
+            continue;
         }
-    } else {
-        error_log("Sculptura: HTTP ошибка при отправке в Telegram: {$response_code} - {$response_body}");
-        return false;
+        
+        $response_code = wp_remote_retrieve_response_code($response);
+        $response_body = wp_remote_retrieve_body($response);
+        
+        if ($response_code === 200) {
+            $result = json_decode($response_body, true);
+            if (!isset($result['ok']) || !$result['ok']) {
+                error_log("Sculptura: Telegram API вернул ошибку (chat_id: {$chat_id}): {$response_body}");
+                $all_success = false;
+            }
+        } else {
+            error_log("Sculptura: HTTP ошибка при отправке в Telegram (chat_id: {$chat_id}): {$response_code} - {$response_body}");
+            $all_success = false;
+        }
     }
+    
+    return $all_success;
 }
 
 

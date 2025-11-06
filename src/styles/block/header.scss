@@ -10,7 +10,7 @@
 }
 
 .header_scrolled {
-    background: rgba(57, 93, 18, 0.6) !important;
+    background: rgba(57, 93, 18, 0.6);
 }
 
 .nav {
@@ -259,6 +259,7 @@
             display: block;
             position: relative;
             z-index: 51;
+            flex-basis: content;
 
             & input {
                 display: none;
@@ -277,23 +278,23 @@
             justify-content: center;
 
             & > span {
-                width: 24px;
-                height: 3px;
+                width: 33px;
+                height: 2px;
                 background-color: $white;
 
                 &::after,
                 &::before {
-                    width: 24px;
-                    height: 3px;
+                    width: 33px;
+                    height: 2px;
                     background-color: $white;
                 }
 
                 &::before {
-                    top: -9px;
+                    top: -12px;
                 }
 
                 &::after {
-                    top: 9px;
+                    top: 12px;
                 }
             }
         }
