@@ -24,3 +24,6 @@ deploy.config.js
 
 # SSH ключи проекта
 .ssh/
+
+# Конфигурация Telegram (содержит чувствительные данные)
+.telegram-config.js

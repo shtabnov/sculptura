@@ -3,9 +3,58 @@
 
 const WordPressSSH = require('./wp-ssh.js');
 const deployConfig = require('../deploy.config.js');
+const fs = require('fs');
+const path = require('path');
 
-const TELEGRAM_BOT_TOKEN = '1850261952:AAHSxGUD20ZJ34d9woe49ZJvpSIp-9QQyKA';
-const TELEGRAM_CHAT_IDS = ['242846482', '973736141'];
+// Безопасное получение токена из переменной окружения или файла
+function getTelegramToken() {
+  // 1. Проверяем переменную окружения (самый безопасный способ)
+  if (process.env.TELEGRAM_BOT_TOKEN) {
+    return process.env.TELEGRAM_BOT_TOKEN;
+  }
+  
+  // 2. Проверяем локальный файл конфигурации (не в git)
+  const localConfigPath = path.join(__dirname, '..', '.telegram-config.js');
+  if (fs.existsSync(localConfigPath)) {
+    try {
+      const localConfig = require(localConfigPath);
+      if (localConfig.TELEGRAM_BOT_TOKEN) {
+        return localConfig.TELEGRAM_BOT_TOKEN;
+      }
+    } catch (e) {
+      console.warn('⚠️ Не удалось прочитать .telegram-config.js');
+    }
+  }
+  
+  throw new Error('TELEGRAM_BOT_TOKEN не найден. Установите переменную окружения TELEGRAM_BOT_TOKEN или создайте файл .telegram-config.js');
+}
+
+function getTelegramChatIds() {
+  // 1. Проверяем переменную окружения
+  if (process.env.TELEGRAM_CHAT_IDS) {
+    return process.env.TELEGRAM_CHAT_IDS.split(',').map(id => id.trim());
+  }
+  
+  // 2. Проверяем локальный файл конфигурации
+  const localConfigPath = path.join(__dirname, '..', '.telegram-config.js');
+  if (fs.existsSync(localConfigPath)) {
+    try {
+      const localConfig = require(localConfigPath);
+      if (localConfig.TELEGRAM_CHAT_IDS) {
+        return Array.isArray(localConfig.TELEGRAM_CHAT_IDS) 
+          ? localConfig.TELEGRAM_CHAT_IDS 
+          : [localConfig.TELEGRAM_CHAT_IDS];
+      }
+    } catch (e) {
+      console.warn('⚠️ Не удалось прочитать .telegram-config.js');
+    }
+  }
+  
+  throw new Error('TELEGRAM_CHAT_IDS не найдены. Установите переменную окружения TELEGRAM_CHAT_IDS или создайте файл .telegram-config.js');
+}
+
+const TELEGRAM_BOT_TOKEN = getTelegramToken();
+const TELEGRAM_CHAT_IDS = getTelegramChatIds();
 
 const wp = new WordPressSSH();
 

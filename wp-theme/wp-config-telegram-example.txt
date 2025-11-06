@@ -1,6 +1,11 @@
 // Настройки Telegram для формы записи Sculptura
 // Добавьте эти строки в wp-config.php перед строкой "/* That's all, stop editing! */"
+// 
+// ВАЖНО: Замените YOUR_BOT_TOKEN и YOUR_CHAT_ID на реальные значения
 
-define('TELEGRAM_BOT_TOKEN', '1850261952:AAHSxGUD20ZJ34d9woe49ZJvpSIp-9QQyKA');
-define('TELEGRAM_CHAT_ID', '242846482');
+define('TELEGRAM_BOT_TOKEN', 'YOUR_BOT_TOKEN');
+define('TELEGRAM_CHAT_ID', 'YOUR_CHAT_ID');
+
+// Или для нескольких чатов:
+// define('TELEGRAM_CHAT_IDS', ['YOUR_CHAT_ID_1', 'YOUR_CHAT_ID_2']);
 
