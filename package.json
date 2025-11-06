@@ -1,8 +1,8 @@
 {
   "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/preset-env": "^7.16.11",
-    "browser-sync": "^2.27.7",
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "browser-sync": "^3.0.4",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
@@ -178,7 +178,6 @@
     "nan": "^2.15.0",
     "nanomatch": "^1.2.13",
     "next-tick": "^1.0.0",
-    "node-sass": "^7.0.1",
     "normalize-package-data": "^2.5.0",
     "normalize-path": "^3.0.0",
     "now-and-later": "^2.0.1",
