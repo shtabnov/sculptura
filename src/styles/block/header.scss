@@ -105,43 +105,7 @@
     }
 
     &__btn {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        width: 26px;
-        height: 26px;
-        cursor: pointer;
-        z-index: 1;
-
-        & > span {
-            display: block;
-            position: absolute;
-            width: 21px;
-            height: 2px;
-            background-color: $white;
-
-            &::after,
-            &::before {
-                display: block;
-                position: absolute;
-                width: 21px;
-                height: 2px;
-                background-color: $white;
-            }
-
-            &::before {
-                content: "";
-                top: -8px;
-            }
-
-            &::after {
-                content: "";
-                top: 8px;
-            }
-        }
+        display: none;
     }
 }
 
@@ -275,26 +239,32 @@
             z-index: 52;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
 
             & > span {
-                width: 33px;
+                display: block;
+                position: absolute;
+                width: 21px;
                 height: 2px;
                 background-color: $white;
 
                 &::after,
                 &::before {
-                    width: 33px;
+                    display: block;
+                    position: absolute;
+                    width: 21px;
                     height: 2px;
                     background-color: $white;
                 }
 
                 &::before {
-                    top: -12px;
+                    content: "";
+                    top: -8px;
                 }
 
                 &::after {
-                    top: 12px;
+                    content: "";
+                    top: 8px;
                 }
             }
         }
