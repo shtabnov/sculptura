@@ -120,6 +120,8 @@ add_filter('home_url', 'sculptura_force_https');
 add_filter('site_url', 'sculptura_force_https');
 add_filter('content_url', 'sculptura_force_https');
 add_filter('plugins_url', 'sculptura_force_https');
+add_filter('template_directory_uri', 'sculptura_force_https');
+add_filter('stylesheet_directory_uri', 'sculptura_force_https');
 
 /**
  * Добавление Favicon
@@ -286,7 +288,7 @@ function sculptura_register_additional_post_types() {
         'public' => false,
         'show_ui' => true,
         'menu_icon' => 'dashicons-star-filled',
-        'supports' => ['title', 'editor', 'thumbnail'],
+        'supports' => ['title', 'editor', 'excerpt', 'thumbnail'],
         'show_in_rest' => true,
     ]);
 
@@ -561,6 +563,79 @@ function sculptura_save_review_meta($post_id) {
     }
 }
 add_action('save_post_review', 'sculptura_save_review_meta');
+
+/**
+ * Добавление мета-поля "Иконка" для features
+ */
+function sculptura_add_feature_meta_boxes() {
+    add_meta_box(
+        'sculptura_feature_icon',
+        'Иконка преимущества',
+        'sculptura_feature_icon_callback',
+        'feature',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'sculptura_add_feature_meta_boxes');
+
+function sculptura_feature_icon_callback($post) {
+    wp_nonce_field('sculptura_feature_save', 'sculptura_feature_nonce');
+    $feature_icon = get_post_meta($post->ID, '_feature_icon', true);
+    ?>
+    <table class="form-table">
+        <tr>
+            <th><label for="feature_icon">URL иконки</label></th>
+            <td>
+                <input type="url" id="feature_icon" name="feature_icon" value="<?php echo esc_url($feature_icon); ?>" class="regular-text" />
+                <button type="button" class="button sculptura-media-upload" data-target="feature_icon">Выбрать изображение</button>
+                <p class="description">Укажите URL иконки (SVG или изображение). Можно использовать путь к файлу в теме: <?php echo esc_html(get_template_directory_uri()); ?>/assets/images/icon/</p>
+                <?php if ($feature_icon) : ?>
+                    <p><img src="<?php echo esc_url($feature_icon); ?>" style="max-width: 100px; height: auto; margin-top: 10px;" /></p>
+                <?php endif; ?>
+            </td>
+        </tr>
+    </table>
+    <script>
+    jQuery(document).ready(function($) {
+        $('.sculptura-media-upload').on('click', function(e) {
+            e.preventDefault();
+            var target = $(this).data('target');
+            var frame = wp.media({
+                title: 'Выберите изображение',
+                button: { text: 'Использовать' },
+                multiple: false
+            });
+            frame.on('select', function() {
+                var attachment = frame.state().get('selection').first().toJSON();
+                $('#' + target).val(attachment.url);
+                if (target === 'feature_icon') {
+                    $('#' + target).next('p').next('p').remove();
+                    $('#' + target).after('<p><img src="' + attachment.url + '" style="max-width: 100px; height: auto; margin-top: 10px;" /></p>');
+                }
+            });
+            frame.open();
+        });
+    });
+    </script>
+    <?php
+}
+
+function sculptura_save_feature_meta($post_id) {
+    if (!isset($_POST['sculptura_feature_nonce']) || !wp_verify_nonce($_POST['sculptura_feature_nonce'], 'sculptura_feature_save')) {
+        return;
+    }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    if (isset($_POST['feature_icon'])) {
+        update_post_meta($post_id, '_feature_icon', esc_url_raw($_POST['feature_icon']));
+    }
+}
+add_action('save_post_feature', 'sculptura_save_feature_meta');
 
 /**
  * Хелпер: получение мета-поля

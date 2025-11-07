@@ -30,7 +30,7 @@ get_header();
                         </div>
 
                         <div class="service-detail__action">
-                            <a class="service-detail__btn" href="#reception">Записаться на прием</a>
+                            <a class="service-detail__btn" href="<?php echo esc_url(home_url('/#reception')); ?>">Записаться на прием</a>
                         </div>
                     </div>
 

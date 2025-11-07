@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Ruda:wght@600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Ruda:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 * {
   box-sizing: border-box;
 }
@@ -31,7 +32,7 @@ p {
 
 h1,
 h2 {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
 }
 
 h2 {
@@ -39,7 +40,7 @@ h2 {
 }
 
 [class*=__title] {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   text-align: center;
   color: #2c2c2c;
   margin-bottom: 3rem;
@@ -250,6 +251,7 @@ section.contact {
 .nav__btn {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   position: fixed;
   top: 20px;
   right: 20px;
@@ -261,14 +263,14 @@ section.contact {
 .nav__btn > span {
   display: block;
   position: absolute;
-  width: 100%;
+  width: 21px;
   height: 2px;
   background-color: #ffffff;
 }
 .nav__btn > span::after, .nav__btn > span::before {
   display: block;
   position: absolute;
-  width: 100%;
+  width: 21px;
   height: 2px;
   background-color: #ffffff;
 }
@@ -472,7 +474,7 @@ section.contact {
   border-bottom: 2px solid #8b9a7a;
 }
 .hero__title h1 {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 4rem;
   line-height: 150%;
   color: #ffffff;
@@ -599,7 +601,7 @@ section.contact {
   margin-bottom: 4rem;
 }
 .features__title {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 3rem;
   color: #2c2c2c;
   margin-bottom: 1rem;
@@ -654,7 +656,7 @@ section.contact {
   color: inherit;
 }
 .features__card-title {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 1.25rem;
   color: #2c2c2c;
   margin-bottom: 0.5rem;
@@ -744,7 +746,7 @@ section.contact {
   gap: 1rem;
 }
 .service__card-title {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 1.5rem;
   color: #2c2c2c;
   margin: 0;
@@ -875,7 +877,7 @@ section.contact {
 .service-detail__info h4,
 .service-detail__info h5,
 .service-detail__info h6 {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   color: #2c2c2c;
   margin-bottom: 1.5rem;
   margin-top: 0;
@@ -911,7 +913,7 @@ section.contact {
   font-size: 1.5rem;
 }
 .service-detail__info .wp-block-heading {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   color: #2c2c2c;
   margin-bottom: 1.5rem;
   margin-top: 0;
@@ -937,7 +939,7 @@ section.contact {
   font-size: 1.5rem;
 }
 .service-detail__subtitle {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 1.5rem;
   color: #2c2c2c;
   margin-bottom: 1.5rem;
@@ -1699,13 +1701,13 @@ section.contact {
   filter: brightness(0) invert(1);
 }
 .footer__tagline {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 0.95rem;
   color: rgbaំ(#ffffff, 0.8);
   margin: 0;
 }
 .footer__title {
-  font-family: "El Messiri", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
   font-size: 1.25rem;
   margin-bottom: 1rem;
   color: #8b9a7a;

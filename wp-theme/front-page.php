@@ -84,7 +84,7 @@ $homepage_id = get_option('page_on_front');
                         <div class="service__card">
                             <div class="service__card-image">
                                 <?php if (has_post_thumbnail()) : ?>
-                                    <?php the_post_thumbnail('medium', ['alt' => get_the_title()]); ?>
+                                    <?php the_post_thumbnail('large', ['alt' => get_the_title()]); ?>
                                 <?php else : ?>
                                     <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #FFDBDB 0%, #EA99FF 100%); display: flex; align-items: center; justify-content: center; color: #131332; font-family: 'El Messiri', sans-serif; font-size: 1.2rem;">
                                         <?php echo esc_html(get_the_title()); ?>
@@ -170,6 +170,10 @@ $homepage_id = get_option('page_on_front');
                         if (!$icon_url && has_post_thumbnail()) {
                             $icon_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
                         }
+                        // Принудительно используем HTTPS для иконок
+                        if ($icon_url) {
+                            $icon_url = sculptura_force_https($icon_url);
+                        }
                         ?>
                         <div class="features__card">
                             <div class="features__card-icon">
@@ -248,8 +252,8 @@ $homepage_id = get_option('page_on_front');
                 </div>
                 
                 <div class="form__group">
-                    <label class="form__label" for="service">Выберите услугу</label>
-                    <select class="form__select" id="service" name="service">
+                    <label class="form__label" for="reception_service">Выберите услугу</label>
+                    <select class="form__select" id="reception_service" name="service">
                         <option value="">Выберите услугу</option>
                         <?php
                         $services_dropdown = new WP_Query([

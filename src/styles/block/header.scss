@@ -21,7 +21,7 @@
     &__logo {
         display: flex;
         align-items: center;
-        
+
         &_mobile {
             display: none !important;
             z-index: 51;
@@ -31,7 +31,6 @@
     &__logo_text {
         display: none !important;
     }
-
 
     &__list {
         display: flex;
@@ -108,6 +107,7 @@
     &__btn {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
         position: fixed;
         top: 20px;
         right: 20px;
@@ -119,7 +119,7 @@
         & > span {
             display: block;
             position: absolute;
-            width: 100%;
+            width: 21px;
             height: 2px;
             background-color: $white;
 
@@ -127,7 +127,7 @@
             &::before {
                 display: block;
                 position: absolute;
-                width: 100%;
+                width: 21px;
                 height: 2px;
                 background-color: $white;
             }
@@ -193,7 +193,7 @@
 
         &__logo_text {
             display: block !important;
-            font-family: $heading;
+            font-family: $logo;
             font-size: 1.5rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -242,7 +242,7 @@
         }
 
         &__title {
-            font-family: $heading;
+            font-family: $logo;
             display: block;
             color: $white;
             font-size: 1.2rem;

@@ -314,7 +314,8 @@
     "wp:exec": "node scripts/wp-edit.js exec",
     "wp:pull": "node scripts/wp-edit.js pull",
     "wp:push": "node scripts/wp-edit.js push",
-    "wp:create-services": "node scripts/create-services.js"
+    "wp:create-services": "node scripts/create-services.js",
+    "wp:create-features": "node scripts/create-features.js"
   },
   "author": "",
   "license": "ISC",
