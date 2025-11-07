@@ -57,20 +57,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 navLink.addEventListener("click", (e) => {
                     const href = navLink.getAttribute("href");
                     
-                    // Если это якорная ссылка (начинается с /#)
-                    if (href && href.startsWith("/#")) {
-                        // Проверяем, находимся ли мы на главной странице
-                        // Главная страница: pathname = "/" или пустой, и нет query параметров (кроме пустых)
-                        const pathname = window.location.pathname;
-                        const search = window.location.search;
-                        const isHomePage = (pathname === "/" || pathname === "/index.html" || pathname === "") && 
-                                          (!search || search === "");
+                    // Проверяем, является ли это якорной ссылкой (содержит #)
+                    if (href && href.includes("#")) {
+                        // Извлекаем якорь из ссылки
+                        const anchorMatch = href.match(/#(.+)$/);
+                        const anchor = anchorMatch ? anchorMatch[0] : ""; // #service, #price и т.д.
                         
-                        // Если не на главной странице, перенаправляем на главную с якорем
-                        if (!isHomePage) {
-                            e.preventDefault();
-                            window.location.href = href;
-                            return;
+                        if (anchor) {
+                            let isHomeLink = false;
+                            
+                            // Проверяем, ведет ли ссылка на главную страницу
+                            if (href.startsWith("/#") || href.startsWith("#")) {
+                                // Относительная ссылка типа /#service или #service
+                                isHomeLink = true;
+                            } else {
+                                try {
+                                    // Абсолютная ссылка
+                                    const url = new URL(href, window.location.origin);
+                                    isHomeLink = url.pathname === "/" || 
+                                                url.pathname === "" || 
+                                                url.pathname === "/index.html";
+                                } catch (err) {
+                                    // Если не удалось распарсить URL, считаем относительной
+                                    isHomeLink = href.startsWith("/") || href.startsWith("#");
+                                }
+                            }
+                            
+                            // Проверяем, находимся ли мы на главной странице
+                            const currentPath = window.location.pathname;
+                            const currentSearch = window.location.search;
+                            const isHomePage = (currentPath === "/" || 
+                                              currentPath === "/index.html" || 
+                                              currentPath === "") && 
+                                              (!currentSearch || currentSearch === "");
+                            
+                            // Если ссылка ведет на главную, но мы не на главной странице
+                            if (isHomeLink && !isHomePage) {
+                                e.preventDefault();
+                                // Перенаправляем на главную с якорем
+                                window.location.href = window.location.origin + anchor;
+                                return;
+                            }
                         }
                     }
                     

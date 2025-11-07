@@ -172,19 +172,41 @@ document.addEventListener("DOMContentLoaded", function () {
     navLinks.forEach(function (navLink) {
       if (navLink && navLink.addEventListener) {
         navLink.addEventListener("click", function (e) {
-          var href = navLink.getAttribute("href"); // Если это якорная ссылка (начинается с /#)
+          var href = navLink.getAttribute("href"); // Проверяем, является ли это якорной ссылкой (содержит #)
 
-          if (href && href.startsWith("/#")) {
-            // Проверяем, находимся ли мы на главной странице
-            // Главная страница: pathname = "/" или пустой, и нет query параметров (кроме пустых)
-            var pathname = window.location.pathname;
-            var search = window.location.search;
-            var isHomePage = (pathname === "/" || pathname === "/index.html" || pathname === "") && (!search || search === ""); // Если не на главной странице, перенаправляем на главную с якорем
+          if (href && href.includes("#")) {
+            // Извлекаем якорь из ссылки
+            var anchorMatch = href.match(/#(.+)$/);
+            var anchor = anchorMatch ? anchorMatch[0] : ""; // #service, #price и т.д.
 
-            if (!isHomePage) {
-              e.preventDefault();
-              window.location.href = href;
-              return;
+            if (anchor) {
+              var isHomeLink = false; // Проверяем, ведет ли ссылка на главную страницу
+
+              if (href.startsWith("/#") || href.startsWith("#")) {
+                // Относительная ссылка типа /#service или #service
+                isHomeLink = true;
+              } else {
+                try {
+                  // Абсолютная ссылка
+                  var url = new URL(href, window.location.origin);
+                  isHomeLink = url.pathname === "/" || url.pathname === "" || url.pathname === "/index.html";
+                } catch (err) {
+                  // Если не удалось распарсить URL, считаем относительной
+                  isHomeLink = href.startsWith("/") || href.startsWith("#");
+                }
+              } // Проверяем, находимся ли мы на главной странице
+
+
+              var currentPath = window.location.pathname;
+              var currentSearch = window.location.search;
+              var isHomePage = (currentPath === "/" || currentPath === "/index.html" || currentPath === "") && (!currentSearch || currentSearch === ""); // Если ссылка ведет на главную, но мы не на главной странице
+
+              if (isHomeLink && !isHomePage) {
+                e.preventDefault(); // Перенаправляем на главную с якорем
+
+                window.location.href = window.location.origin + anchor;
+                return;
+              }
             }
           } // Закрываем меню
 
