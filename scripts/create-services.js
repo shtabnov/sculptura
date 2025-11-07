@@ -339,6 +339,26 @@ require_once('${wpPath}/wp-load.php');
 $json_data = file_get_contents('${jsonPath}');
 $services = json_decode($json_data, true);
 
+// Получаем список slug'ов новых услуг
+$new_slugs = array_column($services, 'slug');
+
+// Получаем все существующие услуги
+$all_services = get_posts([
+    'post_type' => 'service',
+    'posts_per_page' => -1,
+    'post_status' => 'any'
+]);
+
+// Удаляем старые услуги, которых нет в новом списке
+foreach ($all_services as $old_service) {
+    $old_slug = $old_service->post_name;
+    if (!in_array($old_slug, $new_slugs)) {
+        wp_delete_post($old_service->ID, true);
+        echo "Удалена старая услуга: {$old_service->post_title} (slug: $old_slug)\\n";
+    }
+}
+
+// Создаем/обновляем новые услуги
 foreach ($services as $service) {
     // Проверяем, существует ли уже услуга
     $existing = get_posts([
@@ -411,6 +431,13 @@ foreach ($services as $service) {
         }
     }
 }
+
+// Очищаем кеш WordPress
+if (function_exists('wp_cache_flush')) {
+    wp_cache_flush();
+    echo "Кеш WordPress очищен\\n";
+}
+
 echo "Готово!\\n";
 `;
 

@@ -165,14 +165,30 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.overflow = ""; // Восстанавливаем скролл
       }
     });
-  } // Закрываем меню при клике на ссылку
+  } // Закрываем меню при клике на ссылку и обрабатываем якорные ссылки
 
 
   if (navLinks && navLinks.length > 0) {
     navLinks.forEach(function (navLink) {
       if (navLink && navLink.addEventListener) {
-        navLink.addEventListener("click", function () {
-          // Закрываем меню
+        navLink.addEventListener("click", function (e) {
+          var href = navLink.getAttribute("href"); // Если это якорная ссылка (начинается с /#)
+
+          if (href && href.startsWith("/#")) {
+            // Проверяем, находимся ли мы на главной странице
+            // Главная страница: pathname = "/" или пустой, и нет query параметров (кроме пустых)
+            var pathname = window.location.pathname;
+            var search = window.location.search;
+            var isHomePage = (pathname === "/" || pathname === "/index.html" || pathname === "") && (!search || search === ""); // Если не на главной странице, перенаправляем на главную с якорем
+
+            if (!isHomePage) {
+              e.preventDefault();
+              window.location.href = href;
+              return;
+            }
+          } // Закрываем меню
+
+
           if (navList && navList.classList) {
             navList.classList.remove("nav__list_active");
             document.body.style.overflow = "";

@@ -70,6 +70,9 @@ $homepage_id = get_option('page_on_front');
         'posts_per_page' => -1,
         'orderby' => 'menu_order',
         'order' => 'ASC',
+        'cache_results' => false,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
     ]);
     ?>
     <section class="service" id="service">

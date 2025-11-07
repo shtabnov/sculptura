@@ -523,18 +523,18 @@ section.contact {
   pointer-events: none;
 }
 .hero__link:hover {
-  background: rgba(139, 154, 122, 0.85);
-  color: #ffffff;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(139, 154, 122, 0.4);
+  filter: brightness(1.1);
 }
 .hero__link:hover::before {
   animation-duration: 1.5s;
 }
 .hero__link:active {
-  transform: translateY(-1px);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 .hero__btn-wrap {
   position: absolute;
@@ -795,17 +795,16 @@ section.contact {
   transition: opacity 0.3s ease;
 }
 .service__card-btn:hover {
-  background: #c97d5f;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(201, 125, 95, 0.35);
-  border-color: rgba(201, 125, 95, 0.3);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(139, 154, 122, 0.4);
+  filter: brightness(1.1);
 }
 .service__card-btn:hover::before {
   opacity: 1;
 }
 .service__card-btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(201, 125, 95, 0.3);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 4px 15px rgba(139, 154, 122, 0.3);
 }
 
 @media (max-width: 1023.99px) {
@@ -1001,18 +1000,18 @@ section.contact {
   pointer-events: none;
 }
 .service-detail__btn:hover {
-  background: rgba(139, 154, 122, 0.85);
-  color: #ffffff;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(139, 154, 122, 0.4);
+  filter: brightness(1.1);
 }
 .service-detail__btn:hover::before {
   animation-duration: 1.5s;
 }
 .service-detail__btn:active {
-  transform: translateY(-1px);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 .service-detail__image img {
   width: 100%;
@@ -1297,17 +1296,16 @@ section.contact {
   transition: opacity 0.3s ease;
 }
 .form__submit:hover {
-  background: #c97d5f;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(201, 125, 95, 0.35);
-  border-color: rgba(201, 125, 95, 0.3);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(139, 154, 122, 0.4);
+  filter: brightness(1.1);
 }
 .form__submit:hover::before {
   opacity: 1;
 }
 .form__submit:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(201, 125, 95, 0.3);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 4px 15px rgba(139, 154, 122, 0.3);
 }
 .form__submit:hover {
   background: #c97d5f;

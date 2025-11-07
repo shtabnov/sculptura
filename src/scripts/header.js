@@ -50,11 +50,30 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Закрываем меню при клике на ссылку
+    // Закрываем меню при клике на ссылку и обрабатываем якорные ссылки
     if (navLinks && navLinks.length > 0) {
         navLinks.forEach((navLink) => {
             if (navLink && navLink.addEventListener) {
-                navLink.addEventListener("click", () => {
+                navLink.addEventListener("click", (e) => {
+                    const href = navLink.getAttribute("href");
+                    
+                    // Если это якорная ссылка (начинается с /#)
+                    if (href && href.startsWith("/#")) {
+                        // Проверяем, находимся ли мы на главной странице
+                        // Главная страница: pathname = "/" или пустой, и нет query параметров (кроме пустых)
+                        const pathname = window.location.pathname;
+                        const search = window.location.search;
+                        const isHomePage = (pathname === "/" || pathname === "/index.html" || pathname === "") && 
+                                          (!search || search === "");
+                        
+                        // Если не на главной странице, перенаправляем на главную с якорем
+                        if (!isHomePage) {
+                            e.preventDefault();
+                            window.location.href = href;
+                            return;
+                        }
+                    }
+                    
                     // Закрываем меню
                     if (navList && navList.classList) {
                         navList.classList.remove("nav__list_active");

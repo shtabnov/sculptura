@@ -193,12 +193,11 @@
         }
 
         &:hover {
-            background: rgba(139, 154, 122, 0.85);
-            color: $white;
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(139, 154, 122, 0.4);
+            filter: brightness(1.1);
 
             &::before {
                 animation-duration: 1.5s;
@@ -206,7 +205,8 @@
         }
 
         &:active {
-            transform: translateY(-1px);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
     }
 
