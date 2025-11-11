@@ -699,6 +699,13 @@ function sculptura_handle_reception_form() {
         exit;
     }
     
+    // Валидация формата телефона: +7 (9**) ***-**-**
+    $phone_clean = preg_replace('/\s+/', '', $phone); // Убираем пробелы
+    if (!preg_match('/^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/', $phone_clean)) {
+        wp_redirect(add_query_arg('reception', 'error', wp_get_referer()));
+        exit;
+    }
+    
     // Отправка в Telegram
     $telegram_sent = sculptura_send_to_telegram($name, $phone, $service, $date, $time, $comment);
     

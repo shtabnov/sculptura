@@ -154,6 +154,25 @@
             background: $accent-terracotta;
         }
     }
+
+    &__input--error {
+        border-color: #e74c3c !important;
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1) !important;
+
+        &:focus {
+            border-color: #e74c3c !important;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2) !important;
+        }
+    }
+
+    &__error {
+        display: block;
+        color: #e74c3c;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        padding-left: 0.5rem;
+        font-family: $nav;
+    }
 }
 
 @media (max-width: 768.99px) {
