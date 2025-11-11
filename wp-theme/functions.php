@@ -224,6 +224,34 @@ function sculptura_register_menus() {
 add_action('init', 'sculptura_register_menus');
 
 /**
+ * Заменяет якорные ссылки #price на ссылку на страницу прайс-листа
+ */
+function sculptura_fix_price_menu_link($items, $args) {
+    // Ищем страницу прайс-листа по slug
+    $price_page = get_page_by_path('price');
+    if (!$price_page) {
+        // Пробуем кириллический slug
+        $price_page = get_page_by_path('прайс-лист');
+    }
+    
+    if ($price_page) {
+        $price_url = get_permalink($price_page->ID);
+        
+        foreach ($items as $item) {
+            // Проверяем, содержит ли ссылка якорь #price
+            if (strpos($item->url, '#price') !== false || 
+                $item->url === home_url('/#price') || 
+                $item->url === '#price') {
+                $item->url = $price_url;
+            }
+        }
+    }
+    
+    return $items;
+}
+add_filter('wp_nav_menu_objects', 'sculptura_fix_price_menu_link', 10, 2);
+
+/**
  * Регистрация Custom Post Types
  */
 function sculptura_register_post_types() {

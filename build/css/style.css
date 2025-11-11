@@ -1644,6 +1644,158 @@ section.contact {
     background-color: #8b9a7a;
   }
 }
+.price {
+  background-color: #faf8f4;
+  padding-top: 150px;
+  padding-bottom: 100px;
+  min-height: 100vh;
+}
+.price__container {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.price__header {
+  background-color: #ffd700;
+  padding: 2rem 0;
+  margin-bottom: 3rem;
+  text-align: center;
+  border-radius: 0.5rem;
+}
+.price__title {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.price__content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+.price__section_complex, .price__section_additional {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 3px solid #4a90e2;
+}
+.price__section-title {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4a90e2;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.price__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.price__item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+.price__item-content:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.price__item-info {
+  flex: 1;
+  text-align: left;
+}
+.price__item-title {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin: 0 0 0.5rem 0;
+}
+.price__item-description {
+  font-family: "Ruda", sans-serif;
+  font-size: 0.95rem;
+  color: #6b6b6b;
+  line-height: 1.6;
+  margin: 0;
+}
+.price__item-price {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1023.99px) {
+  .price {
+    padding-top: 120px;
+    padding-bottom: 80px;
+  }
+  .price__title {
+    font-size: 2.5rem;
+  }
+  .price__section-title {
+    font-size: 1.75rem;
+  }
+  .price__item-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .price__item-price {
+    align-self: flex-end;
+  }
+}
+@media (max-width: 767.99px) {
+  .price {
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+  .price__header {
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+  }
+  .price__title {
+    font-size: 2rem;
+  }
+  .price__content {
+    gap: 2rem;
+  }
+  .price__section_complex, .price__section_additional {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+  }
+  .price__section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .price__list {
+    gap: 1rem;
+  }
+  .price__item-content {
+    padding: 1.25rem;
+  }
+  .price__item-title {
+    font-size: 1.1rem;
+  }
+  .price__item-description {
+    font-size: 0.9rem;
+  }
+  .price__item-price {
+    font-size: 1.25rem;
+  }
+}
 .footer {
   background-color: rgba(26, 26, 26, 0.95);
   color: #ffffff;
