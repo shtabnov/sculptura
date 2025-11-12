@@ -5,93 +5,110 @@
  * Формат: +7 (9**) ***-**-**
  */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
     const phoneInput = document.getElementById("phone");
 
     if (!phoneInput) {
         return;
     }
 
-    // Регулярное выражение для валидации формата +7 (9**) ***-**-**
-    const phoneRegex = /^\+7\s?\(9\d{2}\)\s?\d{3}-\d{2}-\d{2}$/;
+    // Маска: +7 (9**)**-**-**
+    function formatPhone(value) {
+        // Убираем всё, кроме цифр
+        const digits = value.replace(/\D/g, "");
 
-    /**
-     * Извлекает только цифры пользователя (без 7 из +7)
-     * @param {string} value - Значение поля
-     * @returns {string} - Только цифры пользователя (максимум 10)
-     */
-    function extractUserDigits(value) {
-        // Извлекаем все цифры
-        let digits = value.replace(/\D/g, "");
+        // Если пусто, возвращаем пустую строку
+        if (digits.length === 0) return "";
 
-        // Если есть цифры и первая 7, убираем её (это часть +7)
-        if (digits.length > 0 && digits[0] === "7") {
-            digits = digits.substring(1);
+        // Если начинается с 8, заменяем на 7
+        let cleaned = digits.startsWith("8") ? "7" + digits.slice(1) : digits;
+
+        // Если не начинается с 7, добавляем 7 в начало
+        if (!cleaned.startsWith("7")) {
+            cleaned = "7" + cleaned;
         }
 
-        // Ограничиваем до 10 цифр
-        if (digits.length > 10) {
-            digits = digits.substring(0, 10);
+        // Ограничиваем до 11 цифр (7 + 10 цифр номера)
+        if (cleaned.length > 11) {
+            cleaned = cleaned.slice(0, 11);
         }
 
-        return digits;
-    }
+        // Извлекаем только цифры после 7 (первые 10 цифр номера)
+        const phoneDigits = cleaned.length > 1 ? cleaned.slice(1, 11) : "";
 
-    /**
-     * Форматирует цифры в формат +7 (***) ***-**-**
-     * @param {string} digits - Только цифры пользователя (без 7)
-     * @returns {string} - Отформатированный номер
-     */
-    function formatPhone(digits) {
-        if (!digits || digits.length === 0) {
-            return "";
-        }
+        // Форматируем по маске: +7 (9xx) xxx-xx-xx
+        if (phoneDigits.length === 0) return "+7";
+        if (phoneDigits.length === 1) return "+7 (" + phoneDigits[0];
+        if (phoneDigits.length === 2) return "+7 (" + phoneDigits.slice(0, 2);
+        if (phoneDigits.length === 3) return "+7 (" + phoneDigits.slice(0, 3);
+        if (phoneDigits.length === 4)
+            return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits[3];
+        if (phoneDigits.length === 5)
+            return (
+                "+7 (" +
+                phoneDigits.slice(0, 3) +
+                ") " +
+                phoneDigits.slice(3, 5)
+            );
+        if (phoneDigits.length === 6)
+            return (
+                "+7 (" +
+                phoneDigits.slice(0, 3) +
+                ") " +
+                phoneDigits.slice(3, 6)
+            );
+        if (phoneDigits.length === 7)
+            return (
+                "+7 (" +
+                phoneDigits.slice(0, 3) +
+                ") " +
+                phoneDigits.slice(3, 6) +
+                "-" +
+                phoneDigits[6]
+            );
+        if (phoneDigits.length === 8)
+            return (
+                "+7 (" +
+                phoneDigits.slice(0, 3) +
+                ") " +
+                phoneDigits.slice(3, 6) +
+                "-" +
+                phoneDigits.slice(6, 8)
+            );
+        if (phoneDigits.length === 9)
+            return (
+                "+7 (" +
+                phoneDigits.slice(0, 3) +
+                ") " +
+                phoneDigits.slice(3, 6) +
+                "-" +
+                phoneDigits.slice(6, 8) +
+                "-" +
+                phoneDigits[8]
+            );
+        if (phoneDigits.length === 10)
+            return (
+                "+7 (" +
+                phoneDigits.slice(0, 3) +
+                ") " +
+                phoneDigits.slice(3, 6) +
+                "-" +
+                phoneDigits.slice(6, 8) +
+                "-" +
+                phoneDigits.slice(8, 10)
+            );
 
-        let formatted = "+7 (";
-
-        // Первые 3 цифры
-        if (digits.length > 0) {
-            formatted += digits.substring(0, 3);
-        }
-
-        // Следующие 3 цифры
-        if (digits.length >= 3) {
-            formatted += ") " + digits.substring(3, 6);
-        }
-
-        // Следующие 2 цифры
-        if (digits.length >= 6) {
-            formatted += "-" + digits.substring(6, 8);
-        }
-
-        // Последние 2 цифры
-        if (digits.length >= 8) {
-            formatted += "-" + digits.substring(8, 10);
-        }
-
-        return formatted;
-    }
-
-    /**
-     * Валидация номера телефона
-     * @param {string} phone - Номер телефона
-     * @returns {boolean} - true если валиден
-     */
-    function validatePhone(phone) {
-        const cleanPhone = phone.replace(/\s/g, "");
-
-        // Проверяем формат и что после +7( идет 9
-        if (!phoneRegex.test(cleanPhone)) {
-            return false;
-        }
-
-        // Дополнительная проверка: после +7( должна быть цифра 9
-        const match = cleanPhone.match(/^\+7\((\d)/);
-        if (match && match[1] !== "9") {
-            return false;
-        }
-
-        return cleanPhone.length === 18; // +7(***)***-**-**
+        // Если больше 10 цифр, обрезаем до 10
+        return (
+            "+7 (" +
+            phoneDigits.slice(0, 3) +
+            ") " +
+            phoneDigits.slice(3, 6) +
+            "-" +
+            phoneDigits.slice(6, 8) +
+            "-" +
+            phoneDigits.slice(8, 10)
+        );
     }
 
     /**
@@ -125,123 +142,74 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    /**
-     * Вычисляет позицию курсора после форматирования
-     * @param {string} oldValue - Старое значение
-     * @param {number} oldCursorPos - Старая позиция курсора
-     * @param {string} newValue - Новое значение
-     * @param {number} userDigitsCount - Количество цифр пользователя
-     * @returns {number} - Новая позиция курсора
-     */
-    function calculateNewCursorPosition(
-        oldValue,
-        oldCursorPos,
-        newValue,
-        userDigitsCount
-    ) {
-        // Подсчитываем количество цифр до позиции курсора в старом значении
-        const beforeCursor = oldValue.substring(0, oldCursorPos);
-        let digitsBefore = beforeCursor.replace(/\D/g, "").length;
+    // Валидация: проверяем, что введено 10 цифр после +7 и начинается с 9
+    function validatePhone() {
+        const digits = phoneInput.value.replace(/\D/g, "");
+        // Проверяем, что есть 11 цифр (7 + 10 цифр номера), и вторая цифра (после 7) равна 9
+        const isValid =
+            digits.length === 11 && digits.startsWith("7") && digits[1] === "9";
 
-        // Если в старом значении была 7 из +7, не считаем её
-        if (oldValue.startsWith("+7") && digitsBefore > 0) {
-            const oldDigits = oldValue.replace(/\D/g, "");
-            if (oldDigits.startsWith("7") && oldDigits.length > 1) {
-                digitsBefore = Math.max(0, digitsBefore - 1);
-            }
-        }
-
-        // Находим позицию в новом значении
-        let digitCount = 0;
-        let newCursorPosition = newValue.length;
-
-        for (let i = 0; i < newValue.length; i++) {
-            if (/\d/.test(newValue[i])) {
-                digitCount++;
-                if (digitCount === digitsBefore) {
-                    newCursorPosition = i + 1;
-                    break;
-                }
-            }
-        }
-
-        // Если курсор был в конце, ставим его в конец
-        if (digitsBefore >= userDigitsCount) {
-            newCursorPosition = newValue.length;
-        }
-
-        return newCursorPosition;
+        return isValid;
     }
 
-    // Обработчик ввода - применяем маску
-    phoneInput.addEventListener("input", (e) => {
-        const oldValue = e.target.value;
-        const oldCursorPos = e.target.selectionStart;
+    // Обработка ввода
+    phoneInput.addEventListener("input", function (e) {
+        let value = e.target.value;
+        let formatted = formatPhone(value);
 
-        // Извлекаем только цифры пользователя (без 7 из +7)
-        const userDigits = extractUserDigits(e.target.value);
-
-        // Если цифр нет, очищаем поле
-        if (userDigits.length === 0) {
-            e.target.value = "";
-            return;
+        // Не позволяем вводить больше 18 символов (максимум маски)
+        if (formatted.length > 18) {
+            formatted = formatted.slice(0, 18);
         }
 
-        // Форматируем номер
-        const newValue = formatPhone(userDigits);
-        e.target.value = newValue;
+        e.target.value = formatted;
 
-        // Восстанавливаем позицию курсора
-        const newCursorPos = calculateNewCursorPosition(
-            oldValue,
-            oldCursorPos,
-            newValue,
-            userDigits.length
-        );
-        e.target.setSelectionRange(newCursorPos, newCursorPos);
-
-        // Проверяем валидность только при полном номере
-        if (validatePhone(newValue)) {
+        // НЕ показываем ошибку во время ввода, только убираем если валидно
+        if (validatePhone()) {
             removeError();
         }
     });
 
     // Обработчик вставки (Ctrl+V, Cmd+V)
-    phoneInput.addEventListener("paste", (e) => {
+    phoneInput.addEventListener("paste", function (e) {
         e.preventDefault();
         const pastedText = (e.clipboardData || window.clipboardData).getData(
             "text"
         );
-        const userDigits = extractUserDigits(pastedText);
-        const formatted = formatPhone(userDigits);
+        const formatted = formatPhone(pastedText);
         phoneInput.value = formatted;
         phoneInput.setSelectionRange(formatted.length, formatted.length);
 
-        if (validatePhone(formatted)) {
+        if (validatePhone()) {
             removeError();
         } else {
             showError();
         }
     });
 
-    // Обработчик потери фокуса - валидация
-    phoneInput.addEventListener("blur", () => {
+    // Валидация при потере фокуса
+    phoneInput.addEventListener("blur", function () {
         const value = phoneInput.value.trim();
 
-        if (value && !validatePhone(value)) {
-            showError();
-        } else {
+        // Если поле пустое - убираем ошибку
+        if (!value) {
             removeError();
+            return;
+        }
+
+        // Если номер валиден - убираем ошибку, иначе показываем
+        if (validatePhone()) {
+            removeError();
+        } else {
+            showError();
         }
     });
 
-    // Обработчик отправки формы - валидация перед отправкой
+    // Валидация при отправке формы
     const form = phoneInput.closest("form");
     if (form) {
-        form.addEventListener("submit", (e) => {
-            const value = phoneInput.value.trim();
-
-            if (!value || !validatePhone(value)) {
+        form.addEventListener("submit", function (e) {
+            if (!validatePhone()) {
                 e.preventDefault();
                 showError();
                 phoneInput.focus();
@@ -256,41 +224,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Обработчик клавиш - разрешаем только цифры и управляющие клавиши
-    phoneInput.addEventListener("keydown", (e) => {
-        const allowedKeys = [
-            "Backspace",
-            "Delete",
-            "Tab",
-            "Escape",
-            "Enter",
-            "ArrowLeft",
-            "ArrowRight",
-            "ArrowUp",
-            "ArrowDown",
-            "Home",
-            "End",
-        ];
-
-        // Разрешаем Ctrl/Cmd + A, C, V, X
-        if (
-            (e.ctrlKey || e.metaKey) &&
-            ["a", "c", "v", "x"].includes(e.key.toLowerCase())
-        ) {
-            return;
+    // Сброс стилей при фокусе
+    phoneInput.addEventListener("focus", function () {
+        this.classList.remove("form__input--error");
+        const errorMessage = this.parentElement.querySelector(".form__error");
+        if (errorMessage) {
+            errorMessage.textContent = "";
         }
-
-        // Если это разрешенная клавиша, пропускаем
-        if (allowedKeys.includes(e.key)) {
-            return;
-        }
-
-        // Если это цифра, пропускаем
-        if (/\d/.test(e.key)) {
-            return;
-        }
-
-        // Запрещаем все остальные символы
-        e.preventDefault();
     });
 });
