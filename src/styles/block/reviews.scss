@@ -4,24 +4,38 @@
     &__card {
         position: relative;
         display: flex;
+        flex-direction: column;
         box-sizing: border-box;
-        padding: 41px 31px 20px 30px;
+        padding: 32px;
         background: $white;
-        // box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba($text-dark, 0.1);
         border-radius: 20px;
-        height: 300px;
+        height: auto;
+        min-height: 300px;
         z-index: 4;
         margin-left: 15px;
         margin-right: 15px;
+        transition: box-shadow 0.3s ease;
+
+        &:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
     }
 
-        &__img {
-        flex: 0 0 10vh;
-        width: 10vh;
-        height: 10vh;
+    &__header {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    &__img {
+        flex: 0 0 64px;
+        width: 64px;
+        height: 64px;
         border-radius: 50%;
         overflow: hidden;
-        margin-right: 20px;
         background-color: rgba($accent-sage, 0.2);
 
         & img {
@@ -31,30 +45,50 @@
         }
     }
 
+    &__info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    &__name {
+        font-weight: 600;
+        font-size: 1.125rem;
+        line-height: 1.5;
+        margin-bottom: 4px;
+        color: $text-dark;
+        text-align: left;
+    }
+
+    &__service {
+        font-size: 0.875rem;
+        color: $text-light;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
     &__txt {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
 
-        & h3 {
-            font-weight: 500;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        & p {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-align: left;
+        & > p:first-child {
+            color: $text-dark;
             font-weight: 400;
             font-size: 1rem;
-            line-height: 140%;
-            max-height: 70%;
+            line-height: 1.75;
+            margin-bottom: 16px;
+            text-align: left;
         }
+    }
 
-        & .date {
-            position: absolute;
-            bottom: 1rem;
-            right: 1.2rem;
-        }
+    &__date {
+        font-size: 0.875rem;
+        color: rgba($text-dark, 0.4);
+        margin-top: auto;
     }
 
     &__slider {
@@ -118,21 +152,17 @@
 @media (max-width: 1025px) {
     .reviews {
         &__card {
-            height: 400px;
+            min-height: 350px;
+            padding: 28px;
+        }
+
+        &__name {
+            font-size: 1.125rem;
         }
 
         &__txt {
-            & h3 {
-                font-size: 22px;
-            }
-
-            & p {
-                font-size: 16px;
-            }
-
-            & .date {
-                bottom: 20px;
-                left: 30px;
+            & > p:first-child {
+                font-size: 0.9375rem;
             }
         }
     }
@@ -141,21 +171,33 @@
 @media (max-width: 769px) {
     .reviews {
         &__card {
-            height: 300px;
+            min-height: 320px;
+            padding: 24px;
+        }
+
+        &__header {
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        &__img {
+            flex: 0 0 56px;
+            width: 56px;
+            height: 56px;
+        }
+
+        &__name {
+            font-size: 1rem;
+        }
+
+        &__service {
+            font-size: 0.8125rem;
         }
 
         &__txt {
-            & h3 {
-                font-size: 22px;
-            }
-
-            & p {
-                font-size: 16px;
-            }
-
-            & .date {
-                bottom: 20px;
-                left: calc(100% - 100px);
+            & > p:first-child {
+                font-size: 0.9375rem;
+                line-height: 1.6;
             }
         }
 
@@ -184,25 +226,43 @@
 @media (max-width: 630px) {
     .reviews {
         &__card {
-            height: 300px;
+            min-height: auto;
+            padding: 20px;
         }
 
-        &__txt {
-            & h3 {
-                font-size: 22px;
-            }
-
-            & p {
-                font-size: 16px;
-            }
-
-            & .date {
-                bottom: 20px;
-            }
+        &__header {
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
         &__img {
-            display: none;
+            flex: 0 0 48px;
+            width: 48px;
+            height: 48px;
+        }
+
+        &__name {
+            font-size: 0.9375rem;
+        }
+
+        &__service {
+            font-size: 0.75rem;
+        }
+
+        &__star {
+            font-size: 0.875rem;
+        }
+
+        &__txt {
+            & > p:first-child {
+                font-size: 0.875rem;
+                line-height: 1.6;
+                margin-bottom: 12px;
+            }
+        }
+
+        &__date {
+            font-size: 0.75rem;
         }
 
         & .splide {

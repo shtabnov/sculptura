@@ -1480,22 +1480,34 @@ section.contact {
 .reviews__card {
   position: relative;
   display: flex;
+  flex-direction: column;
   box-sizing: border-box;
-  padding: 41px 31px 20px 30px;
+  padding: 32px;
   background: #ffffff;
+  border: 1px solid rgba(44, 44, 44, 0.1);
   border-radius: 20px;
-  height: 300px;
+  height: auto;
+  min-height: 300px;
   z-index: 4;
   margin-left: 15px;
   margin-right: 15px;
+  transition: box-shadow 0.3s ease;
+}
+.reviews__card:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.reviews__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 .reviews__img {
-  flex: 0 0 10vh;
-  width: 10vh;
-  height: 10vh;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   overflow: hidden;
-  margin-right: 20px;
   background-color: rgba(139, 154, 122, 0.2);
 }
 .reviews__img img {
@@ -1503,27 +1515,45 @@ section.contact {
   height: 100%;
   object-fit: cover;
 }
-.reviews__txt {
-  overflow: hidden;
-}
-.reviews__txt h3 {
-  font-weight: 500;
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-}
-.reviews__txt p {
-  overflow: hidden;
-  text-overflow: ellipsis;
+.reviews__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   text-align: left;
+}
+.reviews__name {
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  margin-bottom: 4px;
+  color: #2c2c2c;
+  text-align: left;
+}
+.reviews__service {
+  font-size: 0.875rem;
+  color: #6b6b6b;
+  margin-bottom: 0;
+  text-align: left;
+}
+.reviews__txt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.reviews__txt > p:first-child {
+  color: #2c2c2c;
   font-weight: 400;
   font-size: 1rem;
-  line-height: 140%;
-  max-height: 70%;
+  line-height: 1.75;
+  margin-bottom: 16px;
+  text-align: left;
 }
-.reviews__txt .date {
-  position: absolute;
-  bottom: 1rem;
-  right: 1.2rem;
+.reviews__date {
+  font-size: 0.875rem;
+  color: rgba(44, 44, 44, 0.4);
+  margin-top: auto;
 }
 .reviews__slider {
   margin-top: 30px;
@@ -1575,32 +1605,39 @@ section.contact {
 
 @media (max-width: 1025px) {
   .reviews__card {
-    height: 400px;
+    min-height: 350px;
+    padding: 28px;
   }
-  .reviews__txt h3 {
-    font-size: 22px;
+  .reviews__name {
+    font-size: 1.125rem;
   }
-  .reviews__txt p {
-    font-size: 16px;
-  }
-  .reviews__txt .date {
-    bottom: 20px;
-    left: 30px;
+  .reviews__txt > p:first-child {
+    font-size: 0.9375rem;
   }
 }
 @media (max-width: 769px) {
   .reviews__card {
-    height: 300px;
+    min-height: 320px;
+    padding: 24px;
   }
-  .reviews__txt h3 {
-    font-size: 22px;
+  .reviews__header {
+    gap: 12px;
+    margin-bottom: 20px;
   }
-  .reviews__txt p {
-    font-size: 16px;
+  .reviews__img {
+    flex: 0 0 56px;
+    width: 56px;
+    height: 56px;
   }
-  .reviews__txt .date {
-    bottom: 20px;
-    left: calc(100% - 100px);
+  .reviews__name {
+    font-size: 1rem;
+  }
+  .reviews__service {
+    font-size: 0.8125rem;
+  }
+  .reviews__txt > p:first-child {
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
   .reviews .splide__track {
     width: calc(100% + 40px);
@@ -1618,19 +1655,34 @@ section.contact {
 }
 @media (max-width: 630px) {
   .reviews__card {
-    height: 300px;
+    min-height: auto;
+    padding: 20px;
   }
-  .reviews__txt h3 {
-    font-size: 22px;
-  }
-  .reviews__txt p {
-    font-size: 16px;
-  }
-  .reviews__txt .date {
-    bottom: 20px;
+  .reviews__header {
+    gap: 12px;
+    margin-bottom: 16px;
   }
   .reviews__img {
-    display: none;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+  }
+  .reviews__name {
+    font-size: 0.9375rem;
+  }
+  .reviews__service {
+    font-size: 0.75rem;
+  }
+  .reviews__star {
+    font-size: 0.875rem;
+  }
+  .reviews__txt > p:first-child {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .reviews__date {
+    font-size: 0.75rem;
   }
   .reviews .splide__track {
     transform: translate(0px, 0px);

@@ -316,22 +316,29 @@ $homepage_id = get_option('page_on_front');
                     </div>
                     <div class="splide__track">
                         <ul class="splide__list">
-                            <?php while ($reviews_query->have_posts()) : $reviews_query->the_post(); ?>
+                            <?php while ($reviews_query->have_posts()) : $reviews_query->the_post(); 
+                                $review_service = get_post_meta(get_the_ID(), '_review_service', true);
+                                $review_date = get_post_meta(get_the_ID(), '_review_date', true);
+                            ?>
                                 <li class="splide__slide">
                                     <div class="reviews__card">
-                                        <?php if (has_post_thumbnail()) : ?>
-                                            <div class="reviews__img">
-                                                <?php the_post_thumbnail('medium', ['alt' => get_the_title()]); ?>
+                                        <div class="reviews__header">
+                                            <?php if (has_post_thumbnail()) : ?>
+                                                <div class="reviews__img">
+                                                    <?php the_post_thumbnail('medium', ['alt' => get_the_title(), 'class' => 'reviews__avatar']); ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            <div class="reviews__info">
+                                                <h3 class="reviews__name"><?php the_title(); ?></h3>
+                                                <?php if ($review_service) : ?>
+                                                    <p class="reviews__service"><?php echo esc_html($review_service); ?></p>
+                                                <?php endif; ?>
                                             </div>
-                                        <?php endif; ?>
+                                        </div>
                                         <div class="reviews__txt">
-                                            <h3><?php the_title(); ?></h3>
                                             <p><?php echo nl2br(esc_html(get_the_content())); ?></p>
-                                            <?php 
-                                            $review_date = sculptura_get_meta('_review_date');
-                                            if ($review_date) : 
-                                            ?>
-                                                <p class="date"><?php echo esc_html(date_i18n('d.m.Y', strtotime($review_date))); ?></p>
+                                            <?php if ($review_date) : ?>
+                                                <p class="reviews__date"><?php echo esc_html(date_i18n('d.m.Y', strtotime($review_date))); ?></p>
                                             <?php endif; ?>
                                         </div>
                                     </div>

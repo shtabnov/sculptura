@@ -124,17 +124,138 @@ add_filter('template_directory_uri', 'sculptura_force_https');
 add_filter('stylesheet_directory_uri', 'sculptura_force_https');
 
 /**
- * Добавление Favicon
+ * Добавление Favicon с поддержкой разных размеров
  */
 function sculptura_add_favicon() {
-    $favicon_url = SCULPTURA_THEME_URI . '/assets/images/logo.svg';
-    $fallback_favicon = SCULPTURA_THEME_URI . '/assets/images/logo.png';
+    $theme_uri = SCULPTURA_THEME_URI;
     
-    echo '<link rel="icon" type="image/svg+xml" href="' . esc_url($favicon_url) . '">' . "\n";
-    echo '<link rel="alternate icon" href="' . esc_url($fallback_favicon) . '">' . "\n";
-    echo '<link rel="apple-touch-icon" href="' . esc_url($fallback_favicon) . '">' . "\n";
+    // Основная фавиконка - используем PNG для лучшей видимости
+    $favicon_32 = $theme_uri . '/assets/images/logo.png';
+    $favicon_16 = $theme_uri . '/assets/images/logo.png';
+    
+    // SVG для современных браузеров (если нужна векторная версия)
+    $favicon_svg = $theme_uri . '/assets/images/logo.svg';
+    
+    // Apple Touch Icon (для iOS) - нужен размер 180x180
+    $apple_touch_icon = $theme_uri . '/assets/images/logo.png';
+    
+    // Android Chrome Icons
+    $android_192 = $theme_uri . '/assets/images/logo.png';
+    $android_512 = $theme_uri . '/assets/images/logo.png';
+    
+    // Основная фавиконка (32x32) - приоритет для большинства браузеров
+    echo '<link rel="icon" type="image/png" sizes="32x32" href="' . esc_url($favicon_32) . '">' . "\n";
+    echo '<link rel="icon" type="image/png" sizes="16x16" href="' . esc_url($favicon_16) . '">' . "\n";
+    
+    // SVG для современных браузеров (опционально, если SVG хорошо виден)
+    // echo '<link rel="icon" type="image/svg+xml" href="' . esc_url($favicon_svg) . '">' . "\n";
+    
+    // Стандартная фавиконка (fallback для старых браузеров)
+    echo '<link rel="shortcut icon" href="' . esc_url($favicon_32) . '">' . "\n";
+    
+    // Apple Touch Icon (для iOS устройств)
+    echo '<link rel="apple-touch-icon" sizes="180x180" href="' . esc_url($apple_touch_icon) . '">' . "\n";
+    
+    // Android Chrome Icons
+    echo '<link rel="icon" type="image/png" sizes="192x192" href="' . esc_url($android_192) . '">' . "\n";
+    echo '<link rel="icon" type="image/png" sizes="512x512" href="' . esc_url($android_512) . '">' . "\n";
+    
+    // Manifest для PWA (опционально)
+    // echo '<link rel="manifest" href="' . esc_url($theme_uri . '/manifest.json') . '">' . "\n";
+    
+    // Цвет темы для браузеров
+    echo '<meta name="theme-color" content="#ffffff">' . "\n";
 }
 add_action('wp_head', 'sculptura_add_favicon', 1);
+
+/**
+ * Добавление SEO мета-тегов (description, keywords)
+ */
+function sculptura_add_seo_meta_tags() {
+    // Базовые значения по умолчанию
+    $default_description = 'Студия естественной красоты Sculptura в Перми. Профессиональный массаж лица, буккальный массаж, маникюр, наращивание ресниц, макияж. Натуральная косметика премиум-класса.';
+    $default_keywords = 'студия красоты, массаж лица, буккальный массаж, маникюр, наращивание ресниц, макияж, Пермь, Кондратово, косметология, уход за лицом, лифтинг';
+    
+    $description = $default_description;
+    $keywords = $default_keywords;
+    $title = get_bloginfo('name');
+    $site_url = home_url('/');
+    $image_url = SCULPTURA_THEME_URI . '/assets/images/logo.png';
+    
+    // Для отдельных страниц и постов
+    if (is_singular()) {
+        $post_id = get_queried_object_id();
+        
+        // Проверяем, есть ли кастомные мета-поля
+        $meta_description = get_post_meta($post_id, '_seo_description', true);
+        $meta_keywords = get_post_meta($post_id, '_seo_keywords', true);
+        
+        if ($meta_description) {
+            $description = $meta_description;
+        } elseif (has_excerpt($post_id)) {
+            $description = wp_trim_words(get_the_excerpt($post_id), 25);
+        } elseif (get_the_content($post_id)) {
+            $description = wp_trim_words(strip_tags(get_the_content($post_id)), 25);
+        }
+        
+        if ($meta_keywords) {
+            $keywords = $meta_keywords;
+        }
+        
+        $title = get_the_title($post_id) . ' — ' . get_bloginfo('name');
+        
+        // Изображение для соцсетей
+        if (has_post_thumbnail($post_id)) {
+            $image_url = get_the_post_thumbnail_url($post_id, 'large');
+        }
+    } elseif (is_home() || is_front_page()) {
+        // Для главной страницы
+        $title = get_bloginfo('name') . ' — ' . get_bloginfo('description');
+    } elseif (is_category()) {
+        $category = get_queried_object();
+        $description = $category->description ?: $default_description;
+        $keywords = $category->name . ', ' . $default_keywords;
+        $title = $category->name . ' — ' . get_bloginfo('name');
+    } elseif (is_tag()) {
+        $tag = get_queried_object();
+        $description = $tag->description ?: $default_description;
+        $keywords = $tag->name . ', ' . $default_keywords;
+        $title = $tag->name . ' — ' . get_bloginfo('name');
+    }
+    
+    // Очищаем и экранируем значения
+    $description = esc_attr(wp_strip_all_tags($description));
+    $keywords = esc_attr($keywords);
+    $title = esc_attr($title);
+    $image_url = esc_url($image_url);
+    
+    // Мета-тег Description (важно для SEO)
+    if ($description) {
+        echo '<meta name="description" content="' . $description . '">' . "\n";
+    }
+    
+    // Мета-тег Keywords (менее важен, но все еще используется)
+    if ($keywords) {
+        echo '<meta name="keywords" content="' . $keywords . '">' . "\n";
+    }
+    
+    // Open Graph теги для социальных сетей (Facebook, VK и т.д.)
+    $og_url = is_singular() ? get_permalink() : home_url('/');
+    echo '<meta property="og:type" content="' . (is_singular() ? 'article' : 'website') . '">' . "\n";
+    echo '<meta property="og:title" content="' . $title . '">' . "\n";
+    echo '<meta property="og:description" content="' . $description . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url($og_url) . '">' . "\n";
+    echo '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . '">' . "\n";
+    echo '<meta property="og:image" content="' . $image_url . '">' . "\n";
+    echo '<meta property="og:locale" content="ru_RU">' . "\n";
+    
+    // Twitter Card теги
+    echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+    echo '<meta name="twitter:title" content="' . $title . '">' . "\n";
+    echo '<meta name="twitter:description" content="' . $description . '">' . "\n";
+    echo '<meta name="twitter:image" content="' . $image_url . '">' . "\n";
+}
+add_action('wp_head', 'sculptura_add_seo_meta_tags', 2);
 
 /**
  * Поддержка темой функций WordPress
@@ -461,6 +582,110 @@ function sculptura_save_homepage_meta($post_id) {
 add_action('save_post', 'sculptura_save_homepage_meta');
 
 /**
+ * Добавление мета-боксов для SEO (description и keywords)
+ */
+function sculptura_add_seo_meta_boxes() {
+    // Добавляем для всех типов постов и страниц
+    $post_types = ['post', 'page', 'service', 'sale'];
+    foreach ($post_types as $post_type) {
+        add_meta_box(
+            'sculptura_seo_meta',
+            'SEO настройки',
+            'sculptura_seo_meta_box_callback',
+            $post_type,
+            'normal',
+            'high'
+        );
+    }
+}
+add_action('add_meta_boxes', 'sculptura_add_seo_meta_boxes');
+
+/**
+ * Callback для SEO мета-бокса
+ */
+function sculptura_seo_meta_box_callback($post) {
+    wp_nonce_field('sculptura_seo_save', 'sculptura_seo_nonce');
+    
+    $seo_description = get_post_meta($post->ID, '_seo_description', true);
+    $seo_keywords = get_post_meta($post->ID, '_seo_keywords', true);
+    
+    ?>
+    <table class="form-table">
+        <tr>
+            <th scope="row">
+                <label for="seo_description">Мета-описание (Description)</label>
+            </th>
+            <td>
+                <textarea 
+                    id="seo_description" 
+                    name="seo_description" 
+                    rows="3" 
+                    style="width: 100%;"
+                    placeholder="Краткое описание страницы (150-160 символов, отображается в результатах поиска)"
+                ><?php echo esc_textarea($seo_description); ?></textarea>
+                <p class="description">
+                    Рекомендуемая длина: 150-160 символов. Если не указано, будет использовано автоматическое описание из текста страницы.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <label for="seo_keywords">Ключевые слова (Keywords)</label>
+            </th>
+            <td>
+                <input 
+                    type="text" 
+                    id="seo_keywords" 
+                    name="seo_keywords" 
+                    value="<?php echo esc_attr($seo_keywords); ?>" 
+                    style="width: 100%;"
+                    placeholder="ключевое слово 1, ключевое слово 2, ключевое слово 3"
+                />
+                <p class="description">
+                    Ключевые слова через запятую. Например: "массаж лица, косметология, Пермь"
+                </p>
+            </td>
+        </tr>
+    </table>
+    <?php
+}
+
+/**
+ * Сохранение SEO мета-полей
+ */
+function sculptura_save_seo_meta($post_id) {
+    // Проверка nonce
+    if (!isset($_POST['sculptura_seo_nonce']) || !wp_verify_nonce($_POST['sculptura_seo_nonce'], 'sculptura_seo_save')) {
+        return;
+    }
+    
+    // Проверка автосохранения
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    // Проверка прав
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    
+    // Сохранение description
+    if (isset($_POST['seo_description'])) {
+        update_post_meta($post_id, '_seo_description', sanitize_textarea_field($_POST['seo_description']));
+    } else {
+        delete_post_meta($post_id, '_seo_description');
+    }
+    
+    // Сохранение keywords
+    if (isset($_POST['seo_keywords'])) {
+        update_post_meta($post_id, '_seo_keywords', sanitize_text_field($_POST['seo_keywords']));
+    } else {
+        delete_post_meta($post_id, '_seo_keywords');
+    }
+}
+add_action('save_post', 'sculptura_save_seo_meta');
+
+/**
  * Добавление мета-полей для услуг (hero image и intro)
  */
 function sculptura_add_service_meta_boxes() {
@@ -551,9 +776,18 @@ function sculptura_save_service_meta($post_id) {
 add_action('save_post_service', 'sculptura_save_service_meta');
 
 /**
- * Добавление мета-поля "Дата" для отзывов
+ * Добавление мета-боксов для отзывов
  */
 function sculptura_add_review_meta_boxes() {
+    add_meta_box(
+        'sculptura_review_details',
+        'Детали отзыва',
+        'sculptura_review_details_callback',
+        'review',
+        'normal',
+        'high'
+    );
+    
     add_meta_box(
         'sculptura_review_date',
         'Дата отзыва',
@@ -565,6 +799,38 @@ function sculptura_add_review_meta_boxes() {
 }
 add_action('add_meta_boxes', 'sculptura_add_review_meta_boxes');
 
+/**
+ * Callback для мета-бокса "Детали отзыва"
+ */
+function sculptura_review_details_callback($post) {
+    wp_nonce_field('sculptura_review_save', 'sculptura_review_nonce');
+    
+    $review_service = get_post_meta($post->ID, '_review_service', true);
+    ?>
+    <table class="form-table">
+        <tr>
+            <th scope="row">
+                <label for="review_service">Услуга:</label>
+            </th>
+            <td>
+                <input 
+                    type="text" 
+                    id="review_service" 
+                    name="review_service" 
+                    value="<?php echo esc_attr($review_service); ?>" 
+                    class="regular-text" 
+                    placeholder="Например: Массаж лица, Буккальный массаж, Маникюр"
+                />
+                <p class="description">Название услуги, о которой оставлен отзыв</p>
+            </td>
+        </tr>
+    </table>
+    <?php
+}
+
+/**
+ * Callback для мета-бокса "Дата отзыва"
+ */
 function sculptura_review_date_callback($post) {
     wp_nonce_field('sculptura_review_save', 'sculptura_review_nonce');
     $review_date = get_post_meta($post->ID, '_review_date', true);
@@ -573,9 +839,13 @@ function sculptura_review_date_callback($post) {
         <label for="review_date">Дата отзыва:</label><br>
         <input type="date" id="review_date" name="review_date" value="<?php echo esc_attr($review_date); ?>" class="regular-text" />
     </p>
+    <p class="description">Дата, когда был оставлен отзыв</p>
     <?php
 }
 
+/**
+ * Сохранение мета-полей отзыва
+ */
 function sculptura_save_review_meta($post_id) {
     if (!isset($_POST['sculptura_review_nonce']) || !wp_verify_nonce($_POST['sculptura_review_nonce'], 'sculptura_review_save')) {
         return;
@@ -586,6 +856,13 @@ function sculptura_save_review_meta($post_id) {
     if (!current_user_can('edit_post', $post_id)) {
         return;
     }
+    
+    // Сохраняем услугу
+    if (isset($_POST['review_service'])) {
+        update_post_meta($post_id, '_review_service', sanitize_text_field($_POST['review_service']));
+    }
+    
+    // Сохраняем дату
     if (isset($_POST['review_date'])) {
         update_post_meta($post_id, '_review_date', sanitize_text_field($_POST['review_date']));
     }
@@ -831,5 +1108,29 @@ function sculptura_send_to_telegram($name, $phone, $service = '', $date = '', $t
     
     return $all_success;
 }
+
+/**
+ * Включение Sitemap в WordPress (если еще не включен)
+ */
+function sculptura_enable_sitemap() {
+    // WordPress 5.5+ автоматически включает sitemap, но убедимся, что он не отключен
+    add_filter('wp_sitemaps_enabled', '__return_true');
+}
+add_action('init', 'sculptura_enable_sitemap');
+
+/**
+ * Добавление ссылки на Sitemap в robots.txt
+ */
+function sculptura_add_sitemap_to_robots($output, $public) {
+    // WordPress 5.5+ автоматически создает sitemap по адресу /wp-sitemap.xml
+    $sitemap_url = home_url('/wp-sitemap.xml');
+    
+    // Добавляем ссылку на sitemap в конец robots.txt
+    $output .= "\n# Sitemap\n";
+    $output .= "Sitemap: " . esc_url($sitemap_url) . "\n";
+    
+    return $output;
+}
+add_filter('robots_txt', 'sculptura_add_sitemap_to_robots', 10, 2);
 
 
