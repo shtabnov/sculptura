@@ -12,103 +12,46 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // Маска: +7 (9**)**-**-**
+    /**
+     * Форматирует номер телефона по маске: +7 (9**) ***-**-**
+     * @param {string} value - Входное значение
+     * @returns {string} - Отформатированный номер
+     */
     function formatPhone(value) {
-        // Убираем всё, кроме цифр
+        // Извлекаем только цифры
         const digits = value.replace(/\D/g, "");
+        if (!digits.length) return "";
 
-        // Если пусто, возвращаем пустую строку
-        if (digits.length === 0) return "";
-
-        // Если начинается с 8, заменяем на 7
-        let cleaned = digits.startsWith("8") ? "7" + digits.slice(1) : digits;
-
-        // Если не начинается с 7, добавляем 7 в начало
-        if (!cleaned.startsWith("7")) {
-            cleaned = "7" + cleaned;
-        }
+        // Нормализуем: заменяем 8 на 7, добавляем 7 если отсутствует
+        let cleaned = digits.startsWith("8")
+            ? "7" + digits.slice(1)
+            : digits.startsWith("7")
+            ? digits
+            : "7" + digits;
 
         // Ограничиваем до 11 цифр (7 + 10 цифр номера)
-        if (cleaned.length > 11) {
-            cleaned = cleaned.slice(0, 11);
+        cleaned = cleaned.slice(0, 11);
+
+        // Извлекаем цифры после 7 (первые 10 цифр номера)
+        const phoneDigits = cleaned.length > 1 ? cleaned.slice(1) : "";
+
+        // Форматируем по маске
+        if (!phoneDigits.length) return "+7";
+        if (phoneDigits.length <= 3) return `+7 (${phoneDigits}`;
+        if (phoneDigits.length <= 6) {
+            return `+7 (${phoneDigits.slice(0, 3)}) ${phoneDigits.slice(3)}`;
         }
-
-        // Извлекаем только цифры после 7 (первые 10 цифр номера)
-        const phoneDigits = cleaned.length > 1 ? cleaned.slice(1, 11) : "";
-
-        // Форматируем по маске: +7 (9xx) xxx-xx-xx
-        if (phoneDigits.length === 0) return "+7";
-        if (phoneDigits.length === 1) return "+7 (" + phoneDigits[0];
-        if (phoneDigits.length === 2) return "+7 (" + phoneDigits.slice(0, 2);
-        if (phoneDigits.length === 3) return "+7 (" + phoneDigits.slice(0, 3);
-        if (phoneDigits.length === 4)
-            return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits[3];
-        if (phoneDigits.length === 5)
-            return (
-                "+7 (" +
-                phoneDigits.slice(0, 3) +
-                ") " +
-                phoneDigits.slice(3, 5)
-            );
-        if (phoneDigits.length === 6)
-            return (
-                "+7 (" +
-                phoneDigits.slice(0, 3) +
-                ") " +
-                phoneDigits.slice(3, 6)
-            );
-        if (phoneDigits.length === 7)
-            return (
-                "+7 (" +
-                phoneDigits.slice(0, 3) +
-                ") " +
-                phoneDigits.slice(3, 6) +
-                "-" +
-                phoneDigits[6]
-            );
-        if (phoneDigits.length === 8)
-            return (
-                "+7 (" +
-                phoneDigits.slice(0, 3) +
-                ") " +
-                phoneDigits.slice(3, 6) +
-                "-" +
-                phoneDigits.slice(6, 8)
-            );
-        if (phoneDigits.length === 9)
-            return (
-                "+7 (" +
-                phoneDigits.slice(0, 3) +
-                ") " +
-                phoneDigits.slice(3, 6) +
-                "-" +
-                phoneDigits.slice(6, 8) +
-                "-" +
-                phoneDigits[8]
-            );
-        if (phoneDigits.length === 10)
-            return (
-                "+7 (" +
-                phoneDigits.slice(0, 3) +
-                ") " +
-                phoneDigits.slice(3, 6) +
-                "-" +
-                phoneDigits.slice(6, 8) +
-                "-" +
-                phoneDigits.slice(8, 10)
-            );
-
-        // Если больше 10 цифр, обрезаем до 10
-        return (
-            "+7 (" +
-            phoneDigits.slice(0, 3) +
-            ") " +
-            phoneDigits.slice(3, 6) +
-            "-" +
-            phoneDigits.slice(6, 8) +
-            "-" +
-            phoneDigits.slice(8, 10)
-        );
+        if (phoneDigits.length <= 8) {
+            return `+7 (${phoneDigits.slice(0, 3)}) ${phoneDigits.slice(
+                3,
+                6
+            )}-${phoneDigits.slice(6)}`;
+        }
+        // 9-10 цифр
+        return `+7 (${phoneDigits.slice(
+            0,
+            3
+        )}) ${phoneDigits.slice(3, 6)}-${phoneDigits.slice(6, 8)}-${phoneDigits.slice(8, 10)}`;
     }
 
     /**

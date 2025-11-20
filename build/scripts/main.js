@@ -266,45 +266,36 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  // Маска: +7 (9**)**-**-**
+  /**
+   * Форматирует номер телефона по маске: +7 (9**) ***-**-**
+   * @param {string} value - Входное значение
+   * @returns {string} - Отформатированный номер
+   */
   function formatPhone(value) {
-    // Убираем всё, кроме цифр
+    // Извлекаем только цифры
     var digits = value.replace(/\D/g, "");
+    if (!digits.length) return "";
 
-    // Если пусто, возвращаем пустую строку
-    if (digits.length === 0) return "";
-
-    // Если начинается с 8, заменяем на 7
-    var cleaned = digits.startsWith("8") ? "7" + digits.slice(1) : digits;
-
-    // Если не начинается с 7, добавляем 7 в начало
-    if (!cleaned.startsWith("7")) {
-      cleaned = "7" + cleaned;
-    }
+    // Нормализуем: заменяем 8 на 7, добавляем 7 если отсутствует
+    var cleaned = digits.startsWith("8") ? "7" + digits.slice(1) : digits.startsWith("7") ? digits : "7" + digits;
 
     // Ограничиваем до 11 цифр (7 + 10 цифр номера)
-    if (cleaned.length > 11) {
-      cleaned = cleaned.slice(0, 11);
+    cleaned = cleaned.slice(0, 11);
+
+    // Извлекаем цифры после 7 (первые 10 цифр номера)
+    var phoneDigits = cleaned.length > 1 ? cleaned.slice(1) : "";
+
+    // Форматируем по маске
+    if (!phoneDigits.length) return "+7";
+    if (phoneDigits.length <= 3) return "+7 (".concat(phoneDigits);
+    if (phoneDigits.length <= 6) {
+      return "+7 (".concat(phoneDigits.slice(0, 3), ") ").concat(phoneDigits.slice(3));
     }
-
-    // Извлекаем только цифры после 7 (первые 10 цифр номера)
-    var phoneDigits = cleaned.length > 1 ? cleaned.slice(1, 11) : "";
-
-    // Форматируем по маске: +7 (9xx) xxx-xx-xx
-    if (phoneDigits.length === 0) return "+7";
-    if (phoneDigits.length === 1) return "+7 (" + phoneDigits[0];
-    if (phoneDigits.length === 2) return "+7 (" + phoneDigits.slice(0, 2);
-    if (phoneDigits.length === 3) return "+7 (" + phoneDigits.slice(0, 3);
-    if (phoneDigits.length === 4) return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits[3];
-    if (phoneDigits.length === 5) return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits.slice(3, 5);
-    if (phoneDigits.length === 6) return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits.slice(3, 6);
-    if (phoneDigits.length === 7) return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits.slice(3, 6) + "-" + phoneDigits[6];
-    if (phoneDigits.length === 8) return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits.slice(3, 6) + "-" + phoneDigits.slice(6, 8);
-    if (phoneDigits.length === 9) return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits.slice(3, 6) + "-" + phoneDigits.slice(6, 8) + "-" + phoneDigits[8];
-    if (phoneDigits.length === 10) return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits.slice(3, 6) + "-" + phoneDigits.slice(6, 8) + "-" + phoneDigits.slice(8, 10);
-
-    // Если больше 10 цифр, обрезаем до 10
-    return "+7 (" + phoneDigits.slice(0, 3) + ") " + phoneDigits.slice(3, 6) + "-" + phoneDigits.slice(6, 8) + "-" + phoneDigits.slice(8, 10);
+    if (phoneDigits.length <= 8) {
+      return "+7 (".concat(phoneDigits.slice(0, 3), ") ").concat(phoneDigits.slice(3, 6), "-").concat(phoneDigits.slice(6));
+    }
+    // 9-10 цифр
+    return "+7 (".concat(phoneDigits.slice(0, 3), ") ").concat(phoneDigits.slice(3, 6), "-").concat(phoneDigits.slice(6, 8), "-").concat(phoneDigits.slice(8, 10));
   }
 
   /**
@@ -453,108 +444,79 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 "use strict";
 
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-// Функция для плавной прокрутки к элементу с учетом хедера
+/**
+ * Плавная прокрутка к элементу с учетом высоты хедера
+ * @param {string} elementId - ID целевого элемента
+ * @param {boolean} smooth - Использовать плавную прокрутку
+ * @returns {boolean} - Успешность операции
+ */
 function scrollToElement(elementId) {
   var smooth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var targetElement = document.getElementById(elementId);
-  if (!targetElement) {
-    return false;
-  }
-
-  // Получаем высоту хедера для учета при прокрутке
+  if (!targetElement) return false;
   var header = document.querySelector(".header");
-  var headerHeight = header ? header.offsetHeight : 0;
+  var headerHeight = (header === null || header === void 0 ? void 0 : header.offsetHeight) || 0;
+  var OFFSET = 10; // Отступ от хедера
 
   // Вычисляем позицию элемента относительно документа
-  // Используем getBoundingClientRect для более точного расчета
   var rect = targetElement.getBoundingClientRect();
   var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   var elementTop = rect.top + scrollTop;
-
-  // Вычитаем высоту хедера и добавляем небольшой отступ (10px) для комфорта
-  var offsetPosition = elementTop - headerHeight - 10;
-
-  // Прокручиваем с учетом высоты хедера
+  var offsetPosition = Math.max(0, elementTop - headerHeight - OFFSET);
   window.scrollTo({
-    top: Math.max(0, offsetPosition),
-    // Убеждаемся, что позиция не отрицательная
+    top: offsetPosition,
     behavior: smooth ? "smooth" : "auto"
   });
   return true;
 }
+
+/**
+ * Извлекает ID якоря из URL
+ * @param {string} href - URL ссылки
+ * @returns {string|null} - ID элемента или null
+ */
+function extractAnchorId(href) {
+  if (!href || !href.includes("#")) return null;
+  if (href.startsWith("#")) {
+    return href.substring(1);
+  }
+  var hashIndex = href.indexOf("#");
+  var blockID = href.substring(hashIndex + 1);
+
+  // Проверяем, ведет ли ссылка на другую страницу
+  try {
+    var url = new URL(href, window.location.origin);
+    var currentPath = window.location.pathname;
+    var targetPath = url.pathname;
+
+    // Если это другая страница, не обрабатываем якорь
+    if (targetPath && targetPath !== currentPath && targetPath !== "/") {
+      return null;
+    }
+  } catch (err) {
+    // Если не удалось распарсить URL, продолжаем обработку
+  }
+  return blockID;
+}
 document.addEventListener("DOMContentLoaded", function () {
   // Обрабатываем якорные ссылки при клике
   var anchors = document.querySelectorAll('a[href*="#"]');
-  if (anchors && anchors.length > 0) {
-    var _iterator = _createForOfIteratorHelper(anchors),
-      _step;
-    try {
-      var _loop = function _loop() {
-        var anchor = _step.value;
-        anchor.addEventListener("click", function (e) {
-          var href = anchor.getAttribute("href");
-          if (!href) {
-            return;
-          }
-
-          // Извлекаем якорь из ссылки (может быть #reception или /#reception или полный URL)
-          var blockID = null;
-
-          // Если ссылка начинается с #, это локальный якорь
-          if (href.startsWith("#")) {
-            blockID = href.substring(1);
-          }
-          // Если ссылка содержит #, извлекаем якорь
-          else if (href.includes("#")) {
-            var hashIndex = href.indexOf("#");
-            blockID = href.substring(hashIndex + 1);
-
-            // Проверяем, ведет ли ссылка на другую страницу
-            try {
-              var url = new URL(href, window.location.origin);
-              var currentPath = window.location.pathname;
-              var targetPath = url.pathname;
-
-              // Если это другая страница, позволяем браузеру обработать переход
-              if (targetPath !== currentPath && targetPath !== "/" && targetPath !== "") {
-                return; // Позволяем браузеру обработать переход
-              }
-            } catch (err) {
-              // Если не удалось распарсить URL, продолжаем обработку
-            }
-          } else {
-            return; // Нет якоря в ссылке
-          }
-
-          // Проверяем, что элемент существует на текущей странице
-          var targetElement = document.getElementById(blockID);
-          if (targetElement) {
-            e.preventDefault();
-            scrollToElement(blockID, true);
-          }
-          // Если элемента нет, позволяем браузеру обработать ссылку (переход на другую страницу)
-        });
-      };
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        _loop();
+  anchors.forEach(function (anchor) {
+    anchor.addEventListener("click", function (e) {
+      var href = anchor.getAttribute("href");
+      var blockID = extractAnchorId(href);
+      if (blockID && document.getElementById(blockID)) {
+        e.preventDefault();
+        scrollToElement(blockID, true);
       }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-  }
+    });
+  });
 
-  // Обрабатываем якорь при загрузке страницы (если в URL есть #)
+  // Обрабатываем якорь при загрузке страницы
   if (window.location.hash) {
-    var hash = window.location.hash.substring(1); // Убираем #
-
-    // Небольшая задержка, чтобы убедиться, что страница полностью загружена
+    var hash = window.location.hash.substring(1);
     setTimeout(function () {
-      scrollToElement(hash, false); // Без плавной прокрутки при загрузке
+      return scrollToElement(hash, false);
     }, 100);
   }
 });

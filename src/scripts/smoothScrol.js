@@ -1,98 +1,82 @@
-// Функция для плавной прокрутки к элементу с учетом хедера
+/**
+ * Плавная прокрутка к элементу с учетом высоты хедера
+ * @param {string} elementId - ID целевого элемента
+ * @param {boolean} smooth - Использовать плавную прокрутку
+ * @returns {boolean} - Успешность операции
+ */
 function scrollToElement(elementId, smooth = true) {
     const targetElement = document.getElementById(elementId);
+    if (!targetElement) return false;
 
-    if (!targetElement) {
-        return false;
-    }
-
-    // Получаем высоту хедера для учета при прокрутке
     const header = document.querySelector(".header");
-    const headerHeight = header ? header.offsetHeight : 0;
+    const headerHeight = header?.offsetHeight || 0;
+    const OFFSET = 10; // Отступ от хедера
 
     // Вычисляем позицию элемента относительно документа
-    // Используем getBoundingClientRect для более точного расчета
     const rect = targetElement.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const elementTop = rect.top + scrollTop;
+    const offsetPosition = Math.max(0, elementTop - headerHeight - OFFSET);
 
-    // Вычитаем высоту хедера и добавляем небольшой отступ (10px) для комфорта
-    const offsetPosition = elementTop - headerHeight - 10;
-
-    // Прокручиваем с учетом высоты хедера
     window.scrollTo({
-        top: Math.max(0, offsetPosition), // Убеждаемся, что позиция не отрицательная
+        top: offsetPosition,
         behavior: smooth ? "smooth" : "auto",
     });
 
     return true;
 }
 
+/**
+ * Извлекает ID якоря из URL
+ * @param {string} href - URL ссылки
+ * @returns {string|null} - ID элемента или null
+ */
+function extractAnchorId(href) {
+    if (!href || !href.includes("#")) return null;
+
+    if (href.startsWith("#")) {
+        return href.substring(1);
+    }
+
+    const hashIndex = href.indexOf("#");
+    const blockID = href.substring(hashIndex + 1);
+
+    // Проверяем, ведет ли ссылка на другую страницу
+    try {
+        const url = new URL(href, window.location.origin);
+        const currentPath = window.location.pathname;
+        const targetPath = url.pathname;
+
+        // Если это другая страница, не обрабатываем якорь
+        if (targetPath && targetPath !== currentPath && targetPath !== "/") {
+            return null;
+        }
+    } catch (err) {
+        // Если не удалось распарсить URL, продолжаем обработку
+    }
+
+    return blockID;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // Обрабатываем якорные ссылки при клике
     const anchors = document.querySelectorAll('a[href*="#"]');
 
-    if (anchors && anchors.length > 0) {
-        for (let anchor of anchors) {
-            anchor.addEventListener("click", function (e) {
-                const href = anchor.getAttribute("href");
+    anchors.forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+            const href = anchor.getAttribute("href");
+            const blockID = extractAnchorId(href);
 
-                if (!href) {
-                    return;
-                }
+            if (blockID && document.getElementById(blockID)) {
+                e.preventDefault();
+                scrollToElement(blockID, true);
+            }
+        });
+    });
 
-                // Извлекаем якорь из ссылки (может быть #reception или /#reception или полный URL)
-                let blockID = null;
-
-                // Если ссылка начинается с #, это локальный якорь
-                if (href.startsWith("#")) {
-                    blockID = href.substring(1);
-                }
-                // Если ссылка содержит #, извлекаем якорь
-                else if (href.includes("#")) {
-                    const hashIndex = href.indexOf("#");
-                    blockID = href.substring(hashIndex + 1);
-
-                    // Проверяем, ведет ли ссылка на другую страницу
-                    try {
-                        const url = new URL(href, window.location.origin);
-                        const currentPath = window.location.pathname;
-                        const targetPath = url.pathname;
-
-                        // Если это другая страница, позволяем браузеру обработать переход
-                        if (
-                            targetPath !== currentPath &&
-                            targetPath !== "/" &&
-                            targetPath !== ""
-                        ) {
-                            return; // Позволяем браузеру обработать переход
-                        }
-                    } catch (err) {
-                        // Если не удалось распарсить URL, продолжаем обработку
-                    }
-                } else {
-                    return; // Нет якоря в ссылке
-                }
-
-                // Проверяем, что элемент существует на текущей странице
-                const targetElement = document.getElementById(blockID);
-
-                if (targetElement) {
-                    e.preventDefault();
-                    scrollToElement(blockID, true);
-                }
-                // Если элемента нет, позволяем браузеру обработать ссылку (переход на другую страницу)
-            });
-        }
-    }
-
-    // Обрабатываем якорь при загрузке страницы (если в URL есть #)
+    // Обрабатываем якорь при загрузке страницы
     if (window.location.hash) {
-        const hash = window.location.hash.substring(1); // Убираем #
-
-        // Небольшая задержка, чтобы убедиться, что страница полностью загружена
-        setTimeout(() => {
-            scrollToElement(hash, false); // Без плавной прокрутки при загрузке
-        }, 100);
+        const hash = window.location.hash.substring(1);
+        setTimeout(() => scrollToElement(hash, false), 100);
     }
 });

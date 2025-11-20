@@ -10,24 +10,26 @@ const deployCSS = require("./gulp/deploy-css");
 const deployJS = require("./gulp/deploy-js");
 const deployImages = require("./gulp/deploy-images");
 
-// const dev = gulp.parallel(pug, style, move, babel);
-// const img = gulp.parallel(image);
-// module.exports.start = gulp.series(pug2html, style, move, babel);
-// module.exports.img = gulp.series(image);
 const { series, parallel } = gulp;
 
-// Отдельные задачи для scripts, css и images
+// ============================================================================
+// Основные задачи сборки
+// ============================================================================
 exports.pug = pug;
-exports.scripts = series(scripts, deployJS); // Автоматический деплой после сборки
-exports.css = series(scss, deployCSS); // Автоматический деплой после сборки
+exports.scripts = series(scripts, deployJS);
+exports.css = series(scss, deployCSS);
 exports.images = series(img, deployImages);
 exports.fonts = fonts;
 
-// Задачи только сборки (без деплоя) - если нужны
+// ============================================================================
+// Задачи только сборки (без деплоя)
+// ============================================================================
 exports.cssBuild = scss;
 exports.jsBuild = scripts;
 
-// Задачи с автоматическим деплоем (дубликаты для ясности)
+// ============================================================================
+// Задачи с автоматическим деплоем (алиасы для ясности)
+// ============================================================================
 exports.cssDeploy = series(scss, deployCSS);
 exports.jsDeploy = series(scripts, deployJS);
 exports.pugDeploy = pug; // PUG не деплоится на WordPress, только локально
