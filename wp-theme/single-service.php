@@ -16,7 +16,7 @@ get_header();
         ?>
         <section class="service-detail">
             <div class="service-detail__container">
-                <h2 class="service-detail__title"><?php the_title(); ?></h2>
+                <h1 class="service-detail__title"><?php echo esc_html(get_the_title()); ?></h1>
                 <div class="service-detail__content">
                     <div class="service-detail__text">
                         <?php if ($intro_text) : ?>
@@ -26,7 +26,14 @@ get_header();
                         <?php endif; ?>
 
                         <div class="service-detail__info">
-                            <?php the_content(); ?>
+                            <?php 
+                            // Добавляем SEO-контент для массажа лица
+                            if (stripos($service_title, 'массаж лица') !== false && !get_the_content()) {
+                                echo '<p>Профессиональный массаж лица в Перми в студии красоты Sculptura. Опытные мастера, натуральная косметика премиум-класса, индивидуальный подход к каждому клиенту.</p>';
+                                echo '<p>Массаж лица в Перми — это эффективная процедура для омоложения и улучшения тонуса кожи. Мы находимся в Кондратово, Пермский край, и работаем ежедневно с 9:00 до 21:00.</p>';
+                            }
+                            the_content(); 
+                            ?>
                         </div>
 
                         <div class="service-detail__action">

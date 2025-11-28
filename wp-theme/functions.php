@@ -67,6 +67,19 @@ function sculptura_enqueue_assets() {
         SCULPTURA_VERSION,
         true
     );
+    
+    // Добавляем defer для некритичных скриптов
+    add_filter('script_loader_tag', function($tag, $handle) {
+        // Добавляем defer для всех скриптов кроме критичных
+        $defer_scripts = ['sculptura-main', 'ymaps'];
+        if (in_array($handle, $defer_scripts)) {
+            // Проверяем, что defer еще не добавлен
+            if (strpos($tag, 'defer') === false) {
+                $tag = str_replace('></script>', ' defer></script>', $tag);
+            }
+        }
+        return $tag;
+    }, 10, 2);
 
     // Глобальная переменная с URI темы для обращений из JS к ассетам
     wp_add_inline_script(
@@ -76,6 +89,32 @@ function sculptura_enqueue_assets() {
     );
 }
 add_action('wp_enqueue_scripts', 'sculptura_enqueue_assets');
+
+/**
+ * Настройка кеширования статических ресурсов
+ */
+function sculptura_set_cache_headers() {
+    // Устанавливаем заголовки кеширования для статических ресурсов
+    if (!is_admin()) {
+        // Кеширование для CSS и JS - 1 год
+        if (preg_match('/\.(css|js)(\?|$)/', $_SERVER['REQUEST_URI'])) {
+            header('Cache-Control: public, max-age=31536000, immutable');
+            header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
+        }
+        // Кеширование для изображений - 1 месяц
+        elseif (preg_match('/\.(jpg|jpeg|png|gif|webp|svg|ico)(\?|$)/', $_SERVER['REQUEST_URI'])) {
+            header('Cache-Control: public, max-age=2592000');
+            header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 2592000) . ' GMT');
+        }
+        // Кеширование для шрифтов - 1 год
+        elseif (preg_match('/\.(woff|woff2|ttf|otf|eot)(\?|$)/', $_SERVER['REQUEST_URI'])) {
+            header('Cache-Control: public, max-age=31536000, immutable');
+            header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT');
+        }
+    }
+}
+add_action('init', 'sculptura_set_cache_headers');
+
 
 /**
  * Принудительное использование HTTPS для всех URL
@@ -169,12 +208,53 @@ function sculptura_add_favicon() {
 add_action('wp_head', 'sculptura_add_favicon', 1);
 
 /**
- * Добавление SEO мета-тегов (description, keywords)
+ * Добавление мета-тега верификации Google Search Console
  */
+function sculptura_add_google_verification() {
+    echo '<meta name="google-site-verification" content="3wtKbPCgLODXD1tz1DtsJFgaQd1DiTRWJQP6p_yn2cI" />' . "\n";
+}
+add_action('wp_head', 'sculptura_add_google_verification', 1);
+
+
+/**
+ * Обрезает title до оптимальной длины для SEO
+ * Google: 50-60 символов, Яндекс: до 70 символов
+ */
+function sculptura_trim_title($title, $max_length = 60) {
+    if (mb_strlen($title) <= $max_length) {
+        return $title;
+    }
+    // Обрезаем по последнему пробелу перед лимитом
+    $trimmed = mb_substr($title, 0, $max_length);
+    $last_space = mb_strrpos($trimmed, ' ');
+    if ($last_space !== false) {
+        $trimmed = mb_substr($trimmed, 0, $last_space);
+    }
+    return $trimmed . '...';
+}
+
+/**
+ * Обрезает description до оптимальной длины для SEO
+ * Google: 150-160 символов, Яндекс: до 200 символов
+ */
+function sculptura_trim_description($description, $max_length = 160) {
+    if (mb_strlen($description) <= $max_length) {
+        return $description;
+    }
+    // Обрезаем по последнему пробелу перед лимитом
+    $trimmed = mb_substr($description, 0, $max_length);
+    $last_space = mb_strrpos($trimmed, ' ');
+    if ($last_space !== false) {
+        $trimmed = mb_substr($trimmed, 0, $last_space);
+    }
+    return $trimmed . '...';
+}
+
 function sculptura_add_seo_meta_tags() {
-    // Базовые значения по умолчанию
-    $default_description = 'Студия естественной красоты Sculptura в Перми. Профессиональный массаж лица, буккальный массаж, маникюр, наращивание ресниц, макияж. Натуральная косметика премиум-класса.';
-    $default_keywords = 'студия красоты, массаж лица, буккальный массаж, маникюр, наращивание ресниц, макияж, Пермь, Кондратово, косметология, уход за лицом, лифтинг';
+    // Базовые значения по умолчанию (оптимизированы для запросов "массаж лица пермь" и "скульптура пермь ру")
+    // Description оптимизирован: содержит ключевые слова и призыв к действию
+    $default_description = 'Скульптура Пермь — студия красоты Sculptura. Массаж лица в Перми, буккальный массаж, косметология. Профессиональный уход за лицом. Кондратово. Запись онлайн.';
+    $default_keywords = 'массаж лица пермь, массаж лица, массаж лица в перми, массаж лица скульптура, косметология пермь, буккальный массаж пермь, студия красоты пермь, уход за лицом пермь, лифтинг лица пермь, скульптура пермь ру, кондратово';
     
     $description = $default_description;
     $keywords = $default_keywords;
@@ -185,10 +265,32 @@ function sculptura_add_seo_meta_tags() {
     // Для отдельных страниц и постов
     if (is_singular()) {
         $post_id = get_queried_object_id();
+        $post_type = get_post_type($post_id);
         
         // Проверяем, есть ли кастомные мета-поля
         $meta_description = get_post_meta($post_id, '_seo_description', true);
         $meta_keywords = get_post_meta($post_id, '_seo_keywords', true);
+        
+        // Специальная обработка для услуг (service)
+        if ($post_type === 'service') {
+            $service_title = get_the_title($post_id);
+            
+            // Если это услуга "Массаж лица", добавляем ключевые слова
+            if (stripos($service_title, 'массаж лица') !== false || stripos($service_title, 'массаж') !== false) {
+                if (!$meta_description) {
+                    // Оптимизированный description для услуг массажа: 152 символа
+                    $meta_description = 'Массаж лица в Перми в студии Sculptura. Профессиональный буккальный массаж для омоложения и улучшения тонуса кожи. Запись онлайн. Кондратово.';
+                }
+                if (!$meta_keywords) {
+                    $meta_keywords = 'массаж лица пермь, массаж лица, массаж лица в перми, массаж лица скульптура, косметология пермь, уход за лицом пермь, лифтинг лица пермь, скульптура пермь ру';
+                }
+            } else {
+                // Для других услуг создаем description на основе названия
+                if (!$meta_description) {
+                    $meta_description = $service_title . ' в Перми в студии красоты Sculptura. Профессиональные услуги красоты и косметологии. Запись онлайн. Кондратово.';
+                }
+            }
+        }
         
         if ($meta_description) {
             $description = $meta_description;
@@ -198,29 +300,53 @@ function sculptura_add_seo_meta_tags() {
             $description = wp_trim_words(strip_tags(get_the_content($post_id)), 25);
         }
         
+        // Обрезаем description до оптимальной длины
+        $description = sculptura_trim_description($description, 160);
+        
         if ($meta_keywords) {
             $keywords = $meta_keywords;
         }
         
-        $title = get_the_title($post_id) . ' — ' . get_bloginfo('name');
+        // Формируем title с учетом длины
+        $post_title = get_the_title($post_id);
+        $site_name = get_bloginfo('name');
+        $title = $post_title . ' — ' . $site_name;
+        
+        // Если title слишком длинный, обрезаем его
+        if (mb_strlen($title) > 60) {
+            // Пытаемся сохранить название поста полностью, обрезая только если очень длинное
+            if (mb_strlen($post_title) > 45) {
+                $title = sculptura_trim_title($post_title, 45) . ' — ' . $site_name;
+            } else {
+                $title = $post_title . ' — ' . sculptura_trim_title($site_name, 15);
+            }
+        }
         
         // Изображение для соцсетей
         if (has_post_thumbnail($post_id)) {
             $image_url = get_the_post_thumbnail_url($post_id, 'large');
         }
     } elseif (is_home() || is_front_page()) {
-        // Для главной страницы
-        $title = get_bloginfo('name') . ' — ' . get_bloginfo('description');
+        // Для главной страницы - оптимизируем под ключевой запрос "скульптура пермь ру"
+        // Title: включает ключевые слова для лучшей индексации
+        $title = 'Скульптура Пермь — Массаж лица в студии красоты';
+        // Description с ключевыми словами "скульптура пермь ру"
+        $description = 'Скульптура Пермь — студия красоты Sculptura. Массаж лица в Перми, буккальный массаж, косметология. Профессиональный уход за лицом. Кондратово. Запись онлайн.';
+        $keywords = $default_keywords;
     } elseif (is_category()) {
         $category = get_queried_object();
         $description = $category->description ?: $default_description;
+        $description = sculptura_trim_description($description, 160);
         $keywords = $category->name . ', ' . $default_keywords;
         $title = $category->name . ' — ' . get_bloginfo('name');
+        $title = sculptura_trim_title($title, 60);
     } elseif (is_tag()) {
         $tag = get_queried_object();
         $description = $tag->description ?: $default_description;
+        $description = sculptura_trim_description($description, 160);
         $keywords = $tag->name . ', ' . $default_keywords;
         $title = $tag->name . ' — ' . get_bloginfo('name');
+        $title = sculptura_trim_title($title, 60);
     }
     
     // Очищаем и экранируем значения
@@ -256,6 +382,157 @@ function sculptura_add_seo_meta_tags() {
     echo '<meta name="twitter:image" content="' . $image_url . '">' . "\n";
 }
 add_action('wp_head', 'sculptura_add_seo_meta_tags', 2);
+
+/**
+ * Добавление структурированных данных Schema.org (JSON-LD)
+ * Улучшает SEO и отображение в результатах поиска
+ */
+function sculptura_add_schema_org() {
+    $site_url = home_url('/');
+    $site_name = get_bloginfo('name');
+    $site_description = get_bloginfo('description');
+    
+    // Основная информация о бизнесе (LocalBusiness)
+    $business_schema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BeautySalon',
+        'name' => $site_name,
+        'description' => 'Студия естественной красоты Sculptura в Перми. Профессиональный массаж лица, буккальный массаж, косметология.',
+        'url' => $site_url,
+        'telephone' => '+79638816267',
+        'address' => [
+            '@type' => 'PostalAddress',
+            'streetAddress' => 'ул. Садовое кольцо 14, вход с торца здания',
+            'addressLocality' => 'Кондратово',
+            'addressRegion' => 'Пермский край',
+            'addressCountry' => 'RU'
+        ],
+        'geo' => [
+            '@type' => 'GeoCoordinates',
+            'latitude' => '57.9833',
+            'longitude' => '56.1167'
+        ],
+        'openingHoursSpecification' => [
+            [
+                '@type' => 'OpeningHoursSpecification',
+                'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                'opens' => '09:00',
+                'closes' => '21:00'
+            ]
+        ],
+        'priceRange' => '$$',
+        'image' => SCULPTURA_THEME_URI . '/assets/images/logo.png',
+        'sameAs' => [
+            'https://vk.com/buccal59'
+        ]
+    ];
+    
+    // Для главной страницы
+    if (is_front_page() || is_home()) {
+        echo '<script type="application/ld+json">' . "\n";
+        echo wp_json_encode($business_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        echo "\n" . '</script>' . "\n";
+        
+        // Добавляем Service schema для главной страницы
+        $service_schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Service',
+            'serviceType' => 'Массаж лица',
+            'provider' => [
+                '@type' => 'BeautySalon',
+                'name' => $site_name,
+                'address' => $business_schema['address']
+            ],
+            'areaServed' => [
+                '@type' => 'City',
+                'name' => 'Пермь'
+            ],
+            'description' => 'Профессиональный массаж лица в Перми. Омоложение и улучшение тонуса кожи лица. Косметология, лифтинг, уход за лицом.'
+        ];
+        
+        echo '<script type="application/ld+json">' . "\n";
+        echo wp_json_encode($service_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        echo "\n" . '</script>' . "\n";
+    }
+    
+    // Для страниц услуг (service post type)
+    if (is_singular('service')) {
+        $post_id = get_queried_object_id();
+        $service_title = get_the_title($post_id);
+        $service_description = has_excerpt($post_id) ? get_the_excerpt($post_id) : wp_trim_words(strip_tags(get_the_content($post_id)), 30);
+        $service_url = get_permalink($post_id);
+        $service_image = has_post_thumbnail($post_id) ? get_the_post_thumbnail_url($post_id, 'large') : SCULPTURA_THEME_URI . '/assets/images/logo.png';
+        
+        $service_schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Service',
+            'name' => $service_title,
+            'description' => $service_description,
+            'provider' => [
+                '@type' => 'BeautySalon',
+                'name' => $site_name,
+                'telephone' => '+79638816267',
+                'address' => $business_schema['address']
+            ],
+            'areaServed' => [
+                '@type' => 'City',
+                'name' => 'Пермь'
+            ],
+            'url' => $service_url,
+            'image' => $service_image
+        ];
+        
+        // Если это массаж лица, добавляем дополнительные данные
+        if (stripos($service_title, 'массаж лица') !== false) {
+        $service_schema['serviceType'] = 'Массаж лица';
+        $service_schema['keywords'] = 'массаж лица пермь, массаж лица, косметология пермь, уход за лицом пермь, скульптура пермь ру';
+        }
+        
+        echo '<script type="application/ld+json">' . "\n";
+        echo wp_json_encode($service_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        echo "\n" . '</script>' . "\n";
+        
+        // Также добавляем LocalBusiness на страницу услуги
+        echo '<script type="application/ld+json">' . "\n";
+        echo wp_json_encode($business_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        echo "\n" . '</script>' . "\n";
+    }
+    
+    // Для отзывов (review post type)
+    if (is_singular('review')) {
+        $post_id = get_queried_object_id();
+        $review_author = get_the_title($post_id);
+        $review_text = get_the_content($post_id);
+        $review_date = get_post_meta($post_id, '_review_date', true) ?: get_the_date('c', $post_id);
+        $review_rating = get_post_meta($post_id, '_review_rating', true) ?: 5;
+        
+        $review_schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Review',
+            'itemReviewed' => [
+                '@type' => 'BeautySalon',
+                'name' => $site_name,
+                'address' => $business_schema['address']
+            ],
+            'author' => [
+                '@type' => 'Person',
+                'name' => $review_author
+            ],
+            'reviewBody' => wp_strip_all_tags($review_text),
+            'datePublished' => $review_date,
+            'reviewRating' => [
+                '@type' => 'Rating',
+                'ratingValue' => $review_rating,
+                'bestRating' => 5
+            ]
+        ];
+        
+        echo '<script type="application/ld+json">' . "\n";
+        echo wp_json_encode($review_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        echo "\n" . '</script>' . "\n";
+    }
+}
+add_action('wp_head', 'sculptura_add_schema_org', 3);
 
 /**
  * Поддержка темой функций WordPress
@@ -327,8 +604,36 @@ add_filter('wp_get_attachment_image', 'sculptura_remove_svg_size_attributes', 10
  */
 function sculptura_image_attributes($attr, $attachment, $size) {
     if ($attachment && get_post_mime_type($attachment->ID) === 'image/svg+xml') {
+        // Для SVG удаляем width и height (они не нужны)
         unset($attr['width']);
         unset($attr['height']);
+    } else {
+        // Для всех остальных изображений гарантируем наличие width и height
+        if (!isset($attr['width']) || !isset($attr['height'])) {
+            $attachment_id = is_object($attachment) ? $attachment->ID : $attachment;
+            if ($attachment_id) {
+                $image_meta = wp_get_attachment_image_src($attachment_id, $size);
+                if ($image_meta) {
+                    if (!isset($attr['width'])) {
+                        $attr['width'] = $image_meta[1];
+                    }
+                    if (!isset($attr['height'])) {
+                        $attr['height'] = $image_meta[2];
+                    }
+                } else {
+                    // Если не удалось получить размеры, пробуем из метаданных
+                    $metadata = wp_get_attachment_metadata($attachment_id);
+                    if ($metadata && isset($metadata['width']) && isset($metadata['height'])) {
+                        if (!isset($attr['width'])) {
+                            $attr['width'] = $metadata['width'];
+                        }
+                        if (!isset($attr['height'])) {
+                            $attr['height'] = $metadata['height'];
+                        }
+                    }
+                }
+            }
+        }
     }
     return $attr;
 }
@@ -373,7 +678,7 @@ function sculptura_fix_price_menu_link($items, $args) {
 add_filter('wp_nav_menu_objects', 'sculptura_fix_price_menu_link', 10, 2);
 
 /**
- * Регистрация Custom Post Types
+ * Регистрация всех Custom Post Types
  */
 function sculptura_register_post_types() {
     // Услуги
@@ -391,11 +696,20 @@ function sculptura_register_post_types() {
             'not_found_in_trash' => 'В корзине услуг не найдено',
         ],
         'public' => true,
+        'publicly_queryable' => true, // Явно разрешаем публичные запросы
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'show_in_nav_menus' => true,
+        'show_in_admin_bar' => true,
+        'show_in_rest' => true,
+        'exclude_from_search' => false, // Включаем в поиск
         'has_archive' => false,
         'menu_icon' => 'dashicons-businessman',
         'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
         'rewrite' => ['slug' => 'services', 'with_front' => false],
-        'show_in_rest' => true,
+        'capability_type' => 'post',
+        'hierarchical' => false,
+        'query_var' => true, // Разрешаем использование в запросах
     ]);
 
     // Акции
@@ -419,13 +733,7 @@ function sculptura_register_post_types() {
         'rewrite' => ['slug' => 'sales', 'with_front' => false],
         'show_in_rest' => true,
     ]);
-}
-add_action('init', 'sculptura_register_post_types');
 
-/**
- * Регистрация Custom Post Types для Features и Reviews
- */
-function sculptura_register_additional_post_types() {
     // Features (Преимущества)
     register_post_type('feature', [
         'labels' => [
@@ -456,7 +764,39 @@ function sculptura_register_additional_post_types() {
         'show_in_rest' => true,
     ]);
 }
-add_action('init', 'sculptura_register_additional_post_types');
+add_action('init', 'sculptura_register_post_types');
+
+/**
+ * Общая функция для вывода JavaScript кода media upload
+ */
+function sculptura_media_upload_script($preview_targets = []) {
+    ?>
+    <script>
+    jQuery(document).ready(function($) {
+        $('.sculptura-media-upload').on('click', function(e) {
+            e.preventDefault();
+            var target = $(this).data('target');
+            var frame = wp.media({
+                title: 'Выберите изображение',
+                button: { text: 'Использовать' },
+                multiple: false
+            });
+            frame.on('select', function() {
+                var attachment = frame.state().get('selection').first().toJSON();
+                $('#' + target).val(attachment.url);
+                <?php if (!empty($preview_targets)) : ?>
+                if (<?php echo json_encode($preview_targets); ?>.includes(target)) {
+                    $('#' + target).next('p').remove();
+                    $('#' + target).after('<p><img src="' + attachment.url + '" style="max-width: 200px; height: auto; margin-top: 10px;" /></p>');
+                }
+                <?php endif; ?>
+            });
+            frame.open();
+        });
+    });
+    </script>
+    <?php
+}
 
 /**
  * Добавление мета-боксов для главной страницы (Hero секция)
@@ -521,24 +861,7 @@ function sculptura_hero_meta_box_callback($post) {
             </td>
         </tr>
     </table>
-    <script>
-    jQuery(document).ready(function($) {
-        $('.sculptura-media-upload').on('click', function(e) {
-            e.preventDefault();
-            var target = $(this).data('target');
-            var frame = wp.media({
-                title: 'Выберите изображение',
-                button: { text: 'Использовать' },
-                multiple: false
-            });
-            frame.on('select', function() {
-                var attachment = frame.state().get('selection').first().toJSON();
-                $('#' + target).val(attachment.url);
-            });
-            frame.open();
-        });
-    });
-    </script>
+    <?php sculptura_media_upload_script(); ?>
     <?php
 }
 
@@ -725,28 +1048,7 @@ function sculptura_service_meta_box_callback($post) {
             <td><textarea id="service_intro" name="service_intro" rows="4" class="large-text"><?php echo esc_textarea($service_intro); ?></textarea></td>
         </tr>
     </table>
-    <script>
-    jQuery(document).ready(function($) {
-        $('.sculptura-media-upload').on('click', function(e) {
-            e.preventDefault();
-            var target = $(this).data('target');
-            var frame = wp.media({
-                title: 'Выберите изображение',
-                button: { text: 'Использовать' },
-                multiple: false
-            });
-            frame.on('select', function() {
-                var attachment = frame.state().get('selection').first().toJSON();
-                $('#' + target).val(attachment.url);
-                if (target === 'service_hero_image') {
-                    $('#' + target).next('p').remove();
-                    $('#' + target).after('<p><img src="' + attachment.url + '" style="max-width: 200px; height: auto; margin-top: 10px;" /></p>');
-                }
-            });
-            frame.open();
-        });
-    });
-    </script>
+    <?php sculptura_media_upload_script(['service_hero_image']); ?>
     <?php
 }
 
@@ -901,28 +1203,7 @@ function sculptura_feature_icon_callback($post) {
             </td>
         </tr>
     </table>
-    <script>
-    jQuery(document).ready(function($) {
-        $('.sculptura-media-upload').on('click', function(e) {
-            e.preventDefault();
-            var target = $(this).data('target');
-            var frame = wp.media({
-                title: 'Выберите изображение',
-                button: { text: 'Использовать' },
-                multiple: false
-            });
-            frame.on('select', function() {
-                var attachment = frame.state().get('selection').first().toJSON();
-                $('#' + target).val(attachment.url);
-                if (target === 'feature_icon') {
-                    $('#' + target).next('p').next('p').remove();
-                    $('#' + target).after('<p><img src="' + attachment.url + '" style="max-width: 100px; height: auto; margin-top: 10px;" /></p>');
-                }
-            });
-            frame.open();
-        });
-    });
-    </script>
+    <?php sculptura_media_upload_script(['feature_icon']); ?>
     <?php
 }
 
@@ -943,8 +1224,108 @@ function sculptura_save_feature_meta($post_id) {
 add_action('save_post_feature', 'sculptura_save_feature_meta');
 
 /**
- * Хелпер: получение мета-поля
+ * Получает адаптивное изображение из URL с оптимизацией для PageSpeed
+ * 
+ * @param string $image_url URL изображения
+ * @param string $size Размер изображения (по умолчанию 'full')
+ * @param array $attr Дополнительные атрибуты для img тега
+ * @return string HTML код изображения с srcset и sizes
  */
+function sculptura_get_responsive_image($image_url, $size = 'full', $attr = []) {
+    if (empty($image_url)) {
+        return '';
+    }
+    
+    // Получаем attachment_id из URL
+    $attachment_id = attachment_url_to_postid($image_url);
+    
+    if (!$attachment_id) {
+        // Если не удалось найти attachment, возвращаем обычный img с оптимизацией
+        $default_attr = [
+            'src' => $image_url,
+            'alt' => isset($attr['alt']) ? $attr['alt'] : '',
+            'loading' => isset($attr['loading']) ? $attr['loading'] : 'lazy',
+            'decoding' => 'async',
+            'fetchpriority' => isset($attr['fetchpriority']) ? $attr['fetchpriority'] : 'auto',
+        ];
+        
+        // Добавляем width и height если указаны
+        if (isset($attr['width'])) {
+            $default_attr['width'] = $attr['width'];
+        }
+        if (isset($attr['height'])) {
+            $default_attr['height'] = $attr['height'];
+        }
+        
+        $attributes = '';
+        foreach ($default_attr as $key => $value) {
+            if (!empty($value)) {
+                $attributes .= ' ' . esc_attr($key) . '="' . esc_attr($value) . '"';
+            }
+        }
+        
+        return '<img' . $attributes . '>';
+    }
+    
+    // Получаем размеры изображения для указанного размера
+    $image_meta = wp_get_attachment_image_src($attachment_id, $size);
+    $width = $image_meta ? $image_meta[1] : null;
+    $height = $image_meta ? $image_meta[2] : null;
+    
+    // Если размеры не получены, пробуем получить из метаданных
+    if (!$width || !$height) {
+        $metadata = wp_get_attachment_metadata($attachment_id);
+        if ($metadata && isset($metadata['width']) && isset($metadata['height'])) {
+            // Для hero изображений используем пропорциональные размеры
+            // Hero занимает 100vw x 100vh, но для предотвращения CLS используем реальные размеры
+            if (isset($attr['sizes']) && strpos($attr['sizes'], '100vw') !== false) {
+                // Вычисляем пропорциональную высоту для hero (обычно соотношение 16:9 или подобное)
+                $aspect_ratio = $metadata['height'] / $metadata['width'];
+                $width = 1920; // Стандартная ширина для hero
+                $height = round($width * $aspect_ratio);
+            } else {
+                $width = $metadata['width'];
+                $height = $metadata['height'];
+            }
+        }
+    }
+    
+    // Используем WordPress функцию для получения адаптивного изображения
+    $default_attr = [
+        'alt' => isset($attr['alt']) ? $attr['alt'] : get_post_meta($attachment_id, '_wp_attachment_image_alt', true),
+        'loading' => isset($attr['loading']) ? $attr['loading'] : 'lazy',
+        'decoding' => 'async',
+        'fetchpriority' => isset($attr['fetchpriority']) ? $attr['fetchpriority'] : 'auto',
+    ];
+    
+    // Добавляем width и height для предотвращения CLS
+    if ($width && $height) {
+        $default_attr['width'] = $width;
+        $default_attr['height'] = $height;
+    }
+    
+    // Добавляем sizes для адаптивности
+    // Hero изображения занимают 100vw на всех экранах
+    // Для других изображений используем более точные значения
+    if (!isset($attr['sizes'])) {
+        // Проверяем, является ли это hero изображением (по контексту использования)
+        // Hero изображения обычно используются в full размере и занимают весь экран
+        $default_attr['sizes'] = '(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw';
+    }
+    
+    // Для hero изображений используем специальные размеры
+    // WordPress автоматически создаст srcset с разными размерами
+    if ($size === 'full') {
+        // Используем большой размер, но не оригинал для оптимизации
+        $size = 'large'; // 1024px по умолчанию в WordPress
+    }
+    
+    // Объединяем с переданными атрибутами (переданные имеют приоритет)
+    $img_attr = array_merge($default_attr, $attr);
+    
+    return wp_get_attachment_image($attachment_id, $size, false, $img_attr);
+}
+
 function sculptura_get_meta($key, $post_id = null, $default = '') {
     if (!$post_id) {
         $post_id = get_the_ID();
@@ -1047,16 +1428,27 @@ function sculptura_send_to_telegram($name, $phone, $service = '', $date = '', $t
         );
     };
     
+    // Форматирование даты: 2025-11-14 -> 14.11.2025
+    $format_date = function($date) {
+        // Проверяем формат YYYY-MM-DD
+        if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $date, $matches)) {
+            return $matches[3] . '.' . $matches[2] . '.' . $matches[1];
+        }
+        // Если формат другой, возвращаем как есть
+        return $date;
+    };
+    
     // Формируем сообщение
     $message = "📝 *Новая заявка на запись*\n\n";
     $message .= "👤 *Имя:* " . $escape_markdown($name) . "\n";
-    $message .= "📞 *Телефон:* " . $escape_markdown($phone) . "\n";
+    // Телефон не экранируем, чтобы убрать обратные слэши и сохранить кликабельность
+    $message .= "📞 *Телефон:* " . $phone . "\n";
     
     if ($service) {
         $message .= "💼 *Услуга:* " . $escape_markdown($service) . "\n";
     }
     if ($date) {
-        $message .= "📅 *Дата:* " . $escape_markdown($date) . "\n";
+        $message .= "📅 *Дата:* " . $escape_markdown($format_date($date)) . "\n";
     }
     if ($time) {
         $message .= "⏰ *Время:* " . $escape_markdown($time) . "\n";
@@ -1117,6 +1509,29 @@ function sculptura_enable_sitemap() {
     add_filter('wp_sitemaps_enabled', '__return_true');
 }
 add_action('init', 'sculptura_enable_sitemap');
+
+/**
+ * Добавление кастомных post types в Sitemap WordPress
+ * Это критично для индексации услуг поисковыми системами
+ * 
+ * WordPress 5.5+ автоматически включает публичные post types в sitemap,
+ * но мы явно убеждаемся, что наши кастомные типы включены
+ */
+function sculptura_add_post_types_to_sitemap($post_types) {
+    // Добавляем наши кастомные типы постов, если они еще не добавлены
+    $service_type = get_post_type_object('service');
+    $sale_type = get_post_type_object('sale');
+    
+    if ($service_type && $service_type->public) {
+        $post_types['service'] = $service_type;
+    }
+    if ($sale_type && $sale_type->public) {
+        $post_types['sale'] = $sale_type;
+    }
+    
+    return $post_types;
+}
+add_filter('wp_sitemaps_post_types', 'sculptura_add_post_types_to_sitemap');
 
 /**
  * Добавление ссылки на Sitemap в robots.txt

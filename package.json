@@ -6,14 +6,20 @@
         "gulp": "^5.0.1",
         "gulp-clean": "^0.4.0",
         "gulp-concat": "^2.6.1",
-        "gulp-imagemin": "^9.2.0",
+        "gulp-if": "^3.0.0",
+        "gulp-imagemin": "^7.1.0",
         "gulp-pug": "^5.0.0",
+        "gulp-rename": "^2.1.0",
+        "imagemin-svgo": "^8.0.0",
         "matchdep": "^1.0.1",
-        "ssh2-sftp-client": "^10.0.3"
+        "merge-stream": "^2.0.0",
+        "ssh2-sftp-client": "^10.0.3",
+        "svgo": "^4.0.0",
+        "through2": "^4.0.2"
     },
     "name": "sculptura-theme",
     "version": "1.0.0",
-    "description": "WordPress theme for Sculptura beauty studio",
+    "description": "",
     "main": "index.js",
     "dependencies": {
         "@splidejs/splide": "^4.0.7",
@@ -263,7 +269,6 @@
         "strip-bom": "^2.0.0",
         "supports-preserve-symlinks-flag": "^1.0.0",
         "sver-compat": "^1.5.0",
-        "through2": "^2.0.5",
         "through2-filter": "^3.0.0",
         "time-stamp": "^1.1.0",
         "to-absolute-glob": "^2.0.2",
@@ -319,6 +324,5 @@
         "wp:create-features": "node scripts/create-features.js"
     },
     "author": "",
-    "license": "ISC",
-    "description": ""
+    "license": "ISC"
 }

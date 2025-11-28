@@ -11,7 +11,7 @@
     }
 
     &__header {
-        background-color: #ffd700; // Желтый цвет как на картинке
+        background-color: $accent-sage;
         padding: 2rem 0;
         margin-bottom: 3rem;
         text-align: center;
@@ -39,7 +39,7 @@
         &_additional {
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 3px solid #4a90e2; // Синяя линия как на картинке
+            border-top: 3px solid $accent-terracotta;
         }
     }
 
@@ -47,7 +47,7 @@
         font-family: $heading;
         font-size: 2rem;
         font-weight: 700;
-        color: #4a90e2; // Синий цвет как на картинке
+        color: $accent-terracotta;
         margin-bottom: 1.5rem;
         text-align: left;
     }

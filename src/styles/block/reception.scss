@@ -156,18 +156,18 @@
     }
 
     &__input--error {
-        border-color: #e74c3c !important;
-        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1) !important;
+        border-color: $error-color !important;
+        box-shadow: 0 0 0 3px rgba($error-color, 0.1) !important;
 
         &:focus {
-            border-color: #e74c3c !important;
-            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2) !important;
+            border-color: $error-color !important;
+            box-shadow: 0 0 0 3px rgba($error-color, 0.2) !important;
         }
     }
 
     &__error {
         display: block;
-        color: #e74c3c;
+        color: $error-color;
         font-size: 0.875rem;
         margin-top: 0.25rem;
         padding-left: 0.5rem;

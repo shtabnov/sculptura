@@ -5,11 +5,11 @@
     z-index: 100;
     width: 3rem;
     height: 3rem;
-    color: #DCDCDC;
+    color: rgba($text-light, 0.5);
     cursor: pointer;
     border-radius: 50%;
     visibility: hidden;
-    box-shadow: inset 0 0 0 6px #DCDCDC;
+    box-shadow: inset 0 0 0 6px rgba($text-light, 0.3);
     opacity: 0;
     transition: 0.3s;
     transform: translateY(25px);
@@ -24,7 +24,7 @@
         width: 100%;
         height: 100%;
         font-size: 1.1rem;
-        content: '↑';
+        content: "↑";
     }
 
     &:hover {

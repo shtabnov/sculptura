@@ -32,7 +32,15 @@ $homepage_id = get_option('page_on_front');
             <?php if (!empty($hero_images)) : ?>
                 <?php foreach ($hero_images as $index => $image_url) : ?>
                     <div class="hero__image<?php echo $index === 0 ? ' hero__image_active' : ''; ?>">
-                        <img src="<?php echo esc_url($image_url); ?>" alt="Hero image <?php echo $index + 1; ?>">
+                        <?php
+                        // Первое изображение загружаем с высоким приоритетом, остальные - lazy
+                        $img_attr = [
+                            'alt' => 'Hero image ' . ($index + 1),
+                            'loading' => $index === 0 ? 'eager' : 'lazy',
+                            'fetchpriority' => $index === 0 ? 'high' : 'auto',
+                        ];
+                        echo sculptura_get_responsive_image($image_url, 'full', $img_attr);
+                        ?>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -78,6 +86,9 @@ $homepage_id = get_option('page_on_front');
     <section class="service" id="service">
         <div class="service__container">
             <h2 class="service__title">Наши услуги</h2>
+            <p class="service__subtitle" style="text-align: center; margin-bottom: 2rem; color: #6b6b6b; max-width: 800px; margin-left: auto; margin-right: auto;">
+                Профессиональный массаж лица в Перми в студии красоты Sculptura. Косметология, уход за лицом, буккальный массаж и другие услуги для вашей красоты.
+            </p>
             <?php if ($services->have_posts()) : ?>
                 <div class="service__wrapper">
                     <?php while ($services->have_posts()) : $services->the_post(); ?>
@@ -178,7 +189,7 @@ $homepage_id = get_option('page_on_front');
                         <div class="features__card">
                             <div class="features__card-icon">
                                 <?php if ($icon_url) : ?>
-                                    <img src="<?php echo esc_url($icon_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                                    <?php echo sculptura_get_responsive_image($icon_url, 'medium', ['alt' => get_the_title()]); ?>
                                 <?php endif; ?>
                             </div>
                             <h3 class="features__card-title"><?php the_title(); ?></h3>

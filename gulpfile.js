@@ -4,7 +4,7 @@ const scss = require("./gulp/scss");
 const scripts = require("./gulp/scripts");
 const clean = require("./gulp/clean");
 const img = require("./gulp/img");
-const fonts = require("./gulp/font");
+// const fonts = require("./gulp/font");
 const server = require("./gulp/server");
 const deployCSS = require("./gulp/deploy-css");
 const deployJS = require("./gulp/deploy-js");
@@ -19,7 +19,7 @@ exports.pug = pug;
 exports.scripts = series(scripts, deployJS);
 exports.css = series(scss, deployCSS);
 exports.images = series(img, deployImages);
-exports.fonts = fonts;
+// exports.fonts = fonts;
 
 // ============================================================================
 // Задачи только сборки (без деплоя)
@@ -42,6 +42,6 @@ const watch = () => {
 
 exports.dev = series(
     clean,
-    parallel(pug, scss, scripts, img, fonts),
+    parallel(pug, scss, scripts, img),
     parallel(watch, server)
 );

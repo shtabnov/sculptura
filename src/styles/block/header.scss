@@ -2,15 +2,15 @@
     position: fixed;
     width: 100%;
     z-index: 50;
-    background: rgba(57, 93, 18, 0.3);
-    box-shadow: 0px 4px 15px rgb(223, 255, 196);
+    background: rgba($deep-oliva, 0.3);
+    box-shadow: 0px 4px 15px rgba($accent-sage, 0.3);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     transition: background 0.3s ease;
 }
 
 .header_scrolled {
-    background: rgba(57, 93, 18, 0.6);
+    background: rgba($deep-oliva, 0.6);
 }
 
 .nav {
@@ -158,7 +158,7 @@
         &__logo_text {
             display: block !important;
             font-family: $logo;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             text-transform: uppercase;
             color: $white;
