@@ -247,7 +247,7 @@ $homepage_id = get_option('page_on_front');
     <section class="reception" id="reception">
         <div class="reception__container">
             <h2 class="reception__title">Записаться на прием</h2>
-            <p class="reception__description">Оставьте свои контактные данные, и мы свяжемся с вами для уточнения деталей записи</p>
+            <p class="reception__description">Оставьте контакты, и мы перезвоним вам в течение 15 минут для уточнения деталей</p>
             <form class="reception__form form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST">
                 <?php wp_nonce_field('reception_form', 'reception_nonce'); ?>
                 <input type="hidden" name="action" value="reception_form_submit">
@@ -263,45 +263,54 @@ $homepage_id = get_option('page_on_front');
                 </div>
                 
                 <div class="form__group">
-                    <label class="form__label" for="reception_service">Выберите услугу</label>
-                    <select class="form__select" id="reception_service" name="service">
-                        <option value="">Выберите услугу</option>
-                        <?php
-                        $services_dropdown = new WP_Query([
-                            'post_type' => 'service',
-                            'posts_per_page' => -1,
-                            'orderby' => 'menu_order',
-                            'order' => 'ASC',
-                        ]);
-                        if ($services_dropdown->have_posts()) :
-                            while ($services_dropdown->have_posts()) : $services_dropdown->the_post();
-                                ?>
-                                <option value="<?php echo esc_attr(get_post_field('post_name')); ?>"><?php the_title(); ?></option>
-                                <?php
-                            endwhile;
-                            wp_reset_postdata();
-                        endif;
-                        ?>
-                    </select>
+                    <button class="form__submit" type="submit">Записаться сейчас</button>
                 </div>
                 
-                <div class="form__group">
-                    <label class="form__label" for="date">Предпочтительная дата</label>
-                    <input class="form__input" type="date" id="date" name="date">
+                <div class="form__toggle-wrapper">
+                    <button type="button" class="form__toggle" id="formToggle">
+                        <span class="form__toggle-text">Указать дополнительные детали</span>
+                        <span class="form__toggle-icon">▼</span>
+                    </button>
                 </div>
                 
-                <div class="form__group">
-                    <label class="form__label" for="time">Предпочтительное время</label>
-                    <input class="form__input" type="time" id="time" name="time">
-                </div>
-                
-                <div class="form__group">
-                    <label class="form__label" for="comment">Комментарий (необязательно)</label>
-                    <textarea class="form__textarea" id="comment" name="comment" placeholder="Укажите дополнительную информацию" rows="4"></textarea>
-                </div>
-                
-                <div class="form__group">
-                    <button class="form__submit" type="submit">Отправить заявку</button>
+                <div class="form__additional" id="formAdditional" style="display: none;">
+                    <div class="form__group">
+                        <label class="form__label" for="reception_service">Выберите услугу</label>
+                        <select class="form__select" id="reception_service" name="service">
+                            <option value="">Выберите услугу</option>
+                            <?php
+                            $services_dropdown = new WP_Query([
+                                'post_type' => 'service',
+                                'posts_per_page' => -1,
+                                'orderby' => 'menu_order',
+                                'order' => 'ASC',
+                            ]);
+                            if ($services_dropdown->have_posts()) :
+                                while ($services_dropdown->have_posts()) : $services_dropdown->the_post();
+                                    ?>
+                                    <option value="<?php echo esc_attr(get_post_field('post_name')); ?>"><?php the_title(); ?></option>
+                                    <?php
+                                endwhile;
+                                wp_reset_postdata();
+                            endif;
+                            ?>
+                        </select>
+                    </div>
+                    
+                    <div class="form__group">
+                        <label class="form__label" for="date">Предпочтительная дата</label>
+                        <input class="form__input" type="date" id="date" name="date">
+                    </div>
+                    
+                    <div class="form__group">
+                        <label class="form__label" for="time">Предпочтительное время</label>
+                        <input class="form__input" type="time" id="time" name="time">
+                    </div>
+                    
+                    <div class="form__group">
+                        <label class="form__label" for="comment">Комментарий</label>
+                        <textarea class="form__textarea" id="comment" name="comment" placeholder="Укажите дополнительную информацию" rows="3"></textarea>
+                    </div>
                 </div>
             </form>
         </div>

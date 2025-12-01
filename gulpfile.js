@@ -1,4 +1,6 @@
 const gulp = require("gulp");
+const { exec } = require("child_process");
+const { promisify } = require("util");
 const pug = require("./gulp/pug");
 const scss = require("./gulp/scss");
 const scripts = require("./gulp/scripts");
@@ -11,6 +13,7 @@ const deployJS = require("./gulp/deploy-js");
 const deployImages = require("./gulp/deploy-images");
 
 const { series, parallel } = gulp;
+const execPromise = promisify(exec);
 
 // ============================================================================
 // Основные задачи сборки
@@ -33,6 +36,36 @@ exports.jsBuild = scripts;
 exports.cssDeploy = series(scss, deployCSS);
 exports.jsDeploy = series(scripts, deployJS);
 exports.pugDeploy = pug; // PUG не деплоится на WordPress, только локально
+
+// ============================================================================
+// Полный деплой через scripts/deploy.js
+// ============================================================================
+function fullDeploy() {
+    return new Promise((resolve, reject) => {
+        console.log("🚀 Запуск полного деплоя через scripts/deploy.js...\n");
+        const deployProcess = exec(
+            "node scripts/deploy.js",
+            (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`❌ Ошибка деплоя: ${error.message}`);
+                    reject(error);
+                    return;
+                }
+                if (stderr) {
+                    console.error(stderr);
+                }
+                console.log(stdout);
+                resolve();
+            }
+        );
+
+        // Прокидываем вывод в реальном времени
+        deployProcess.stdout.pipe(process.stdout);
+        deployProcess.stderr.pipe(process.stderr);
+    });
+}
+
+exports.deploy = fullDeploy;
 
 const watch = () => {
     gulp.watch("src/pug/**/*.pug", gulp.series(pug));

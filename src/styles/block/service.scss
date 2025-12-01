@@ -16,14 +16,16 @@
         border-radius: 1rem;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         flex-direction: column;
         font-family: $nav;
 
         &:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+            border-color: rgba(139, 154, 122, 0.3);
         }
     }
 
@@ -137,9 +139,10 @@
         }
         
         &:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(201, 125, 95, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(201, 125, 95, 0.5), 0 0 20px rgba(201, 125, 95, 0.3);
             background: linear-gradient(135deg, $accent-terracotta 0%, $accent-sage 100%);
+            filter: brightness(1.1);
             
             &::before {
                 left: 100%;
@@ -152,7 +155,7 @@
         }
         
         &:active {
-            transform: translateY(-1px);
+            transform: scale(1.02);
             box-shadow: 0 4px 15px rgba(139, 154, 122, 0.3);
         }
         

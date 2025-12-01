@@ -2,7 +2,7 @@
 section.reception(id='reception')
     .reception__container 
         h2.reception__title Записаться на прием
-        p.reception__description Оставьте свои контактные данные, и мы свяжемся с вами для уточнения деталей записи
+        p.reception__description Оставьте контакты, и мы перезвоним вам в течение 15 минут для уточнения деталей
         form.reception__form.form(action="#" method="POST")
             .form__group
                 label.form__label(for="name") Ваше имя *
@@ -13,29 +13,35 @@ section.reception(id='reception')
                 input.form__input(type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required)
             
             .form__group
-                label.form__label(for="service") Выберите услугу
-                select.form__select(id="service" name="service")
-                    option(value="") Выберите услугу
-                    option(value="face-massage") Массаж лица
-                    option(value="bucal") Букальный массаж
-                    option(value="classic-massage") Классический массаж
-                    option(value="manicure") Маникюр
-                    option(value="eyelashes") Ресницы
-                    option(value="makeup") Макияж
+                button.form__submit(type="submit") Записаться сейчас
             
-            .form__group
-                label.form__label(for="date") Предпочтительная дата
-                input.form__input(type="date" id="date" name="date")
+            .form__toggle-wrapper
+                button.form__toggle(type="button" id="formToggle")
+                    span.form__toggle-text Указать дополнительные детали
+                    span.form__toggle-icon ▼
             
-            .form__group
-                label.form__label(for="time") Предпочтительное время
-                input.form__input(type="time" id="time" name="time")
-            
-            .form__group
-                label.form__label(for="comment") Комментарий (необязательно)
-                textarea.form__textarea(id="comment" name="comment" placeholder="Укажите дополнительную информацию" rows="4")
-            
-            .form__group
-                button.form__submit(type="submit") Отправить заявку
+            .form__additional(id="formAdditional" style="display: none;")
+                .form__group
+                    label.form__label(for="service") Выберите услугу
+                    select.form__select(id="service" name="service")
+                        option(value="") Выберите услугу
+                        option(value="face-massage") Массаж лица
+                        option(value="bucal") Букальный массаж
+                        option(value="classic-massage") Классический массаж
+                        option(value="manicure") Маникюр
+                        option(value="eyelashes") Ресницы
+                        option(value="makeup") Макияж
+                
+                .form__group
+                    label.form__label(for="date") Предпочтительная дата
+                    input.form__input(type="date" id="date" name="date")
+                
+                .form__group
+                    label.form__label(for="time") Предпочтительное время
+                    input.form__input(type="time" id="time" name="time")
+                
+                .form__group
+                    label.form__label(for="comment") Комментарий
+                    textarea.form__textarea(id="comment" name="comment" placeholder="Укажите дополнительную информацию" rows="3")
 
 include button-up.pug

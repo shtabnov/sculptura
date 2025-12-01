@@ -173,6 +173,51 @@
         padding-left: 0.5rem;
         font-family: $nav;
     }
+
+    &__toggle-wrapper {
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    &__toggle {
+        background: transparent;
+        border: none;
+        color: $accent-sage;
+        font-family: $nav;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        border-radius: 0.5rem;
+
+        &:hover {
+            color: $accent-terracotta;
+            background: rgba($accent-sage, 0.05);
+        }
+
+        &--active {
+            color: $accent-terracotta;
+        }
+
+        &-icon {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+    }
+
+    &__additional {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba($accent-sage, 0.2);
+        overflow: hidden;
+        transition: max-height 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+        max-height: 0;
+    }
 }
 
 @media (max-width: 768.99px) {

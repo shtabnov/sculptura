@@ -175,4 +175,42 @@ document.addEventListener("DOMContentLoaded", function () {
             errorMessage.textContent = "";
         }
     });
+
+    // Раскрытие/скрытие дополнительных полей
+    const formToggle = document.getElementById("formToggle");
+    const formAdditional = document.getElementById("formAdditional");
+
+    if (formToggle && formAdditional) {
+        // Инициализация: устанавливаем начальное состояние
+        formAdditional.style.maxHeight = "0";
+        formAdditional.style.opacity = "0";
+        formAdditional.style.overflow = "hidden";
+        
+        formToggle.addEventListener("click", function () {
+            const isHidden = formAdditional.style.maxHeight === "0px" || 
+                            formAdditional.style.maxHeight === "";
+            
+            if (isHidden) {
+                // Раскрываем
+                formAdditional.style.display = "block";
+                formAdditional.style.maxHeight = formAdditional.scrollHeight + "px";
+                formAdditional.style.opacity = "1";
+                formToggle.querySelector(".form__toggle-text").textContent = "Скрыть дополнительные детали";
+                formToggle.querySelector(".form__toggle-icon").textContent = "▲";
+                formToggle.classList.add("form__toggle--active");
+            } else {
+                // Скрываем
+                formAdditional.style.maxHeight = "0";
+                formAdditional.style.opacity = "0";
+                setTimeout(() => {
+                    if (formAdditional.style.maxHeight === "0px") {
+                        formAdditional.style.display = "none";
+                    }
+                }, 300);
+                formToggle.querySelector(".form__toggle-text").textContent = "Указать дополнительные детали";
+                formToggle.querySelector(".form__toggle-icon").textContent = "▼";
+                formToggle.classList.remove("form__toggle--active");
+            }
+        });
+    }
 });
